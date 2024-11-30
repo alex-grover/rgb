@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate": "wagmi generate"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.61.3",
@@ -21,6 +22,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@wagmi/cli": "^2.1.18",
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
     "typescript": "^5",

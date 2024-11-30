@@ -4,7 +4,18 @@ on:
   push:
 
 jobs:
-  test:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - uses: foundry-rs/foundry-toolchain@v1
+      - run: bun run generate
+      - run: test -z "$(git status --porcelain)"
+  contracts:
     runs-on: ubuntu-latest
     defaults:
       run:
