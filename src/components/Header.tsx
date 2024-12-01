@@ -1,6 +1,6 @@
-import { ConnectButton } from "./ConnectButton";
-import { Container, Flex } from "@radix-ui/themes";
-import { RGBIcon } from "./RGBIcon";
+import { Container, Flex } from '@radix-ui/themes'
+import { ConnectButton } from './ConnectButton'
+import { RGBIcon } from './RGBIcon'
 
 export function Header() {
   return (

@@ -1,15 +1,15 @@
-import type { Metadata } from "next";
-import { Web3Provider } from "@/lib/Web3Provider";
-import { PropsWithChildren } from "react";
-import { Flex, Theme } from "@radix-ui/themes";
-import { Header } from "@/components/Header";
-import "@radix-ui/themes/styles.css";
-import "./global.css"
+import { Header } from '@/components/Header'
+import { Web3Provider } from '@/components/Web3Provider'
+import { Flex, Theme } from '@radix-ui/themes'
+import type { Metadata } from 'next'
+import type { PropsWithChildren } from 'react'
+import '@radix-ui/themes/styles.css'
+import './global.css'
 
 export const metadata: Metadata = {
-  title: "RGB Signatures",
-  description: "RGB is an infinite canvas",
-};
+  title: 'RGB Signatures',
+  description: 'RGB is an infinite canvas',
+}
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
@@ -25,5 +25,5 @@ export default function RootLayout({ children }: PropsWithChildren) {
         </Theme>
       </body>
     </html>
-  );
+  )
 }

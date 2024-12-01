@@ -1,4 +1,4 @@
-import { HomeClientPage } from "./client";
+import { HomeClientPage } from './client'
 
 export default async function HomePage({
   searchParams,
@@ -7,7 +7,13 @@ export default async function HomePage({
 }) {
   const { r, g, b } = await searchParams
 
-  return <HomeClientPage r={parseSearchParam(r) ?? randomColor()} g={parseSearchParam(g) ?? randomColor()} b={parseSearchParam(b) ?? randomColor()} />
+  return (
+    <HomeClientPage
+      r={parseSearchParam(r) ?? randomColor()}
+      g={parseSearchParam(g) ?? randomColor()}
+      b={parseSearchParam(b) ?? randomColor()}
+    />
+  )
 }
 
 function parseSearchParam(param: string | string[] | undefined) {

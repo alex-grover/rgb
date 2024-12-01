@@ -1,5 +1,5 @@
 'use client'
 
-import { ConnectKitButton } from "connectkit";
+import { ConnectKitButton } from 'connectkit'
 
 export const ConnectButton = ConnectKitButton

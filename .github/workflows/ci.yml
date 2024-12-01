@@ -15,6 +15,7 @@ jobs:
       - uses: foundry-rs/foundry-toolchain@v1
       - run: bun run generate
       - run: test -z "$(git status --porcelain)"
+      - run: bun run biome ci
   contracts:
     runs-on: ubuntu-latest
     defaults:
