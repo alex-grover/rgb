@@ -32,7 +32,7 @@ import {SignatureRenderer} from "./SignatureRenderer.sol";
 */
 
 contract RGBSignatures is ERC721, Ownable {
-    uint256 public immutable mintCost = 0.00333 ether;
+    uint256 public immutable mintCost = 0.002 ether;
     string internal constant _name = "RGB Signatures";
     string internal constant _symbol = "RGB";
 

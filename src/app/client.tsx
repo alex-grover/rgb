@@ -79,11 +79,11 @@ export function HomeClientPage({
         <Button
           size="4"
           onClick={() =>
-            writeContract({ args: [r, g, b], value: parseEther('0.00333') })
+            writeContract({ args: [r, g, b], value: parseEther('0.002') })
           }
           loading={isPending || isConfirming}
         >
-          Mint for .00333 ETH
+          Mint for .002 ETH
         </Button>
       </Flex>
     </Container>
