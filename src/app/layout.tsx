@@ -17,7 +17,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
     <html lang="en" suppressHydrationWarning>
       <body>
         <ThemeProvider attribute="class">
-          <Theme accentColor="gray" grayColor="gray" radius="none">
+          <Theme accentColor="gray" radius="none">
             <Web3Provider>
               <Flex direction="column" minHeight="100dvh">
                 <Header />

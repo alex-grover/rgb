@@ -82,6 +82,7 @@ export function HomeClientPage({
             writeContract({ args: [r, g, b], value: parseEther('0.002') })
           }
           loading={isPending || isConfirming}
+          highContrast
         >
           Mint for .002 ETH
         </Button>
