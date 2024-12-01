@@ -51,8 +51,9 @@ export function Signature({ r, g, b }: SignatureProps) {
               }
 
               return (
-                // biome-ignore lint/correctness/useJsxKeyInIterable: fixed number of elements
                 <Square
+                  // biome-ignore lint/suspicious/noArrayIndexKey: fixed list of elements
+                  key={`${row}-${col}`}
                   row={row}
                   col={col}
                   color={color}
@@ -84,8 +85,9 @@ function Square({
       Array(3)
         .fill(null)
         .map((_, col) => (
-          // biome-ignore lint/correctness/useJsxKeyInIterable: fixed number of elements
           <rect
+            // biome-ignore lint/suspicious/noArrayIndexKey: fixed list of elements
+            key={`${row}-${col}`}
             x={outerCol * 3 + col}
             y={outerRow * 3 + row}
             width="1"
