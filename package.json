@@ -10,6 +10,7 @@
     "generate": "wagmi generate"
   },
   "dependencies": {
+    "@radix-ui/themes": "^3.1.6",
     "@tanstack/react-query": "^5.61.3",
     "connectkit": "^1.8.2",
     "next": "15.0.3",
@@ -27,5 +28,6 @@
     "eslint-config-next": "15.0.3",
     "typescript": "^5",
     "vercel": "^39.1.1"
-  }
+  },
+  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
 }

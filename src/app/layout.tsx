@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Web3Provider } from "@/lib/Web3Provider";
-import { ConnectButton } from "@/components/ConnectButton";
 import { PropsWithChildren } from "react";
-import Link from "next/link";
+import { Flex, Theme } from "@radix-ui/themes";
+import { Header } from "@/components/Header";
+import "@radix-ui/themes/styles.css";
+import "./global.css"
 
 export const metadata: Metadata = {
   title: "RGB Signatures",
@@ -13,22 +15,14 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
       <body>
-        <Web3Provider>
-          <header>
-            <Link href="/about">Logo</Link>
-            <nav>
-              <Link href="/about">About</Link>
-              <Link href="/collections">Collections</Link>
-              <Link href="/faq">FAQ</Link>
-            </nav>
-            <ConnectButton />
-          </header>
-          {children}
-          <footer>
-            <div>Copyright</div>
-            <div>Social links</div>
-          </footer>
-        </Web3Provider>
+        <Theme accentColor="gray" grayColor="gray" radius="none">
+          <Web3Provider>
+            <Flex direction="column" minHeight="100dvh">
+              <Header />
+              {children}
+            </Flex>
+          </Web3Provider>
+        </Theme>
       </body>
     </html>
   );
