@@ -2,6 +2,8 @@
 
 import { Signature } from '@/components/Signature'
 import { useWriteRgbSignaturesMint } from '@/generated'
+import { randomColor } from '@/lib/random'
+import { useKeyPress } from '@/lib/useKeyPress'
 import {
   AspectRatio,
   Button,
@@ -38,6 +40,12 @@ export function HomeClientPage({
       `${pathname}?${new URLSearchParams({ r: r.toString(), g: g.toString(), b: b.toString() })}`,
     )
   }, [pathname, r, g, b])
+
+  useKeyPress(' ', () => {
+    setR(randomColor())
+    setG(randomColor())
+    setB(randomColor())
+  })
 
   const { writeContract, isPending, data: hash } = useWriteRgbSignaturesMint()
 

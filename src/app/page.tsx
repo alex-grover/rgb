@@ -1,3 +1,4 @@
+import { randomColor } from '@/lib/random'
 import { HomeClientPage } from './client'
 
 export default async function HomePage({
@@ -22,8 +23,4 @@ function parseSearchParam(param: string | string[] | undefined) {
   if (Number.isNaN(number)) return null
   if (number < 0 || number > 255) return null
   return number
-}
-
-function randomColor() {
-  return Math.floor(Math.random() * 256)
 }
