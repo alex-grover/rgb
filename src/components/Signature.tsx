@@ -38,15 +38,15 @@ export function Signature({ r, g, b }: SignatureProps) {
               let color: string
               let centerColor: string
               if (index === null) {
-                color = 'white'
-                centerColor = 'black'
+                color = 'black'
+                centerColor = 'white'
               } else {
-                color = binary[index] === '1' ? 'black' : 'white'
+                color = binary[index] === '1' ? 'white' : 'black'
                 centerColor =
                   row === col && row !== 3
                     ? binary[index] === '1'
-                      ? 'white'
-                      : 'black'
+                      ? 'black'
+                      : 'white'
                     : color
               }
 

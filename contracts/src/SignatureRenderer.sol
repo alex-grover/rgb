@@ -19,11 +19,11 @@ library SignatureRenderer {
                 string memory color;
                 string memory centerColor;
                 if (index == 24) {
-                    color = "white";
-                    centerColor = "black";
+                    color = "black";
+                    centerColor = "white";
                 } else {
-                    color = binary[index] ? "black" : "white";
-                    centerColor = row == col && row != 3 ? (binary[index] ? "white" : "black") : color;
+                    color = binary[index] ? "white" : "black";
+                    centerColor = row == col && row != 3 ? (binary[index] ? "black" : "white") : color;
                 }
 
                 result = string.concat(result, renderSquare(row, col, color, centerColor));
