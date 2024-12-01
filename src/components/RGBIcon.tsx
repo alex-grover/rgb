@@ -1,6 +1,7 @@
 export function RGBIcon() {
   return (
     <svg
+      id="logo"
       width="40"
       height="40"
       viewBox="0 0 40 40"
