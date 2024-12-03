@@ -61,11 +61,23 @@ contract RGBSignatures is ERC721, Ownable {
         return _symbol;
     }
 
+    function contractURI() public pure returns (string memory) {
+        return string.concat(
+            'data:application/json;utf8,{"name":"RGB Signatures","description":"RGB is an infinite canvas"}'
+        );
+    }
+
     function tokenURI(uint256 id) public pure override returns (string memory) {
         (uint8 r, uint8 g, uint8 b) = rgb(id);
 
-        string memory json = string.concat(
-            '{"name":"RGB Signatures","description":"RGB is an infinite canvas","image":"data:image/svg+xml;base64,',
+        return string.concat(
+            'data:application/json;utf8,{"name":"rgb(',
+            LibString.toString(r),
+            ",",
+            LibString.toString(g),
+            ",",
+            LibString.toString(b),
+            ')","description":"RGB is an infinite canvas","image":"data:image/svg+xml;base64,',
             Base64.encode(bytes(SignatureRenderer.render(id))),
             '","attributes":[{"trait_type":"r","display_type":"number","max_value":255,"value":',
             LibString.toString(r),
@@ -75,8 +87,6 @@ contract RGBSignatures is ERC721, Ownable {
             LibString.toString(b),
             "}]}"
         );
-
-        return string.concat("data:application/json;base64,", Base64.encode(bytes(json)));
     }
 
     function tokenId(uint8 r, uint8 g, uint8 b) public pure returns (uint256) {
