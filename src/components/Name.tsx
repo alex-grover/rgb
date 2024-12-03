@@ -4,8 +4,8 @@ import { shortenAddress } from '@/lib/address'
 import { chain } from '@/lib/chain'
 import { Link, Skeleton } from '@radix-ui/themes'
 import type { Address } from 'viem'
-import { mainnet } from 'viem/chains'
 import { useEnsName } from 'wagmi'
+import { mainnet } from 'wagmi/chains'
 
 type NameProps = {
   address?: Address

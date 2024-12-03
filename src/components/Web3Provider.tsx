@@ -10,7 +10,7 @@ import { mainnet } from 'wagmi/chains'
 
 const config = createConfig(
   getDefaultConfig({
-    chains: [chain],
+    chains: [chain, mainnet],
     transports: {
       [mainnet.id]: http(mainnetRpcUrl),
       [chain.id]: http(rpcUrl),
