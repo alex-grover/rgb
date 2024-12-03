@@ -1,5 +1,5 @@
 import type { Color } from '@/lib/color'
-import { IconButton, Popover } from '@radix-ui/themes'
+import { IconButton, Popover, Theme } from '@radix-ui/themes'
 import { useEffect, useState } from 'react'
 import { RgbColorPicker } from 'react-colorful'
 import { useDebounceValue } from 'usehooks-ts'
@@ -26,7 +26,9 @@ export function ColorPicker({
   return (
     <Popover.Root>
       <Popover.Trigger>
-        <IconButton variant="outline" highContrast />
+        <Theme appearance="dark" hasBackground={false}>
+          <IconButton variant="outline" highContrast />
+        </Theme>
       </Popover.Trigger>
       <Popover.Content align="center" asChild className={styles.content}>
         <RgbColorPicker color={color} onChange={setColor} />
