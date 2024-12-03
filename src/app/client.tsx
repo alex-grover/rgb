@@ -3,12 +3,14 @@
 import { ColorPicker } from '@/components/ColorPicker'
 import { Signature } from '@/components/Signature'
 import {
+  useReadRgbSignaturesOwnerOf,
   useWriteRgbSignaturesMint,
   useWriteRgbSignaturesMintRandom,
 } from '@/generated'
 import type { Color } from '@/lib/color'
 import { randomColor } from '@/lib/random'
 import { useKeyPress } from '@/lib/useKeyPress'
+import { ExternalLinkIcon } from '@radix-ui/react-icons'
 import {
   AspectRatio,
   Box,
@@ -17,8 +19,9 @@ import {
   Flex,
   TextField,
 } from '@radix-ui/themes'
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { parseEther } from 'viem'
 
 type HomeClientPageProps = {
@@ -29,6 +32,12 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
   const pathname = usePathname()
 
   const [color, setColor] = useState(initialColor)
+
+  const tokenId = useMemo(
+    () => BigInt((color.r << 16) | (color.g << 8) | color.b),
+    [color],
+  )
+  const { data: owner } = useReadRgbSignaturesOwnerOf({ args: [tokenId] })
 
   useEffect(() => {
     window.history.replaceState(
@@ -97,20 +106,28 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
             <TextField.Slot>B</TextField.Slot>
           </TextField.Root>
         </Flex>
-        <Button
-          size="4"
-          onClick={() =>
-            mint({
-              args: [color.r, color.g, color.b],
-              value: parseEther('0.002'),
-            })
-          }
-          loading={mintPending}
-          disabled={mintRandomPending}
-          highContrast
-        >
-          Mint for .002 ETH
-        </Button>
+        {owner ? (
+          <Button size="4" asChild>
+            <Link href={`/signatures/${tokenId}`}>
+              Minted <ExternalLinkIcon />
+            </Link>
+          </Button>
+        ) : (
+          <Button
+            size="4"
+            onClick={() =>
+              mint({
+                args: [color.r, color.g, color.b],
+                value: parseEther('0.002'),
+              })
+            }
+            loading={mintPending}
+            disabled={mintRandomPending}
+            highContrast
+          >
+            Mint for .002 ETH
+          </Button>
+        )}
         <Button
           size="4"
           onClick={() => mintRandom({ value: parseEther('0.001') })}

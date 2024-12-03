@@ -1,0 +1,27 @@
+.container {
+  border-top: 1px solid var(--accent-6);
+}
+
+.aside {
+  border-left: 1px solid var(--accent-6);
+}
+
+.colors {
+  border-top: 1px solid var(--accent-6);
+  border-bottom: 1px solid var(--accent-6);
+}
+
+.colors > :not(:last-child) {
+  border-right: 1px solid var(--accent-6);
+}
+
+.square {
+  --size: 16px;
+  height: var(--size);
+  width: var(--size);
+  aspect-ratio: 1;
+}
+
+.metadata > :not(:last-child) {
+  border-bottom: 1px solid var(--accent-6);
+}

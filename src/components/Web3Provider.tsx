@@ -1,29 +1,24 @@
 'use client'
 
+import { chain, mainnetRpcUrl, rpcUrl } from '@/lib/chain'
 import { env } from '@/lib/env'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ConnectKitProvider, getDefaultConfig } from 'connectkit'
 import type { PropsWithChildren } from 'react'
 import { http, WagmiProvider, createConfig } from 'wagmi'
-import { base, baseSepolia } from 'wagmi/chains'
-
-const chain = env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? base : baseSepolia
+import { mainnet } from 'wagmi/chains'
 
 const config = createConfig(
   getDefaultConfig({
     chains: [chain],
     transports: {
-      [base.id]: http(
-        `https://base-mainnet.g.alchemy.com/v2/${env.NEXT_PUBLIC_ALCHEMY_ID}`,
-      ),
-      [baseSepolia.id]: http(
-        `https://base-sepolia.g.alchemy.com/v2/${env.NEXT_PUBLIC_ALCHEMY_ID}`,
-      ),
+      [mainnet.id]: http(mainnetRpcUrl),
+      [chain.id]: http(rpcUrl),
     },
     walletConnectProjectId: env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
     appName: 'RGB Signatures',
     appDescription: 'RGB is an infinite canvas',
-    appUrl: 'https://rgb.so',
+    appUrl: 'https://rgb.fun',
     appIcon: '', // your app's icon, no bigger than 1024x1024px (max. 1MB)
   }),
 )
