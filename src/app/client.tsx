@@ -61,83 +61,87 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
     useWriteRgbSignaturesMintRandom()
 
   return (
-    <Container size="1" px="2" pb="8">
-      <Flex direction="column" justify="center" gap="3">
-        <Flex align="center" justify="center" asChild>
-          <AspectRatio
-            style={{ backgroundColor: `rgb(${color.r},${color.g},${color.b})` }}
-          >
-            <Signature color={color} />
-            <Box
-              position="absolute"
-              right={{ initial: '4', xs: '6' }}
-              bottom={{ initial: '4', xs: '6' }}
+    <Flex flexGrow="1" align="center">
+      <Container size="1" px="2" pb="8">
+        <Flex direction="column" justify="center" gap="3">
+          <Flex align="center" justify="center" asChild>
+            <AspectRatio
+              style={{
+                backgroundColor: `rgb(${color.r},${color.g},${color.b})`,
+              }}
             >
-              <ColorPicker color={color} setColor={setColor} />
-            </Box>
-          </AspectRatio>
-        </Flex>
-        <Flex gap="3">
-          <TextField.Root
-            size="3"
-            value={color.r}
-            onChange={(e) =>
-              setColor({ ...color, r: Number.parseInt(e.target.value) || 0 })
-            }
-          >
-            <TextField.Slot>R</TextField.Slot>
-          </TextField.Root>
-          <TextField.Root
-            size="3"
-            value={color.g}
-            onChange={(e) =>
-              setColor({ ...color, g: Number.parseInt(e.target.value) || 0 })
-            }
-          >
-            <TextField.Slot>G</TextField.Slot>
-          </TextField.Root>
-          <TextField.Root
-            size="3"
-            value={color.b}
-            onChange={(e) =>
-              setColor({ ...color, b: Number.parseInt(e.target.value) || 0 })
-            }
-          >
-            <TextField.Slot>B</TextField.Slot>
-          </TextField.Root>
-        </Flex>
-        {owner ? (
-          <Button size="4" asChild>
-            <Link href={`/signatures/${tokenId}`}>
-              Minted <ExternalLinkIcon />
-            </Link>
-          </Button>
-        ) : (
+              <Signature color={color} />
+              <Box
+                position="absolute"
+                right={{ initial: '4', xs: '6' }}
+                bottom={{ initial: '4', xs: '6' }}
+              >
+                <ColorPicker color={color} setColor={setColor} />
+              </Box>
+            </AspectRatio>
+          </Flex>
+          <Flex gap="3">
+            <TextField.Root
+              size="3"
+              value={color.r}
+              onChange={(e) =>
+                setColor({ ...color, r: Number.parseInt(e.target.value) || 0 })
+              }
+            >
+              <TextField.Slot>R</TextField.Slot>
+            </TextField.Root>
+            <TextField.Root
+              size="3"
+              value={color.g}
+              onChange={(e) =>
+                setColor({ ...color, g: Number.parseInt(e.target.value) || 0 })
+              }
+            >
+              <TextField.Slot>G</TextField.Slot>
+            </TextField.Root>
+            <TextField.Root
+              size="3"
+              value={color.b}
+              onChange={(e) =>
+                setColor({ ...color, b: Number.parseInt(e.target.value) || 0 })
+              }
+            >
+              <TextField.Slot>B</TextField.Slot>
+            </TextField.Root>
+          </Flex>
+          {owner ? (
+            <Button size="4" asChild>
+              <Link href={`/signatures/${tokenId}`}>
+                Minted <ExternalLinkIcon />
+              </Link>
+            </Button>
+          ) : (
+            <Button
+              size="4"
+              onClick={() =>
+                mint({
+                  args: [color.r, color.g, color.b],
+                  value: parseEther('0.002'),
+                })
+              }
+              loading={mintPending}
+              disabled={mintRandomPending}
+              highContrast
+            >
+              Mint for .002 ETH
+            </Button>
+          )}
           <Button
             size="4"
-            onClick={() =>
-              mint({
-                args: [color.r, color.g, color.b],
-                value: parseEther('0.002'),
-              })
-            }
-            loading={mintPending}
-            disabled={mintRandomPending}
-            highContrast
+            onClick={() => mintRandom({ value: parseEther('0.001') })}
+            loading={mintRandomPending}
+            disabled={mintPending}
+            variant="outline"
           >
-            Mint for .002 ETH
+            Mint random for .001 ETH
           </Button>
-        )}
-        <Button
-          size="4"
-          onClick={() => mintRandom({ value: parseEther('0.001') })}
-          loading={mintRandomPending}
-          disabled={mintPending}
-          variant="outline"
-        >
-          Mint random for .001 ETH
-        </Button>
-      </Flex>
-    </Container>
+        </Flex>
+      </Container>
+    </Flex>
   )
 }
