@@ -32,33 +32,40 @@ import {SignatureRenderer} from "./SignatureRenderer.sol";
 */
 
 contract RGBSignatures is ERC721, Ownable {
-    uint256 public immutable mintCost = 0.002 ether;
-    string internal constant _name = "RGB Signatures";
-    string internal constant _symbol = "RGB";
+    uint256 public immutable MINT_COST = 0.002 ether;
+    address payable public immutable feeRecipient;
+    uint256 public totalSupply;
 
-    constructor() {
+    event Mint(uint256 indexed id, address minter, uint256 genesis, uint256 timestamp);
+
+    constructor(address payable feeRecipient_) {
         _initializeOwner(msg.sender);
+        feeRecipient = feeRecipient_;
     }
 
     function mint(uint8 r, uint8 g, uint8 b) external payable {
-        require(msg.value >= mintCost, "Insufficient funds");
-        _mint(msg.sender, tokenId(r, g, b));
+        require(msg.value >= MINT_COST, "Insufficient funds");
+
+        uint256 id = tokenId(r, g, b);
+        _mint(msg.sender, id);
+        emit Mint(id, msg.sender, ++totalSupply, block.timestamp);
+
+        (bool sent,) = feeRecipient.call{value: address(this).balance}("");
+        require(sent, "Failed to transfer mint fee");
     }
 
     function adminMint(uint8 r, uint8 g, uint8 b, address to) external onlyOwner {
-        _mint(to, tokenId(r, g, b));
-    }
-
-    function withdraw() external onlyOwner {
-        payable(msg.sender).transfer(address(this).balance);
+        uint256 id = tokenId(r, g, b);
+        _mint(to, id);
+        emit Mint(id, msg.sender, ++totalSupply, block.timestamp);
     }
 
     function name() public pure override returns (string memory) {
-        return _name;
+        return "RGB Signatures";
     }
 
     function symbol() public pure override returns (string memory) {
-        return _symbol;
+        return "RGB";
     }
 
     function contractURI() public pure returns (string memory) {
