@@ -32,7 +32,8 @@ import {SignatureRenderer} from "./SignatureRenderer.sol";
 */
 
 contract RGBSignatures is ERC721, Ownable {
-    uint256 public immutable MINT_COST = 0.002 ether;
+    uint256 public constant MINT_COST = 0.002 ether;
+    uint256 public constant RANDOM_MINT_COST = 0.001 ether;
     address payable public immutable feeRecipient;
     uint256 public totalSupply;
 
@@ -46,18 +47,24 @@ contract RGBSignatures is ERC721, Ownable {
     function mint(uint8 r, uint8 g, uint8 b) external payable {
         require(msg.value >= MINT_COST, "Insufficient funds");
 
-        uint256 id = tokenId(r, g, b);
-        _mint(msg.sender, id);
-        emit Mint(id, msg.sender, ++totalSupply, block.timestamp);
+        _mintSignature(r, g, b, msg.sender);
+        _transferFees();
+    }
 
-        (bool sent,) = feeRecipient.call{value: address(this).balance}("");
-        require(sent, "Failed to transfer mint fee");
+    function mintRandom() external payable {
+        require(msg.value >= RANDOM_MINT_COST, "Insufficient funds");
+
+        uint256 random = uint256(keccak256(abi.encodePacked(block.prevrandao, msg.sender)));
+        uint8 r = uint8(random % 256);
+        uint8 g = uint8((random / 256) % 256);
+        uint8 b = uint8((random / (256 * 256)) % 256);
+
+        _mintSignature(r, g, b, msg.sender);
+        _transferFees();
     }
 
     function adminMint(uint8 r, uint8 g, uint8 b, address to) external onlyOwner {
-        uint256 id = tokenId(r, g, b);
-        _mint(to, id);
-        emit Mint(id, msg.sender, ++totalSupply, block.timestamp);
+        _mintSignature(r, g, b, to);
     }
 
     function name() public pure override returns (string memory) {
@@ -104,5 +111,16 @@ contract RGBSignatures is ERC721, Ownable {
         r = uint8((id >> 16) & 0xFF);
         g = uint8((id >> 8) & 0xFF);
         b = uint8(id & 0xFF);
+    }
+
+    function _mintSignature(uint8 r, uint8 g, uint8 b, address to) internal {
+        uint256 id = tokenId(r, g, b);
+        _mint(to, id);
+        emit Mint(id, to, ++totalSupply, block.timestamp);
+    }
+
+    function _transferFees() internal {
+        (bool sent,) = feeRecipient.call{value: address(this).balance}("");
+        require(sent, "Failed to transfer fees");
     }
 }

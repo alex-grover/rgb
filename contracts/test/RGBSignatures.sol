@@ -5,8 +5,9 @@ import {Test, console} from "forge-std/Test.sol";
 import {RGBSignatures} from "../src/RGBSignatures.sol";
 
 contract RGBSignaturesTest is Test {
-    function test_tokenURI() external {
-        RGBSignatures signatures = new RGBSignatures();
+    function test_tokenURI(address payable feeRecipient) external {
+        vm.assume(feeRecipient != address(0));
+        RGBSignatures signatures = new RGBSignatures(feeRecipient);
         console.log(signatures.tokenURI(signatures.tokenId(255, 153, 0)));
     }
 }
