@@ -26,7 +26,7 @@ export function ColorPicker({
   return (
     <Popover.Root>
       <Popover.Trigger>
-        <IconButton variant="outline" />
+        <IconButton variant="outline" highContrast />
       </Popover.Trigger>
       <Popover.Content align="center" asChild className={styles.content}>
         <RgbColorPicker color={color} onChange={setColor} />
