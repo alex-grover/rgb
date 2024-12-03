@@ -2,7 +2,10 @@
 
 import { ColorPicker } from '@/components/ColorPicker'
 import { Signature } from '@/components/Signature'
-import { useWriteRgbSignaturesMint } from '@/generated'
+import {
+  useWriteRgbSignaturesMint,
+  useWriteRgbSignaturesMintRandom,
+} from '@/generated'
 import type { Color } from '@/lib/color'
 import { randomColor } from '@/lib/random'
 import { useKeyPress } from '@/lib/useKeyPress'
@@ -17,7 +20,6 @@ import {
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { parseEther } from 'viem'
-import { useWaitForTransactionReceipt } from 'wagmi'
 
 type HomeClientPageProps = {
   color: Color
@@ -44,11 +46,10 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
     })
   })
 
-  const { writeContract, isPending, data: hash } = useWriteRgbSignaturesMint()
-
-  const { isLoading: isConfirming } = useWaitForTransactionReceipt({
-    hash,
-  })
+  const { writeContract: mint, isPending: mintPending } =
+    useWriteRgbSignaturesMint()
+  const { writeContract: mintRandom, isPending: mintRandomPending } =
+    useWriteRgbSignaturesMintRandom()
 
   return (
     <Container size="1" px="2" pb="8">
@@ -99,15 +100,25 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
         <Button
           size="4"
           onClick={() =>
-            writeContract({
+            mint({
               args: [color.r, color.g, color.b],
               value: parseEther('0.002'),
             })
           }
-          loading={isPending || isConfirming}
+          loading={mintPending}
+          disabled={mintRandomPending}
           highContrast
         >
           Mint for .002 ETH
+        </Button>
+        <Button
+          size="4"
+          onClick={() => mintRandom({ value: parseEther('0.001') })}
+          loading={mintRandomPending}
+          disabled={mintPending}
+          variant="outline"
+        >
+          Mint random for .001 ETH
         </Button>
       </Flex>
     </Container>
