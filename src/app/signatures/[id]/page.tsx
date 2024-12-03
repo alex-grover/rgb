@@ -51,16 +51,25 @@ export default async function SignaturePage({ params }: SignaturePageProps) {
   }
 
   return (
-    <Flex direction="row" flexGrow="1" className={styles.container}>
+    <Flex
+      direction={{ initial: 'column', xs: 'row' }}
+      flexGrow="1"
+      className={styles.container}
+    >
       <Flex
         align="center"
         justify="center"
         flexGrow="1"
+        minHeight={{ initial: '100vw', xs: 'auto' }}
         style={{ backgroundColor: `rgb(${color.r},${color.g},${color.b})` }}
       >
         <Signature color={color} />
       </Flex>
-      <Flex direction="column" flexBasis="400px" className={styles.aside}>
+      <Flex
+        direction="column"
+        flexBasis={{ initial: '400px', xs: 'auto' }}
+        className={styles.aside}
+      >
         <Flex direction="column" p="6" gap="6">
           <RGBIcon size={20} />
           <Flex direction="column" gap="4">
