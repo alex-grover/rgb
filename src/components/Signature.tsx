@@ -1,3 +1,5 @@
+import type { Color } from '@/lib/color'
+
 const INDEXES = [
   [0, 1, 2, 3, 4],
   [15, 16, 17, 18, 5],
@@ -7,16 +9,14 @@ const INDEXES = [
 ]
 
 type SignatureProps = {
-  r: number
-  g: number
-  b: number
+  color: Color
 }
 
-export function Signature({ r, g, b }: SignatureProps) {
+export function Signature({ color }: SignatureProps) {
   const binary =
-    r.toString(2).padStart(8, '0') +
-    g.toString(2).padStart(8, '0') +
-    b.toString(2).padStart(8, '0')
+    color.r.toString(2).padStart(8, '0') +
+    color.g.toString(2).padStart(8, '0') +
+    color.b.toString(2).padStart(8, '0')
 
   return (
     <svg

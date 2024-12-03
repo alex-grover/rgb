@@ -10,9 +10,11 @@ export default async function HomePage({
 
   return (
     <HomeClientPage
-      r={parseSearchParam(r) ?? randomColor()}
-      g={parseSearchParam(g) ?? randomColor()}
-      b={parseSearchParam(b) ?? randomColor()}
+      color={{
+        r: parseSearchParam(r) ?? randomColor(),
+        g: parseSearchParam(g) ?? randomColor(),
+        b: parseSearchParam(b) ?? randomColor(),
+      }}
     />
   )
 }
