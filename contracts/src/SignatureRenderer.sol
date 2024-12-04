@@ -6,16 +6,11 @@ import {Strings} from "openzeppelin-contracts/contracts/utils/Strings.sol";
 library SignatureRenderer {
     function render(uint256 id) internal pure returns (string memory) {
         bool[24] memory binary = toBinary(id);
-        uint8[5][5] memory indexes = [
-            [0, 1, 2, 3, 4],
-            [15, 16, 17, 18, 5],
-            [14, 23, 24, 19, 6],
-            [13, 22, 21, 20, 7],
-            [12, 11, 10, 9, 8]
-        ];
+        uint8[5][5] memory indexes =
+            [[0, 1, 2, 3, 4], [15, 16, 17, 18, 5], [14, 23, 24, 19, 6], [13, 22, 21, 20, 7], [12, 11, 10, 9, 8]];
 
-        string
-            memory result = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" height="512" width="512" shape-rendering="crispEdges">';
+        string memory result =
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" height="512" width="512" shape-rendering="crispEdges">';
 
         for (uint8 row = 0; row < 5; row++) {
             for (uint8 col = 0; col < 5; col++) {
@@ -28,27 +23,21 @@ library SignatureRenderer {
                     centerColor = "white";
                 } else {
                     color = binary[index] ? "white" : "black";
-                    centerColor = row == col && row != 3
-                        ? (binary[index] ? "black" : "white")
-                        : color;
+                    centerColor = row == col && row != 3 ? (binary[index] ? "black" : "white") : color;
                 }
 
-                result = string.concat(
-                    result,
-                    renderSquare(row, col, color, centerColor)
-                );
+                result = string.concat(result, renderSquare(row, col, color, centerColor));
             }
         }
 
         return string.concat(result, "</svg>");
     }
 
-    function renderSquare(
-        uint8 outerRow,
-        uint8 outerCol,
-        string memory color,
-        string memory centerColor
-    ) internal pure returns (string memory) {
+    function renderSquare(uint8 outerRow, uint8 outerCol, string memory color, string memory centerColor)
+        internal
+        pure
+        returns (string memory)
+    {
         string memory result = "";
 
         for (uint8 row = 0; row < 3; row++) {
@@ -70,9 +59,7 @@ library SignatureRenderer {
         return result;
     }
 
-    function toBinary(
-        uint256 id
-    ) internal pure returns (bool[24] memory binary) {
+    function toBinary(uint256 id) internal pure returns (bool[24] memory binary) {
         for (uint8 i = 0; i < 24; i++) {
             binary[23 - i] = (id & 1 == 1) ? true : false;
             id >>= 1;

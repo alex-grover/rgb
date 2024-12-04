@@ -37,16 +37,9 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
     uint256 public constant RANDOM_MINT_COST = 0.001 ether;
     address payable public immutable feeRecipient;
 
-    event Mint(
-        uint256 indexed id,
-        address minter,
-        uint256 genesis,
-        uint256 timestamp
-    );
+    event Mint(uint256 indexed id, address minter, uint256 genesis, uint256 timestamp);
 
-    constructor(
-        address payable feeRecipient_
-    ) ERC721("RGB Signatures", "RGB") Ownable(msg.sender) {
+    constructor(address payable feeRecipient_) ERC721("RGB Signatures", "RGB") Ownable(msg.sender) {
         feeRecipient = feeRecipient_;
     }
 
@@ -60,9 +53,7 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
     function mintRandom() external payable {
         require(msg.value >= RANDOM_MINT_COST, "Insufficient funds");
 
-        uint256 random = uint256(
-            keccak256(abi.encodePacked(block.prevrandao, msg.sender))
-        );
+        uint256 random = uint256(keccak256(abi.encodePacked(block.prevrandao, msg.sender)));
         uint8 r = uint8(random % 256);
         uint8 g = uint8((random / 256) % 256);
         uint8 b = uint8((random / (256 * 256)) % 256);
@@ -71,43 +62,36 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
         _transferFees();
     }
 
-    function adminMint(
-        uint8 r,
-        uint8 g,
-        uint8 b,
-        address to
-    ) external onlyOwner {
+    function adminMint(uint8 r, uint8 g, uint8 b, address to) external onlyOwner {
         _mintSignature(r, g, b, to);
     }
 
     function contractURI() public pure returns (string memory) {
-        return
-            string.concat(
-                'data:application/json;utf8,{"name":"RGB Signatures","description":"RGB is an infinite canvas"}'
-            );
+        return string.concat(
+            'data:application/json;utf8,{"name":"RGB Signatures","description":"RGB is an infinite canvas"}'
+        );
     }
 
     function tokenURI(uint256 id) public pure override returns (string memory) {
         (uint8 r, uint8 g, uint8 b) = rgb(id);
 
-        return
-            string.concat(
-                'data:application/json;utf8,{"name":"rgb(',
-                Strings.toString(r),
-                ",",
-                Strings.toString(g),
-                ",",
-                Strings.toString(b),
-                ')","description":"RGB is an infinite canvas","image":"data:image/svg+xml;base64,',
-                Base64.encode(bytes(SignatureRenderer.render(id))),
-                '","attributes":[{"trait_type":"r","display_type":"number","max_value":255,"value":',
-                Strings.toString(r),
-                '},{"trait_type":"g","display_type":"number","max_value":255,"value":',
-                Strings.toString(g),
-                '},{"trait_type":"b","display_type":"number","max_value":255,"value":',
-                Strings.toString(b),
-                "}]}"
-            );
+        return string.concat(
+            'data:application/json;utf8,{"name":"rgb(',
+            Strings.toString(r),
+            ",",
+            Strings.toString(g),
+            ",",
+            Strings.toString(b),
+            ')","description":"RGB is an infinite canvas","image":"data:image/svg+xml;base64,',
+            Base64.encode(bytes(SignatureRenderer.render(id))),
+            '","attributes":[{"trait_type":"r","display_type":"number","max_value":255,"value":',
+            Strings.toString(r),
+            '},{"trait_type":"g","display_type":"number","max_value":255,"value":',
+            Strings.toString(g),
+            '},{"trait_type":"b","display_type":"number","max_value":255,"value":',
+            Strings.toString(b),
+            "}]}"
+        );
     }
 
     function tokenId(uint8 r, uint8 g, uint8 b) public pure returns (uint256) {
@@ -127,7 +111,7 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
     }
 
     function _transferFees() internal {
-        (bool sent, ) = feeRecipient.call{value: address(this).balance}("");
+        (bool sent,) = feeRecipient.call{value: address(this).balance}("");
         require(sent, "Failed to transfer fees");
     }
 }
