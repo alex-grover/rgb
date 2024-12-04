@@ -3,6 +3,7 @@
 import { Signature } from '@/components/Signature'
 import { idToColor } from '@/lib/color'
 import {
+  Box,
   Container,
   Flex,
   Grid,
@@ -20,7 +21,7 @@ export default function GalleryPage() {
   const { data } = useSWR<string[], string>('/api/signatures')
 
   return (
-    <Flex flexGrow="1">
+    <Box flexGrow="1">
       <Container size="1" px="2" pb="8">
         <Flex direction="column" gap="6">
           <Flex direction="column" gap="2">
@@ -60,6 +61,6 @@ export default function GalleryPage() {
           )}
         </Flex>
       </Container>
-    </Flex>
+    </Box>
   )
 }
