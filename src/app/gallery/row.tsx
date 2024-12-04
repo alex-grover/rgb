@@ -30,11 +30,13 @@ export function SignatureRow({ id }: SignatureRowProps) {
       </Flex>
       <Flex align="center" gap="2">
         <Name address={owner} />
-        <Box
-          height="16px"
-          width="16px"
-          style={{ backgroundColor: `rgb(${color.r},${color.g},${color.b})` }}
-        />
+        <NextLink href={`/signatures/${id}`}>
+          <Box
+            height="16px"
+            width="16px"
+            style={{ backgroundColor: `rgb(${color.r},${color.g},${color.b})` }}
+          />
+        </NextLink>
       </Flex>
     </Flex>
   )
