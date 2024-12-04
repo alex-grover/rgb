@@ -133,7 +133,9 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
           )}
           <Button
             size="4"
-            onClick={() => mintRandom({ value: parseEther('0.001') })}
+            onClick={() =>
+              mintRandom({ args: [1], value: parseEther('0.001') })
+            }
             loading={mintRandomPending}
             disabled={mintPending}
             variant="outline"

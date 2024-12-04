@@ -50,15 +50,18 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
         _transferFees();
     }
 
-    function mintRandom() external payable {
-        require(msg.value >= RANDOM_MINT_COST, "Insufficient funds");
+    function mintRandom(uint8 amount) external payable {
+        require(msg.value >= RANDOM_MINT_COST * amount, "Insufficient funds");
 
-        uint256 random = uint256(keccak256(abi.encodePacked(block.prevrandao, msg.sender)));
-        uint8 r = uint8(random % 256);
-        uint8 g = uint8((random / 256) % 256);
-        uint8 b = uint8((random / (256 * 256)) % 256);
+        for (uint8 i = 0; i < amount; i++) {
+            uint256 random = uint256(keccak256(abi.encodePacked(block.prevrandao, msg.sender, i)));
+            uint8 r = uint8(random % 256);
+            uint8 g = uint8((random / 256) % 256);
+            uint8 b = uint8((random / (256 * 256)) % 256);
 
-        _mintSignature(r, g, b, msg.sender);
+            _mintSignature(r, g, b, msg.sender);
+        }
+
         _transferFees();
     }
 
