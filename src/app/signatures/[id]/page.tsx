@@ -61,7 +61,8 @@ export default async function SignaturePage({ params }: SignaturePageProps) {
       </Flex>
       <Flex
         direction="column"
-        flexBasis={{ initial: '400px', xs: 'auto' }}
+        flexBasis={{ initial: 'auto', xs: '400px' }}
+        flexShrink="0"
         className={styles.aside}
       >
         <Flex direction="column" p="6" gap="6">

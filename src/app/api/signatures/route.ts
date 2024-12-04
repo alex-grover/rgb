@@ -4,6 +4,8 @@ import { mintEvent } from '@/lib/contracts'
 import { viemClient } from '@/lib/viem'
 import { NextResponse } from 'next/server'
 
+export const revalidate = 10
+
 export async function GET() {
   const logs = await viemClient.getLogs({
     address: rgbSignaturesAddress[chain.id],
