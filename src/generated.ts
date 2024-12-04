@@ -11,7 +11,7 @@ import {
 
 /**
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const rgbSignaturesAbi = [
   {
@@ -54,35 +54,19 @@ export const rgbSignaturesAbi = [
   {
     type: 'function',
     inputs: [
-      { name: 'account', internalType: 'address', type: 'address' },
-      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'approve',
     outputs: [],
-    stateMutability: 'payable',
+    stateMutability: 'nonpayable',
   },
   {
     type: 'function',
     inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
     name: 'balanceOf',
-    outputs: [{ name: 'result', internalType: 'uint256', type: 'uint256' }],
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'cancelOwnershipHandover',
-    outputs: [],
-    stateMutability: 'payable',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: 'pendingOwner', internalType: 'address', type: 'address' },
-    ],
-    name: 'completeOwnershipHandover',
-    outputs: [],
-    stateMutability: 'payable',
   },
   {
     type: 'function',
@@ -100,9 +84,9 @@ export const rgbSignaturesAbi = [
   },
   {
     type: 'function',
-    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
+    inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
     name: 'getApproved',
-    outputs: [{ name: 'result', internalType: 'address', type: 'address' }],
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
     stateMutability: 'view',
   },
   {
@@ -112,7 +96,7 @@ export const rgbSignaturesAbi = [
       { name: 'operator', internalType: 'address', type: 'address' },
     ],
     name: 'isApprovedForAll',
-    outputs: [{ name: 'result', internalType: 'bool', type: 'bool' }],
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
     stateMutability: 'view',
   },
   {
@@ -138,29 +122,20 @@ export const rgbSignaturesAbi = [
     inputs: [],
     name: 'name',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
-    stateMutability: 'pure',
+    stateMutability: 'view',
   },
   {
     type: 'function',
     inputs: [],
     name: 'owner',
-    outputs: [{ name: 'result', internalType: 'address', type: 'address' }],
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
     stateMutability: 'view',
   },
   {
     type: 'function',
-    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
+    inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
     name: 'ownerOf',
-    outputs: [{ name: 'result', internalType: 'address', type: 'address' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: 'pendingOwner', internalType: 'address', type: 'address' },
-    ],
-    name: 'ownershipHandoverExpiresAt',
-    outputs: [{ name: 'result', internalType: 'uint256', type: 'uint256' }],
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
     stateMutability: 'view',
   },
   {
@@ -168,14 +143,7 @@ export const rgbSignaturesAbi = [
     inputs: [],
     name: 'renounceOwnership',
     outputs: [],
-    stateMutability: 'payable',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'requestOwnershipHandover',
-    outputs: [],
-    stateMutability: 'payable',
+    stateMutability: 'nonpayable',
   },
   {
     type: 'function',
@@ -193,29 +161,29 @@ export const rgbSignaturesAbi = [
     inputs: [
       { name: 'from', internalType: 'address', type: 'address' },
       { name: 'to', internalType: 'address', type: 'address' },
-      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'safeTransferFrom',
     outputs: [],
-    stateMutability: 'payable',
+    stateMutability: 'nonpayable',
   },
   {
     type: 'function',
     inputs: [
       { name: 'from', internalType: 'address', type: 'address' },
       { name: 'to', internalType: 'address', type: 'address' },
-      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
       { name: 'data', internalType: 'bytes', type: 'bytes' },
     ],
     name: 'safeTransferFrom',
     outputs: [],
-    stateMutability: 'payable',
+    stateMutability: 'nonpayable',
   },
   {
     type: 'function',
     inputs: [
       { name: 'operator', internalType: 'address', type: 'address' },
-      { name: 'isApproved', internalType: 'bool', type: 'bool' },
+      { name: 'approved', internalType: 'bool', type: 'bool' },
     ],
     name: 'setApprovalForAll',
     outputs: [],
@@ -225,7 +193,7 @@ export const rgbSignaturesAbi = [
     type: 'function',
     inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
     name: 'supportsInterface',
-    outputs: [{ name: 'result', internalType: 'bool', type: 'bool' }],
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
     stateMutability: 'view',
   },
   {
@@ -233,7 +201,14 @@ export const rgbSignaturesAbi = [
     inputs: [],
     name: 'symbol',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
-    stateMutability: 'pure',
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'index', internalType: 'uint256', type: 'uint256' }],
+    name: 'tokenByIndex',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
   },
   {
     type: 'function',
@@ -245,6 +220,16 @@ export const rgbSignaturesAbi = [
     name: 'tokenId',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'pure',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'index', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'tokenOfOwnerByIndex',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
   },
   {
     type: 'function',
@@ -265,18 +250,18 @@ export const rgbSignaturesAbi = [
     inputs: [
       { name: 'from', internalType: 'address', type: 'address' },
       { name: 'to', internalType: 'address', type: 'address' },
-      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'transferFrom',
     outputs: [],
-    stateMutability: 'payable',
+    stateMutability: 'nonpayable',
   },
   {
     type: 'function',
     inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
     name: 'transferOwnership',
     outputs: [],
-    stateMutability: 'payable',
+    stateMutability: 'nonpayable',
   },
   {
     type: 'event',
@@ -289,12 +274,17 @@ export const rgbSignaturesAbi = [
         indexed: true,
       },
       {
-        name: 'account',
+        name: 'approved',
         internalType: 'address',
         type: 'address',
         indexed: true,
       },
-      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'tokenId',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: true,
+      },
     ],
     name: 'Approval',
   },
@@ -314,12 +304,7 @@ export const rgbSignaturesAbi = [
         type: 'address',
         indexed: true,
       },
-      {
-        name: 'isApproved',
-        internalType: 'bool',
-        type: 'bool',
-        indexed: false,
-      },
+      { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
     ],
     name: 'ApprovalForAll',
   },
@@ -354,33 +339,7 @@ export const rgbSignaturesAbi = [
     anonymous: false,
     inputs: [
       {
-        name: 'pendingOwner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-    ],
-    name: 'OwnershipHandoverCanceled',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'pendingOwner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-    ],
-    name: 'OwnershipHandoverRequested',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'oldOwner',
+        name: 'previousOwner',
         internalType: 'address',
         type: 'address',
         indexed: true,
@@ -400,36 +359,95 @@ export const rgbSignaturesAbi = [
     inputs: [
       { name: 'from', internalType: 'address', type: 'address', indexed: true },
       { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'tokenId',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: true,
+      },
     ],
     name: 'Transfer',
   },
-  { type: 'error', inputs: [], name: 'AccountBalanceOverflow' },
-  { type: 'error', inputs: [], name: 'AlreadyInitialized' },
-  { type: 'error', inputs: [], name: 'BalanceQueryForZeroAddress' },
-  { type: 'error', inputs: [], name: 'NewOwnerIsZeroAddress' },
-  { type: 'error', inputs: [], name: 'NoHandoverRequest' },
-  { type: 'error', inputs: [], name: 'NotOwnerNorApproved' },
-  { type: 'error', inputs: [], name: 'TokenAlreadyExists' },
-  { type: 'error', inputs: [], name: 'TokenDoesNotExist' },
-  { type: 'error', inputs: [], name: 'TransferFromIncorrectOwner' },
-  { type: 'error', inputs: [], name: 'TransferToNonERC721ReceiverImplementer' },
-  { type: 'error', inputs: [], name: 'TransferToZeroAddress' },
-  { type: 'error', inputs: [], name: 'Unauthorized' },
+  { type: 'error', inputs: [], name: 'ERC721EnumerableForbiddenBatchMint' },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'sender', internalType: 'address', type: 'address' },
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
+      { name: 'owner', internalType: 'address', type: 'address' },
+    ],
+    name: 'ERC721IncorrectOwner',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'operator', internalType: 'address', type: 'address' },
+      { name: 'tokenId', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'ERC721InsufficientApproval',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'approver', internalType: 'address', type: 'address' }],
+    name: 'ERC721InvalidApprover',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'operator', internalType: 'address', type: 'address' }],
+    name: 'ERC721InvalidOperator',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
+    name: 'ERC721InvalidOwner',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'receiver', internalType: 'address', type: 'address' }],
+    name: 'ERC721InvalidReceiver',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'sender', internalType: 'address', type: 'address' }],
+    name: 'ERC721InvalidSender',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'tokenId', internalType: 'uint256', type: 'uint256' }],
+    name: 'ERC721NonexistentToken',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'index', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'ERC721OutOfBoundsIndex',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
+    name: 'OwnableInvalidOwner',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
+    name: 'OwnableUnauthorizedAccount',
+  },
 ] as const
 
 /**
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const rgbSignaturesAddress = {
   8453: '0x0000000000000000000000000000000000000000',
-  84532: '0x91A42B219c1eee3e760B745A8640454f86a8C593',
+  84532: '0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7',
 } as const
 
 /**
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const rgbSignaturesConfig = {
   address: rgbSignaturesAddress,
@@ -444,7 +462,7 @@ export const rgbSignaturesConfig = {
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link rgbSignaturesAbi}__
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useReadRgbSignatures = /*#__PURE__*/ createUseReadContract({
   abi: rgbSignaturesAbi,
@@ -455,7 +473,7 @@ export const useReadRgbSignatures = /*#__PURE__*/ createUseReadContract({
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"MINT_COST"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useReadRgbSignaturesMintCost = /*#__PURE__*/ createUseReadContract(
   {
@@ -469,7 +487,7 @@ export const useReadRgbSignaturesMintCost = /*#__PURE__*/ createUseReadContract(
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"RANDOM_MINT_COST"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useReadRgbSignaturesRandomMintCost =
   /*#__PURE__*/ createUseReadContract({
@@ -482,7 +500,7 @@ export const useReadRgbSignaturesRandomMintCost =
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"balanceOf"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useReadRgbSignaturesBalanceOf =
   /*#__PURE__*/ createUseReadContract({
@@ -495,7 +513,7 @@ export const useReadRgbSignaturesBalanceOf =
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"contractURI"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useReadRgbSignaturesContractUri =
   /*#__PURE__*/ createUseReadContract({
@@ -508,7 +526,7 @@ export const useReadRgbSignaturesContractUri =
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"feeRecipient"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useReadRgbSignaturesFeeRecipient =
   /*#__PURE__*/ createUseReadContract({
@@ -521,7 +539,7 @@ export const useReadRgbSignaturesFeeRecipient =
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"getApproved"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useReadRgbSignaturesGetApproved =
   /*#__PURE__*/ createUseReadContract({
@@ -534,7 +552,7 @@ export const useReadRgbSignaturesGetApproved =
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"isApprovedForAll"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useReadRgbSignaturesIsApprovedForAll =
   /*#__PURE__*/ createUseReadContract({
@@ -547,7 +565,7 @@ export const useReadRgbSignaturesIsApprovedForAll =
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"name"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useReadRgbSignaturesName = /*#__PURE__*/ createUseReadContract({
   abi: rgbSignaturesAbi,
@@ -559,7 +577,7 @@ export const useReadRgbSignaturesName = /*#__PURE__*/ createUseReadContract({
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"owner"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useReadRgbSignaturesOwner = /*#__PURE__*/ createUseReadContract({
   abi: rgbSignaturesAbi,
@@ -571,7 +589,7 @@ export const useReadRgbSignaturesOwner = /*#__PURE__*/ createUseReadContract({
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"ownerOf"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useReadRgbSignaturesOwnerOf = /*#__PURE__*/ createUseReadContract({
   abi: rgbSignaturesAbi,
@@ -580,23 +598,10 @@ export const useReadRgbSignaturesOwnerOf = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"ownershipHandoverExpiresAt"`
- *
- * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
- */
-export const useReadRgbSignaturesOwnershipHandoverExpiresAt =
-  /*#__PURE__*/ createUseReadContract({
-    abi: rgbSignaturesAbi,
-    address: rgbSignaturesAddress,
-    functionName: 'ownershipHandoverExpiresAt',
-  })
-
-/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"rgb"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useReadRgbSignaturesRgb = /*#__PURE__*/ createUseReadContract({
   abi: rgbSignaturesAbi,
@@ -608,7 +613,7 @@ export const useReadRgbSignaturesRgb = /*#__PURE__*/ createUseReadContract({
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"supportsInterface"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useReadRgbSignaturesSupportsInterface =
   /*#__PURE__*/ createUseReadContract({
@@ -621,7 +626,7 @@ export const useReadRgbSignaturesSupportsInterface =
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"symbol"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useReadRgbSignaturesSymbol = /*#__PURE__*/ createUseReadContract({
   abi: rgbSignaturesAbi,
@@ -630,10 +635,23 @@ export const useReadRgbSignaturesSymbol = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"tokenByIndex"`
+ *
+ * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
+ */
+export const useReadRgbSignaturesTokenByIndex =
+  /*#__PURE__*/ createUseReadContract({
+    abi: rgbSignaturesAbi,
+    address: rgbSignaturesAddress,
+    functionName: 'tokenByIndex',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"tokenId"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useReadRgbSignaturesTokenId = /*#__PURE__*/ createUseReadContract({
   abi: rgbSignaturesAbi,
@@ -642,10 +660,23 @@ export const useReadRgbSignaturesTokenId = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"tokenOfOwnerByIndex"`
+ *
+ * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
+ */
+export const useReadRgbSignaturesTokenOfOwnerByIndex =
+  /*#__PURE__*/ createUseReadContract({
+    abi: rgbSignaturesAbi,
+    address: rgbSignaturesAddress,
+    functionName: 'tokenOfOwnerByIndex',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"tokenURI"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useReadRgbSignaturesTokenUri = /*#__PURE__*/ createUseReadContract(
   {
@@ -659,7 +690,7 @@ export const useReadRgbSignaturesTokenUri = /*#__PURE__*/ createUseReadContract(
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"totalSupply"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useReadRgbSignaturesTotalSupply =
   /*#__PURE__*/ createUseReadContract({
@@ -672,7 +703,7 @@ export const useReadRgbSignaturesTotalSupply =
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link rgbSignaturesAbi}__
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useWriteRgbSignatures = /*#__PURE__*/ createUseWriteContract({
   abi: rgbSignaturesAbi,
@@ -683,7 +714,7 @@ export const useWriteRgbSignatures = /*#__PURE__*/ createUseWriteContract({
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"adminMint"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useWriteRgbSignaturesAdminMint =
   /*#__PURE__*/ createUseWriteContract({
@@ -696,7 +727,7 @@ export const useWriteRgbSignaturesAdminMint =
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"approve"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useWriteRgbSignaturesApprove =
   /*#__PURE__*/ createUseWriteContract({
@@ -706,36 +737,10 @@ export const useWriteRgbSignaturesApprove =
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"cancelOwnershipHandover"`
- *
- * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
- */
-export const useWriteRgbSignaturesCancelOwnershipHandover =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: rgbSignaturesAbi,
-    address: rgbSignaturesAddress,
-    functionName: 'cancelOwnershipHandover',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"completeOwnershipHandover"`
- *
- * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
- */
-export const useWriteRgbSignaturesCompleteOwnershipHandover =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: rgbSignaturesAbi,
-    address: rgbSignaturesAddress,
-    functionName: 'completeOwnershipHandover',
-  })
-
-/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"mint"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useWriteRgbSignaturesMint = /*#__PURE__*/ createUseWriteContract({
   abi: rgbSignaturesAbi,
@@ -747,7 +752,7 @@ export const useWriteRgbSignaturesMint = /*#__PURE__*/ createUseWriteContract({
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"mintRandom"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useWriteRgbSignaturesMintRandom =
   /*#__PURE__*/ createUseWriteContract({
@@ -760,7 +765,7 @@ export const useWriteRgbSignaturesMintRandom =
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"renounceOwnership"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useWriteRgbSignaturesRenounceOwnership =
   /*#__PURE__*/ createUseWriteContract({
@@ -770,23 +775,10 @@ export const useWriteRgbSignaturesRenounceOwnership =
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"requestOwnershipHandover"`
- *
- * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
- */
-export const useWriteRgbSignaturesRequestOwnershipHandover =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: rgbSignaturesAbi,
-    address: rgbSignaturesAddress,
-    functionName: 'requestOwnershipHandover',
-  })
-
-/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"safeTransferFrom"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useWriteRgbSignaturesSafeTransferFrom =
   /*#__PURE__*/ createUseWriteContract({
@@ -799,7 +791,7 @@ export const useWriteRgbSignaturesSafeTransferFrom =
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"setApprovalForAll"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useWriteRgbSignaturesSetApprovalForAll =
   /*#__PURE__*/ createUseWriteContract({
@@ -812,7 +804,7 @@ export const useWriteRgbSignaturesSetApprovalForAll =
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"transferFrom"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useWriteRgbSignaturesTransferFrom =
   /*#__PURE__*/ createUseWriteContract({
@@ -825,7 +817,7 @@ export const useWriteRgbSignaturesTransferFrom =
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"transferOwnership"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useWriteRgbSignaturesTransferOwnership =
   /*#__PURE__*/ createUseWriteContract({
@@ -838,7 +830,7 @@ export const useWriteRgbSignaturesTransferOwnership =
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link rgbSignaturesAbi}__
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useSimulateRgbSignatures = /*#__PURE__*/ createUseSimulateContract(
   { abi: rgbSignaturesAbi, address: rgbSignaturesAddress },
@@ -848,7 +840,7 @@ export const useSimulateRgbSignatures = /*#__PURE__*/ createUseSimulateContract(
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"adminMint"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useSimulateRgbSignaturesAdminMint =
   /*#__PURE__*/ createUseSimulateContract({
@@ -861,7 +853,7 @@ export const useSimulateRgbSignaturesAdminMint =
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"approve"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useSimulateRgbSignaturesApprove =
   /*#__PURE__*/ createUseSimulateContract({
@@ -871,36 +863,10 @@ export const useSimulateRgbSignaturesApprove =
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"cancelOwnershipHandover"`
- *
- * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
- */
-export const useSimulateRgbSignaturesCancelOwnershipHandover =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: rgbSignaturesAbi,
-    address: rgbSignaturesAddress,
-    functionName: 'cancelOwnershipHandover',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"completeOwnershipHandover"`
- *
- * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
- */
-export const useSimulateRgbSignaturesCompleteOwnershipHandover =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: rgbSignaturesAbi,
-    address: rgbSignaturesAddress,
-    functionName: 'completeOwnershipHandover',
-  })
-
-/**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"mint"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useSimulateRgbSignaturesMint =
   /*#__PURE__*/ createUseSimulateContract({
@@ -913,7 +879,7 @@ export const useSimulateRgbSignaturesMint =
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"mintRandom"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useSimulateRgbSignaturesMintRandom =
   /*#__PURE__*/ createUseSimulateContract({
@@ -926,7 +892,7 @@ export const useSimulateRgbSignaturesMintRandom =
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"renounceOwnership"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useSimulateRgbSignaturesRenounceOwnership =
   /*#__PURE__*/ createUseSimulateContract({
@@ -936,23 +902,10 @@ export const useSimulateRgbSignaturesRenounceOwnership =
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"requestOwnershipHandover"`
- *
- * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
- */
-export const useSimulateRgbSignaturesRequestOwnershipHandover =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: rgbSignaturesAbi,
-    address: rgbSignaturesAddress,
-    functionName: 'requestOwnershipHandover',
-  })
-
-/**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"safeTransferFrom"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useSimulateRgbSignaturesSafeTransferFrom =
   /*#__PURE__*/ createUseSimulateContract({
@@ -965,7 +918,7 @@ export const useSimulateRgbSignaturesSafeTransferFrom =
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"setApprovalForAll"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useSimulateRgbSignaturesSetApprovalForAll =
   /*#__PURE__*/ createUseSimulateContract({
@@ -978,7 +931,7 @@ export const useSimulateRgbSignaturesSetApprovalForAll =
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"transferFrom"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useSimulateRgbSignaturesTransferFrom =
   /*#__PURE__*/ createUseSimulateContract({
@@ -991,7 +944,7 @@ export const useSimulateRgbSignaturesTransferFrom =
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `functionName` set to `"transferOwnership"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useSimulateRgbSignaturesTransferOwnership =
   /*#__PURE__*/ createUseSimulateContract({
@@ -1004,7 +957,7 @@ export const useSimulateRgbSignaturesTransferOwnership =
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link rgbSignaturesAbi}__
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useWatchRgbSignaturesEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
@@ -1016,7 +969,7 @@ export const useWatchRgbSignaturesEvent =
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `eventName` set to `"Approval"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useWatchRgbSignaturesApprovalEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
@@ -1029,7 +982,7 @@ export const useWatchRgbSignaturesApprovalEvent =
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `eventName` set to `"ApprovalForAll"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useWatchRgbSignaturesApprovalForAllEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
@@ -1042,7 +995,7 @@ export const useWatchRgbSignaturesApprovalForAllEvent =
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `eventName` set to `"Mint"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useWatchRgbSignaturesMintEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
@@ -1052,36 +1005,10 @@ export const useWatchRgbSignaturesMintEvent =
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `eventName` set to `"OwnershipHandoverCanceled"`
- *
- * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
- */
-export const useWatchRgbSignaturesOwnershipHandoverCanceledEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: rgbSignaturesAbi,
-    address: rgbSignaturesAddress,
-    eventName: 'OwnershipHandoverCanceled',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `eventName` set to `"OwnershipHandoverRequested"`
- *
- * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
- */
-export const useWatchRgbSignaturesOwnershipHandoverRequestedEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: rgbSignaturesAbi,
-    address: rgbSignaturesAddress,
-    eventName: 'OwnershipHandoverRequested',
-  })
-
-/**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `eventName` set to `"OwnershipTransferred"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useWatchRgbSignaturesOwnershipTransferredEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
@@ -1094,7 +1021,7 @@ export const useWatchRgbSignaturesOwnershipTransferredEvent =
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link rgbSignaturesAbi}__ and `eventName` set to `"Transfer"`
  *
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x0000000000000000000000000000000000000000)
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x91A42B219c1eee3e760B745A8640454f86a8C593)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xEb0Bd59F3B680A94187abD00fB6879db1f4f9Ca7)
  */
 export const useWatchRgbSignaturesTransferEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
