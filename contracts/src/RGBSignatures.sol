@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import {Ownable} from "solady/auth/Ownable.sol";
-import {ERC721} from "solady/tokens/ERC721.sol";
-import {Base64} from "solady/utils/Base64.sol";
-import {LibString} from "solady/utils/LibString.sol";
+import {Ownable} from "openzeppelin-contracts/contracts/access/Ownable.sol";
+import {ERC721} from "openzeppelin-contracts/contracts/token/ERC721/ERC721.sol";
+import {ERC721Enumerable} from "openzeppelin-contracts/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import {Base64} from "openzeppelin-contracts/contracts/utils/Base64.sol";
+import {Strings} from "openzeppelin-contracts/contracts/utils/Strings.sol";
 import {SignatureRenderer} from "./SignatureRenderer.sol";
 
 /*
@@ -31,16 +32,21 @@ import {SignatureRenderer} from "./SignatureRenderer.sol";
          \|___|                                            ~~
 */
 
-contract RGBSignatures is ERC721, Ownable {
+contract RGBSignatures is ERC721Enumerable, Ownable {
     uint256 public constant MINT_COST = 0.002 ether;
     uint256 public constant RANDOM_MINT_COST = 0.001 ether;
     address payable public immutable feeRecipient;
-    uint256 public totalSupply;
 
-    event Mint(uint256 indexed id, address minter, uint256 genesis, uint256 timestamp);
+    event Mint(
+        uint256 indexed id,
+        address minter,
+        uint256 genesis,
+        uint256 timestamp
+    );
 
-    constructor(address payable feeRecipient_) {
-        _initializeOwner(msg.sender);
+    constructor(
+        address payable feeRecipient_
+    ) ERC721("RGB Signatures", "RGB") Ownable(msg.sender) {
         feeRecipient = feeRecipient_;
     }
 
@@ -54,7 +60,9 @@ contract RGBSignatures is ERC721, Ownable {
     function mintRandom() external payable {
         require(msg.value >= RANDOM_MINT_COST, "Insufficient funds");
 
-        uint256 random = uint256(keccak256(abi.encodePacked(block.prevrandao, msg.sender)));
+        uint256 random = uint256(
+            keccak256(abi.encodePacked(block.prevrandao, msg.sender))
+        );
         uint8 r = uint8(random % 256);
         uint8 g = uint8((random / 256) % 256);
         uint8 b = uint8((random / (256 * 256)) % 256);
@@ -63,44 +71,43 @@ contract RGBSignatures is ERC721, Ownable {
         _transferFees();
     }
 
-    function adminMint(uint8 r, uint8 g, uint8 b, address to) external onlyOwner {
+    function adminMint(
+        uint8 r,
+        uint8 g,
+        uint8 b,
+        address to
+    ) external onlyOwner {
         _mintSignature(r, g, b, to);
     }
 
-    function name() public pure override returns (string memory) {
-        return "RGB Signatures";
-    }
-
-    function symbol() public pure override returns (string memory) {
-        return "RGB";
-    }
-
     function contractURI() public pure returns (string memory) {
-        return string.concat(
-            'data:application/json;utf8,{"name":"RGB Signatures","description":"RGB is an infinite canvas"}'
-        );
+        return
+            string.concat(
+                'data:application/json;utf8,{"name":"RGB Signatures","description":"RGB is an infinite canvas"}'
+            );
     }
 
     function tokenURI(uint256 id) public pure override returns (string memory) {
         (uint8 r, uint8 g, uint8 b) = rgb(id);
 
-        return string.concat(
-            'data:application/json;utf8,{"name":"rgb(',
-            LibString.toString(r),
-            ",",
-            LibString.toString(g),
-            ",",
-            LibString.toString(b),
-            ')","description":"RGB is an infinite canvas","image":"data:image/svg+xml;base64,',
-            Base64.encode(bytes(SignatureRenderer.render(id))),
-            '","attributes":[{"trait_type":"r","display_type":"number","max_value":255,"value":',
-            LibString.toString(r),
-            '},{"trait_type":"g","display_type":"number","max_value":255,"value":',
-            LibString.toString(g),
-            '},{"trait_type":"b","display_type":"number","max_value":255,"value":',
-            LibString.toString(b),
-            "}]}"
-        );
+        return
+            string.concat(
+                'data:application/json;utf8,{"name":"rgb(',
+                Strings.toString(r),
+                ",",
+                Strings.toString(g),
+                ",",
+                Strings.toString(b),
+                ')","description":"RGB is an infinite canvas","image":"data:image/svg+xml;base64,',
+                Base64.encode(bytes(SignatureRenderer.render(id))),
+                '","attributes":[{"trait_type":"r","display_type":"number","max_value":255,"value":',
+                Strings.toString(r),
+                '},{"trait_type":"g","display_type":"number","max_value":255,"value":',
+                Strings.toString(g),
+                '},{"trait_type":"b","display_type":"number","max_value":255,"value":',
+                Strings.toString(b),
+                "}]}"
+            );
     }
 
     function tokenId(uint8 r, uint8 g, uint8 b) public pure returns (uint256) {
@@ -116,11 +123,11 @@ contract RGBSignatures is ERC721, Ownable {
     function _mintSignature(uint8 r, uint8 g, uint8 b, address to) internal {
         uint256 id = tokenId(r, g, b);
         _mint(to, id);
-        emit Mint(id, to, ++totalSupply, block.timestamp);
+        emit Mint(id, to, totalSupply(), block.timestamp);
     }
 
     function _transferFees() internal {
-        (bool sent,) = feeRecipient.call{value: address(this).balance}("");
+        (bool sent, ) = feeRecipient.call{value: address(this).balance}("");
         require(sent, "Failed to transfer fees");
     }
 }
