@@ -1,4 +1,4 @@
-import { Container, Flex } from '@radix-ui/themes'
+import { Container, Flex, Link as TamaguiLink } from '@radix-ui/themes'
 import Link from 'next/link'
 import { ConnectButton } from './ConnectButton'
 import { RGBIcon } from './RGBIcon'
@@ -11,7 +11,12 @@ export function Header() {
           <Link href="/">
             <RGBIcon />
           </Link>
-          <ConnectButton />
+          <Flex align="center" gap="6">
+            <TamaguiLink asChild>
+              <Link href="/gallery">Gallery</Link>
+            </TamaguiLink>
+            <ConnectButton />
+          </Flex>
         </Flex>
       </header>
     </Container>

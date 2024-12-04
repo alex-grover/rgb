@@ -10,9 +10,10 @@ const INDEXES = [
 
 type SignatureProps = {
   color: Color
+  size?: number
 }
 
-export function Signature({ color }: SignatureProps) {
+export function Signature({ color, size = 240 }: SignatureProps) {
   const binary =
     color.r.toString(2).padStart(8, '0') +
     color.g.toString(2).padStart(8, '0') +
@@ -22,8 +23,8 @@ export function Signature({ color }: SignatureProps) {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 15 15"
-      height="240"
-      width="240"
+      height={size}
+      width={size}
       shapeRendering="crispEdges"
     >
       <title>RGB Signature</title>

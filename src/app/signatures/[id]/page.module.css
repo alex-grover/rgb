@@ -16,10 +16,7 @@
 }
 
 .square {
-  --size: 16px;
-  height: var(--size);
-  width: var(--size);
-  aspect-ratio: 1;
+  height: var(--space-4);
 }
 
 .metadata > :not(:last-child) {

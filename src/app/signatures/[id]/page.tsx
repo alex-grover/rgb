@@ -3,12 +3,12 @@ import { RGBIcon } from '@/components/RGBIcon'
 import { Signature } from '@/components/Signature'
 import { rgbSignaturesAddress } from '@/generated'
 import { chain, fromBlock } from '@/lib/chain'
-import type { Color } from '@/lib/color'
+import { idToColor } from '@/lib/color'
+import { mintEvent } from '@/lib/contracts'
 import { viemClient } from '@/lib/viem'
 import { Box, Flex, Heading, Link, Text } from '@radix-ui/themes'
 import { notFound } from 'next/navigation'
 import * as v from 'valibot'
-import { parseAbiItem } from 'viem'
 import { Owner } from './owner'
 import styles from './page.module.css'
 
@@ -31,9 +31,7 @@ export default async function SignaturePage({ params }: SignaturePageProps) {
 
   const logs = await viemClient.getLogs({
     address: rgbSignaturesAddress[chain.id],
-    event: parseAbiItem(
-      'event Mint(uint256 indexed id, address minter, uint256 genesis, uint256 timestamp)',
-    ),
+    event: mintEvent,
     fromBlock,
     args: {
       id: parseResult.output.id,
@@ -44,11 +42,7 @@ export default async function SignaturePage({ params }: SignaturePageProps) {
   const log = logs.at(0)
   if (!log) notFound()
 
-  const color: Color = {
-    r: Number((parseResult.output.id >> 16n) & 0xffn),
-    g: Number((parseResult.output.id >> 8n) & 0xffn),
-    b: Number(parseResult.output.id & 0xffn),
-  }
+  const color = idToColor(parseResult.output.id)
 
   return (
     <Flex
@@ -91,11 +85,10 @@ export default async function SignaturePage({ params }: SignaturePageProps) {
             py="4"
           >
             <Text>R</Text>
-            <div
-              style={{
-                backgroundColor: 'red',
-              }}
-              className={styles.square}
+            <Box
+              height="16px"
+              width="16px"
+              style={{ backgroundColor: 'red' }}
             />
             <Text>{color.r}</Text>
           </Flex>
@@ -108,11 +101,10 @@ export default async function SignaturePage({ params }: SignaturePageProps) {
             py="4"
           >
             <Text>G</Text>
-            <div
-              style={{
-                backgroundColor: 'green',
-              }}
-              className={styles.square}
+            <Box
+              height="16px"
+              width="16px"
+              style={{ backgroundColor: 'green' }}
             />
             <Text>{color.g}</Text>
           </Flex>
@@ -125,11 +117,10 @@ export default async function SignaturePage({ params }: SignaturePageProps) {
             py="4"
           >
             <Text>B</Text>
-            <div
-              style={{
-                backgroundColor: 'blue',
-              }}
-              className={styles.square}
+            <Box
+              height="16px"
+              width="16px"
+              style={{ backgroundColor: 'blue' }}
             />
             <Text>{color.b}</Text>
           </Flex>
