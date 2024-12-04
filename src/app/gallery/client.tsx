@@ -14,16 +14,10 @@ import Link from 'next/link'
 import useSWR from 'swr'
 import { SignatureRow } from './row'
 
-async function fetcher(...args: Parameters<typeof fetch>) {
-  const response = await fetch(...args)
-  if (!response.ok) throw new Error(await response.text())
-  return response.json()
-}
-
 const MAX_SUPPLY = 16777216
 
 export function GalleryClientPage() {
-  const { data } = useSWR<string[], string>('/api/signatures', fetcher)
+  const { data } = useSWR<string[], string>('/api/signatures')
 
   return (
     <Flex flexGrow="1">

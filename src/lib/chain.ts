@@ -5,8 +5,6 @@ import { env } from './env'
 export const chain = baseSepolia
 // env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? base : baseSepolia
 
-export const mainnetRpcUrl = `https://eth-mainnet.g.alchemy.com/v2/${env.NEXT_PUBLIC_ALCHEMY_ID}`
-
 export const rpcUrl = `https://base-sepolia.g.alchemy.com/v2/${env.NEXT_PUBLIC_ALCHEMY_ID}`
 // chain === base
 //   ? `https://base-mainnet.g.alchemy.com/v2/${env.NEXT_PUBLIC_ALCHEMY_ID}`

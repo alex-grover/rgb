@@ -3,22 +3,22 @@
 import { shortenAddress } from '@/lib/address'
 import { chain } from '@/lib/chain'
 import { Link, Skeleton } from '@radix-ui/themes'
+import useSWRImmutable from 'swr/immutable'
 import type { Address } from 'viem'
-import { useEnsName } from 'wagmi'
-import { mainnet } from 'wagmi/chains'
 
 type NameProps = {
   address?: Address
 }
 
+type EnsDataResponse = {
+  ens: string
+}
+
 export function Name({ address }: NameProps) {
-  const { data: ensName } = useEnsName({
-    chainId: mainnet.id,
-    address,
-    query: {
-      enabled: !!address,
-    },
-  })
+  const { data } = useSWRImmutable<EnsDataResponse>(
+    address && `https://api.ensdata.net/${address}`,
+    { shouldRetryOnError: false },
+  )
 
   return (
     <Skeleton loading={!address}>
@@ -29,7 +29,7 @@ export function Name({ address }: NameProps) {
             target="_blank"
             rel="noreferrer"
           >
-            {ensName ?? shortenAddress(address)}
+            {data?.ens ?? shortenAddress(address)}
           </a>
         </Link>
       ) : (

@@ -6,6 +6,7 @@ import { ThemeProvider } from 'next-themes'
 import type { PropsWithChildren } from 'react'
 import '@radix-ui/themes/styles.css'
 import './global.css'
+import { SWRProvider } from '@/components/SWRProvider'
 
 export const metadata: Metadata = {
   title: 'RGB Signatures',
@@ -19,10 +20,12 @@ export default function RootLayout({ children }: PropsWithChildren) {
         <ThemeProvider attribute="class">
           <Theme accentColor="gray" radius="none">
             <Web3Provider>
-              <Flex direction="column" minHeight="100dvh">
-                <Header />
-                {children}
-              </Flex>
+              <SWRProvider>
+                <Flex direction="column" minHeight="100dvh">
+                  <Header />
+                  {children}
+                </Flex>
+              </SWRProvider>
             </Web3Provider>
           </Theme>
         </ThemeProvider>

@@ -1,18 +1,16 @@
 'use client'
 
-import { chain, mainnetRpcUrl, rpcUrl } from '@/lib/chain'
+import { chain, rpcUrl } from '@/lib/chain'
 import { env } from '@/lib/env'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ConnectKitProvider, getDefaultConfig } from 'connectkit'
 import type { PropsWithChildren } from 'react'
 import { http, WagmiProvider, createConfig } from 'wagmi'
-import { mainnet } from 'wagmi/chains'
 
 const config = createConfig(
   getDefaultConfig({
-    chains: [chain, mainnet],
+    chains: [chain],
     transports: {
-      [mainnet.id]: http(mainnetRpcUrl),
       [chain.id]: http(rpcUrl),
     },
     walletConnectProjectId: env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
