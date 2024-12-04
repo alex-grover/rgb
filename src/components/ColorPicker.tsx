@@ -16,7 +16,7 @@ export function ColorPicker({
 }: ColorPickerProps) {
   const [color, setColor] = useState(initialColor)
 
-  const [debouncedColor] = useDebounceValue(color, 20)
+  const [debouncedColor] = useDebounceValue(color, 25)
 
   useEffect(
     () => setParentColor(debouncedColor),
