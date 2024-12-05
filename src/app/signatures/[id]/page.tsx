@@ -172,7 +172,7 @@ export default async function SignaturePage({ params }: RouteProps) {
             </Flex>
           </Box>
         </Box>
-        <Box m="6" asChild>
+        <Box m="6" mt="0" asChild>
           <Button variant="outline" size="4" asChild>
             <a
               href={`https://${chain.id === baseSepolia.id ? 'testnets.' : ''}opensea.io/assets/${chain.network}/${rgbSignaturesAddress[chain.id]}/${log.args.id}`}
