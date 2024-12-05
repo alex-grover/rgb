@@ -10,19 +10,21 @@ import {
 import type { Color } from '@/lib/color'
 import { randomColor } from '@/lib/random'
 import { useKeyPress } from '@/lib/useKeyPress'
-import { ExternalLinkIcon } from '@radix-ui/react-icons'
+import { ExternalLinkIcon, MinusIcon, PlusIcon } from '@radix-ui/react-icons'
 import {
   AspectRatio,
   Box,
   Button,
   Container,
   Flex,
+  IconButton,
   TextField,
 } from '@radix-ui/themes'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 import { parseEther } from 'viem'
+import styles from './client.module.css'
 
 type HomeClientPageProps = {
   color: Color
@@ -32,6 +34,14 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
   const pathname = usePathname()
 
   const [color, setColor] = useState(initialColor)
+  const [randomMintAmount, setRandomMintAmount] = useState(1)
+  const randomMintCost = new Intl.NumberFormat('en-US', {
+    maximumFractionDigits: 3,
+  })
+    .formatToParts(0.001 * randomMintAmount)
+    .slice(1)
+    .map(({ value }) => value)
+    .join('')
 
   const tokenId = useMemo(
     () => BigInt((color.r << 16) | (color.g << 8) | color.b),
@@ -131,17 +141,39 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
               Mint for .002 ETH
             </Button>
           )}
-          <Button
-            size="4"
-            onClick={() =>
-              mintRandom({ args: [1], value: parseEther('0.001') })
-            }
-            loading={mintRandomPending}
-            disabled={mintPending}
-            variant="outline"
-          >
-            Mint random for .001 ETH
-          </Button>
+          <Flex gap="3">
+            <IconButton
+              size="4"
+              variant="outline"
+              onClick={() => setRandomMintAmount((amount) => amount - 1)}
+              disabled={randomMintAmount === 1}
+            >
+              <MinusIcon />
+            </IconButton>
+            <Button
+              size="4"
+              onClick={() =>
+                mintRandom({
+                  args: [randomMintAmount],
+                  value: parseEther(randomMintCost),
+                })
+              }
+              loading={mintRandomPending}
+              disabled={mintPending}
+              variant="outline"
+              className={styles.random}
+            >
+              Mint x{randomMintAmount} random for {randomMintCost} ETH
+            </Button>
+            <IconButton
+              size="4"
+              variant="outline"
+              onClick={() => setRandomMintAmount((amount) => amount + 1)}
+              disabled={randomMintAmount === 10}
+            >
+              <PlusIcon />
+            </IconButton>
+          </Flex>
         </Flex>
       </Container>
     </Flex>
