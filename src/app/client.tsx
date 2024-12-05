@@ -18,6 +18,7 @@ import {
   Container,
   Flex,
   IconButton,
+  Text,
   TextField,
 } from '@radix-ui/themes'
 import Link from 'next/link'
@@ -163,7 +164,9 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
               variant="outline"
               className={styles.random}
             >
-              Mint x{randomMintAmount} random for {randomMintCost} ETH
+              <Text size={{ initial: '3', xs: '4' }}>
+                Mint x{randomMintAmount} random for {randomMintCost} ETH
+              </Text>
             </Button>
             <IconButton
               size="4"
