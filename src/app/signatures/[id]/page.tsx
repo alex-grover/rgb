@@ -5,6 +5,7 @@ import { rgbSignaturesAddress } from '@/generated'
 import { chain, fromBlock } from '@/lib/chain'
 import { idToColor } from '@/lib/color'
 import { mintEvent } from '@/lib/contracts'
+import type { RouteProps } from '@/lib/next'
 import { viemClient } from '@/lib/viem'
 import { Box, Button, Flex, Heading, Link, Text } from '@radix-ui/themes'
 import { notFound } from 'next/navigation'
@@ -12,10 +13,6 @@ import * as v from 'valibot'
 import { baseSepolia } from 'wagmi/chains'
 import { Owner } from './owner'
 import styles from './page.module.css'
-
-type SignaturePageProps = {
-  params: Promise<unknown>
-}
 
 const schema = v.object({
   id: v.pipe(
@@ -26,7 +23,7 @@ const schema = v.object({
   ),
 })
 
-export default async function SignaturePage({ params }: SignaturePageProps) {
+export default async function SignaturePage({ params }: RouteProps) {
   const parseResult = v.safeParse(schema, await params)
   if (!parseResult.success) notFound()
 

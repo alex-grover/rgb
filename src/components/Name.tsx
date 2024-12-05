@@ -1,8 +1,8 @@
 'use client'
 
 import { shortenAddress } from '@/lib/address'
-import { chain } from '@/lib/chain'
 import { Link, Skeleton } from '@radix-ui/themes'
+import NextLink from 'next/link'
 import useSWRImmutable from 'swr/immutable'
 import type { Address } from 'viem'
 
@@ -24,13 +24,9 @@ export function Name({ address }: NameProps) {
     <Skeleton loading={!address}>
       {address ? (
         <Link asChild>
-          <a
-            href={`${chain.blockExplorers.default.url}/address/${address}`}
-            target="_blank"
-            rel="noreferrer"
-          >
+          <NextLink href={`/accounts/${address}`}>
             {data?.ens ?? shortenAddress(address)}
-          </a>
+          </NextLink>
         </Link>
       ) : (
         '0x0000...0000'

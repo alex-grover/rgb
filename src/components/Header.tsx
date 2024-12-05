@@ -1,9 +1,14 @@
+'use client'
+
 import { Flex, Link as TamaguiLink } from '@radix-ui/themes'
+import { ConnectKitButton } from 'connectkit'
 import Link from 'next/link'
-import { ConnectButton } from './ConnectButton'
+import { useAccount } from 'wagmi'
 import { RGBIcon } from './RGBIcon'
 
 export function Header() {
+  const { address } = useAccount()
+
   return (
     <Flex
       asChild
@@ -20,7 +25,12 @@ export function Header() {
           <TamaguiLink asChild>
             <Link href="/gallery">Gallery</Link>
           </TamaguiLink>
-          <ConnectButton />
+          {address && (
+            <TamaguiLink asChild>
+              <Link href={`/accounts/${address}`}>Profile</Link>
+            </TamaguiLink>
+          )}
+          <ConnectKitButton />
         </Flex>
       </header>
     </Flex>
