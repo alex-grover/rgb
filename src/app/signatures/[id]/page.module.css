@@ -2,10 +2,6 @@
   border-top: 1px solid var(--accent-6);
 }
 
-.aside {
-  border-left: 1px solid var(--accent-6);
-}
-
 .colors {
   border-top: 1px solid var(--accent-6);
   border-bottom: 1px solid var(--accent-6);
@@ -21,4 +17,11 @@
 
 .metadata > :not(:last-child) {
   border-bottom: 1px solid var(--accent-6);
+}
+
+/* xs */
+@media (min-width: 520px) {
+  .aside {
+    border-left: 1px solid var(--accent-6);
+  }
 }
