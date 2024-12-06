@@ -21,6 +21,7 @@ import {
   Text,
   TextField,
 } from '@radix-ui/themes'
+import { useIsMounted } from 'connectkit'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
@@ -33,6 +34,7 @@ type HomeClientPageProps = {
 
 export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
   const pathname = usePathname()
+  const isMounted = useIsMounted()
 
   const [color, setColor] = useState(initialColor)
   const [randomMintAmount, setRandomMintAmount] = useState(1)
@@ -50,12 +52,14 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
   )
   const { data: owner } = useReadRgbSignaturesOwnerOf({ args: [tokenId] })
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: don't update search params on first load
   useEffect(() => {
-    window.history.replaceState(
-      null,
-      '',
-      `${pathname}?${new URLSearchParams({ r: color.r.toString(), g: color.g.toString(), b: color.b.toString() })}`,
-    )
+    if (isMounted)
+      window.history.replaceState(
+        null,
+        '',
+        `${pathname}?${new URLSearchParams({ r: color.r.toString(), g: color.g.toString(), b: color.b.toString() })}`,
+      )
   }, [pathname, color])
 
   useKeyPress(' ', () => {
