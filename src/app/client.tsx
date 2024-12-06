@@ -99,27 +99,36 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
             <TextField.Root
               size="3"
               value={color.r}
-              onChange={(e) =>
-                setColor({ ...color, r: Number.parseInt(e.target.value) || 0 })
-              }
+              onChange={(e) => {
+                const r =
+                  Number.parseInt(e.target.value.replace(/\D/g, '')) || 0
+                if (r > 255) return
+                setColor({ ...color, r })
+              }}
             >
               <TextField.Slot>R</TextField.Slot>
             </TextField.Root>
             <TextField.Root
               size="3"
               value={color.g}
-              onChange={(e) =>
-                setColor({ ...color, g: Number.parseInt(e.target.value) || 0 })
-              }
+              onChange={(e) => {
+                const g =
+                  Number.parseInt(e.target.value.replace(/\D/g, '')) || 0
+                if (g > 255) return
+                setColor({ ...color, g })
+              }}
             >
               <TextField.Slot>G</TextField.Slot>
             </TextField.Root>
             <TextField.Root
               size="3"
               value={color.b}
-              onChange={(e) =>
-                setColor({ ...color, b: Number.parseInt(e.target.value) || 0 })
-              }
+              onChange={(e) => {
+                const b =
+                  Number.parseInt(e.target.value.replace(/\D/g, '')) || 0
+                if (b > 255) return
+                setColor({ ...color, b })
+              }}
             >
               <TextField.Slot>B</TextField.Slot>
             </TextField.Root>
