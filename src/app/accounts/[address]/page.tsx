@@ -1,4 +1,4 @@
-import type { RouteProps } from '@/lib/next'
+import type { PageProps } from '@/lib/next'
 import { notFound } from 'next/navigation'
 import * as v from 'valibot'
 import { type Address, isAddress } from 'viem'
@@ -10,7 +10,7 @@ const schema = v.object({
   ),
 })
 
-export default async function ProfilePage({ params }: RouteProps) {
+export default async function ProfilePage({ params }: PageProps) {
   const parseResult = v.safeParse(schema, await params)
   if (!parseResult.success) notFound()
 

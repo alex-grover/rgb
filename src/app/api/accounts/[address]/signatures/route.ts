@@ -1,6 +1,6 @@
 import { rgbSignaturesAbi, rgbSignaturesAddress } from '@/generated'
 import { chain } from '@/lib/chain'
-import type { RouteProps } from '@/lib/next'
+import type { RouteContext } from '@/lib/next'
 import { viemClient } from '@/lib/viem'
 import { NextResponse } from 'next/server'
 import * as v from 'valibot'
@@ -19,7 +19,7 @@ export type AccountSignaturesResponse = {
   signatures: string[]
 }
 
-export async function GET(_: Request, { params }: RouteProps) {
+export async function GET(_: Request, { params }: RouteContext) {
   const parseResult = v.safeParse(schema, await params)
   if (!parseResult.success)
     return NextResponse.json(parseResult.issues, { status: 400 })

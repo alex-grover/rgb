@@ -5,7 +5,7 @@ import { rgbSignaturesAddress } from '@/generated'
 import { chain, fromBlock } from '@/lib/chain'
 import { idToColor } from '@/lib/color'
 import { mintEvent } from '@/lib/contracts'
-import type { RouteProps } from '@/lib/next'
+import type { PageProps } from '@/lib/next'
 import { viemClient } from '@/lib/viem'
 import { Box, Button, Flex, Heading, Link, Text } from '@radix-ui/themes'
 import NextLink from 'next/link'
@@ -24,7 +24,7 @@ const schema = v.object({
   ),
 })
 
-export default async function SignaturePage({ params }: RouteProps) {
+export default async function SignaturePage({ params }: PageProps) {
   const parseResult = v.safeParse(schema, await params)
   if (!parseResult.success) notFound()
 

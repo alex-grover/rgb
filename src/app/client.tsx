@@ -7,7 +7,7 @@ import {
   useWriteRgbSignaturesMint,
   useWriteRgbSignaturesMintRandom,
 } from '@/generated'
-import type { Color } from '@/lib/color'
+import { type Color, colorToId } from '@/lib/color'
 import { randomColor } from '@/lib/random'
 import { useKeyPress } from '@/lib/useKeyPress'
 import { MinusIcon, PlusIcon } from '@radix-ui/react-icons'
@@ -23,8 +23,8 @@ import {
 } from '@radix-ui/themes'
 import { useIsMounted } from 'connectkit'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { useEffect, useMemo, useState } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { parseEther } from 'viem'
 import styles from './client.module.css'
 
@@ -33,6 +33,7 @@ type HomeClientPageProps = {
 }
 
 export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
+  const router = useRouter()
   const pathname = usePathname()
   const isMounted = useIsMounted()
 
@@ -46,10 +47,7 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
     .map(({ value }) => value)
     .join('')
 
-  const tokenId = useMemo(
-    () => BigInt((color.r << 16) | (color.g << 8) | color.b),
-    [color],
-  )
+  const tokenId = colorToId(color)
   const { data: owner } = useReadRgbSignaturesOwnerOf({ args: [tokenId] })
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: don't update search params on first load
@@ -70,10 +68,21 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
     })
   })
 
-  const { writeContract: mint, isPending: mintPending } =
-    useWriteRgbSignaturesMint()
-  const { writeContract: mintRandom, isPending: mintRandomPending } =
-    useWriteRgbSignaturesMintRandom()
+  const {
+    data: mintHash,
+    writeContract: mint,
+    isPending: mintPending,
+  } = useWriteRgbSignaturesMint()
+  const {
+    data: mintRandomHash,
+    writeContract: mintRandom,
+    isPending: mintRandomPending,
+  } = useWriteRgbSignaturesMintRandom()
+
+  useEffect(() => {
+    if (mintHash || mintRandomHash)
+      router.push(`/transactions/${mintHash || mintRandomHash}`)
+  }, [mintHash, mintRandomHash, router])
 
   return (
     <Flex flexGrow="1" direction="column" justify="center" asChild>

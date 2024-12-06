@@ -1,11 +1,8 @@
+import type { PageProps } from '@/lib/next'
 import { randomColor } from '@/lib/random'
 import { HomeClientPage } from './client'
 
-export default async function HomePage({
-  searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}) {
+export default async function HomePage({ searchParams }: PageProps) {
   const { r, g, b } = await searchParams
 
   return (
