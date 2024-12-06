@@ -77,7 +77,7 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
 
   return (
     <Flex flexGrow="1" direction="column" justify="center" asChild>
-      <Container size="1" px="2" pb="8">
+      <Container size="1" px="2" pb={{ initial: '4', xs: '8' }}>
         <Flex direction="column" justify="center" gap="3">
           <Flex align="center" justify="center" asChild>
             <AspectRatio
