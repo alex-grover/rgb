@@ -34,7 +34,7 @@ export function ProfileClientPage({ address }: ProfileClientPageProps) {
         <Flex direction="column" align="center" gap="6">
           <Signature color={idToColor(BigInt(address))} size={60} />
           <Flex direction="column" align="center" gap="2">
-            <Name address={address} />
+            <Name address={address} link={false} />
             <Text>
               <Skeleton loading={!data}>{data?.count ?? '00'}</Skeleton>{' '}
               signatures owned
@@ -71,7 +71,7 @@ export function ProfileClientPage({ address }: ProfileClientPageProps) {
                           rgb({color.r},{color.g},{color.b})
                         </Text>
                         <Text size="2">
-                          owned by <Name address={address} />
+                          owned by <Name address={address} link={false} />
                         </Text>
                       </Flex>
                       <Button variant="outline" size="3" asChild>

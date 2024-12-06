@@ -10,7 +10,7 @@ import {
 import type { Color } from '@/lib/color'
 import { randomColor } from '@/lib/random'
 import { useKeyPress } from '@/lib/useKeyPress'
-import { ExternalLinkIcon, MinusIcon, PlusIcon } from '@radix-ui/react-icons'
+import { MinusIcon, PlusIcon } from '@radix-ui/react-icons'
 import {
   AspectRatio,
   Box,
@@ -135,9 +135,7 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
           </Flex>
           {owner ? (
             <Button size="4" asChild>
-              <Link href={`/signatures/${tokenId}`}>
-                Minted <ExternalLinkIcon />
-              </Link>
+              <Link href={`/signatures/${tokenId}`}>Already minted</Link>
             </Button>
           ) : (
             <Button

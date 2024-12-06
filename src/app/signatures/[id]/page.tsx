@@ -8,6 +8,7 @@ import { mintEvent } from '@/lib/contracts'
 import type { RouteProps } from '@/lib/next'
 import { viemClient } from '@/lib/viem'
 import { Box, Button, Flex, Heading, Link, Text } from '@radix-ui/themes'
+import NextLink from 'next/link'
 import { notFound } from 'next/navigation'
 import * as v from 'valibot'
 import { baseSepolia } from 'wagmi/chains'
@@ -129,7 +130,11 @@ export default async function SignaturePage({ params }: RouteProps) {
           <Box p="6" className={styles.metadata}>
             <Flex align="center" justify="between" py="2">
               <Text>Creator</Text>
-              <Text>rgb.eth</Text>
+              <Link asChild>
+                <NextLink href="/accounts/0xf3e2399c5D1C698A6C1dfa195ADbd12a6AfD1899">
+                  rgb.eth
+                </NextLink>
+              </Link>
             </Flex>
             <Flex align="center" justify="between" py="2">
               <Text>Network</Text>

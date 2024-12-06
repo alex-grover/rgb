@@ -8,13 +8,14 @@ import type { Address } from 'viem'
 
 type NameProps = {
   address?: Address
+  link?: boolean
 }
 
 type EnsDataResponse = {
   ens: string
 }
 
-export function Name({ address }: NameProps) {
+export function Name({ address, link = true }: NameProps) {
   const { data } = useSWRImmutable<EnsDataResponse>(
     address && `https://api.ensdata.net/${address}`,
     { shouldRetryOnError: false },
@@ -23,11 +24,15 @@ export function Name({ address }: NameProps) {
   return (
     <Skeleton loading={!address}>
       {address ? (
-        <Link asChild>
-          <NextLink href={`/accounts/${address}`}>
-            {data?.ens ?? shortenAddress(address)}
-          </NextLink>
-        </Link>
+        link ? (
+          <Link asChild>
+            <NextLink href={`/accounts/${address}`}>
+              {data?.ens ?? shortenAddress(address)}
+            </NextLink>
+          </Link>
+        ) : (
+          (data?.ens ?? shortenAddress(address))
+        )
       ) : (
         '0x0000...0000'
       )}
