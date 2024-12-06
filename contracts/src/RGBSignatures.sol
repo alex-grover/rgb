@@ -43,30 +43,31 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
         feeRecipient = feeRecipient_;
     }
 
-    function mint(uint8 r, uint8 g, uint8 b) external payable {
+    function mint(uint8 r, uint8 g, uint8 b) external payable returns (uint256 id) {
         require(msg.value >= MINT_COST, "Insufficient funds");
 
-        _mintSignature(r, g, b, msg.sender);
+        id = _mintSignature(r, g, b, msg.sender);
         _transferFees();
     }
 
-    function mintRandom(uint8 amount) external payable {
+    function mintRandom(uint8 amount) external payable returns (uint256[] memory ids) {
         require(msg.value >= RANDOM_MINT_COST * amount, "Insufficient funds");
 
+        ids = new uint256[](amount);
         for (uint8 i = 0; i < amount; i++) {
             uint256 random = uint256(keccak256(abi.encodePacked(block.prevrandao, msg.sender, i)));
             uint8 r = uint8(random % 256);
             uint8 g = uint8((random / 256) % 256);
             uint8 b = uint8((random / (256 * 256)) % 256);
 
-            _mintSignature(r, g, b, msg.sender);
+            ids[i] = _mintSignature(r, g, b, msg.sender);
         }
 
         _transferFees();
     }
 
-    function adminMint(uint8 r, uint8 g, uint8 b, address to) external onlyOwner {
-        _mintSignature(r, g, b, to);
+    function adminMint(uint8 r, uint8 g, uint8 b, address to) external onlyOwner returns (uint256 id) {
+        return _mintSignature(r, g, b, to);
     }
 
     function contractURI() public pure returns (string memory) {
@@ -107,8 +108,8 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
         b = uint8(id & 0xFF);
     }
 
-    function _mintSignature(uint8 r, uint8 g, uint8 b, address to) internal {
-        uint256 id = tokenId(r, g, b);
+    function _mintSignature(uint8 r, uint8 g, uint8 b, address to) internal returns (uint256 id) {
+        id = tokenId(r, g, b);
         _mint(to, id);
         emit Mint(id, to, totalSupply(), block.timestamp);
     }
