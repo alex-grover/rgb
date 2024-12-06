@@ -37,7 +37,7 @@ export function ProfileClientPage({ address }: ProfileClientPageProps) {
             <Name address={address} link={false} />
             <Text>
               <Skeleton loading={!data}>{data?.count ?? '00'}</Skeleton>{' '}
-              signatures owned
+              Signatures owned
             </Text>
           </Flex>
         </Flex>
