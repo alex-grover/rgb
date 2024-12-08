@@ -1,6 +1,7 @@
 'use client'
 
 import { ColorPicker } from '@/components/ColorPicker'
+import { DiceIcon } from '@/components/DiceIcon'
 import { Signature } from '@/components/Signature'
 import {
   useReadRgbSignaturesOwnerOf,
@@ -20,11 +21,12 @@ import {
   IconButton,
   Text,
   TextField,
+  Theme,
 } from '@radix-ui/themes'
 import { useIsMounted } from 'connectkit'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { parseEther } from 'viem'
 import styles from './client.module.css'
 
@@ -60,13 +62,17 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
       )
   }, [pathname, color])
 
-  useKeyPress(' ', () => {
-    setColor({
-      r: randomColor(),
-      g: randomColor(),
-      b: randomColor(),
-    })
-  })
+  const shuffle = useCallback(
+    () =>
+      setColor({
+        r: randomColor(),
+        g: randomColor(),
+        b: randomColor(),
+      }),
+    [],
+  )
+
+  useKeyPress(' ', shuffle)
 
   const {
     data: mintHash,
@@ -95,6 +101,20 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
               }}
             >
               <Signature color={color} />
+              <Theme appearance="dark">
+                <Box
+                  position="absolute"
+                  left="4"
+                  bottom="4"
+                  display={{ initial: 'block', xs: 'none' }}
+                  height="32px"
+                  asChild
+                >
+                  <IconButton variant="ghost" onClick={shuffle}>
+                    <DiceIcon size={32} />
+                  </IconButton>
+                </Box>
+              </Theme>
               <Box
                 position="absolute"
                 right={{ initial: '4', xs: '6' }}
@@ -196,6 +216,21 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
             >
               <PlusIcon />
             </IconButton>
+          </Flex>
+          <Flex
+            display={{ initial: 'none', xs: 'flex' }}
+            position="fixed"
+            bottom="40px"
+            left="0"
+            width="100%"
+            justify="center"
+          >
+            <Flex align="center" gap="1" asChild>
+              <Button variant="ghost" onClick={shuffle}>
+                <Text>SPACEBAR</Text>
+                <DiceIcon size={16} />
+              </Button>
+            </Flex>
           </Flex>
         </Flex>
       </Container>
