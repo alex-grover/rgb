@@ -86,9 +86,14 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
   } = useWriteRgbSignaturesMintRandom()
 
   useEffect(() => {
-    if (mintHash || mintRandomHash)
-      router.push(`/transactions/${mintHash || mintRandomHash}`)
-  }, [mintHash, mintRandomHash, router])
+    if (!mintHash && !mintRandomHash) return
+
+    const params = new URLSearchParams()
+    if (mintHash) params.set('id', tokenId.toString())
+    else params.set('amount', randomMintAmount.toString())
+
+    router.push(`/transactions/${mintHash || mintRandomHash}?${params}`)
+  }, [mintHash, mintRandomHash, tokenId, randomMintAmount, router])
 
   return (
     <Flex flexGrow="1" direction="column" justify="center" asChild>
