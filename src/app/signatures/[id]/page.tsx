@@ -181,7 +181,7 @@ export default async function SignaturePage({ params }: PageProps) {
         <Box m="6" mt="0" asChild>
           <Button variant="outline" size="4" asChild>
             <a
-              href={`https://${chain.id === baseSepolia.id ? 'testnets.' : ''}opensea.io/assets/${chain.network}/${rgbSignaturesAddress[chain.id]}/${log.args.id}`}
+              href={`https://${chain.id === baseSepolia.id ? 'testnets.' : ''}opensea.io/assets/${'network' in chain ? chain.network : chain.name.toLowerCase()}/${rgbSignaturesAddress[chain.id]}/${log.args.id}`}
               target="_blank"
               rel="noreferrer"
             >
