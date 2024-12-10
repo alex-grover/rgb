@@ -1,4 +1,5 @@
 import { Name } from '@/components/Name'
+import { OpenSeaIcon } from '@/components/OpenSeaIcon'
 import { RGBIcon } from '@/components/RGBIcon'
 import { Signature } from '@/components/Signature'
 import { rgbSignaturesAddress } from '@/generated'
@@ -185,6 +186,7 @@ export default async function SignaturePage({ params }: PageProps) {
               rel="noreferrer"
             >
               Place a bid on secondary
+              <OpenSeaIcon />
             </a>
           </Button>
         </Box>
