@@ -1,5 +1,6 @@
 'use client'
 
+import { chain } from '@/lib/chain'
 import { Box, Flex, Grid, Link, Separator } from '@radix-ui/themes'
 import { ConnectKitButton } from 'connectkit'
 import NextLink from 'next/link'
@@ -63,7 +64,10 @@ export function Header() {
               <Link href="https://warpcast.com/~/channel/rgb" target="_blank">
                 Farcaster
               </Link>
-              <Link href="" target="_blank">
+              <Link
+                href={`${chain.blockExplorers.default.url}/address/0xf3e2399c5D1C698A6C1dfa195ADbd12a6AfD1899`}
+                target="_blank"
+              >
                 rgb.eth
               </Link>
             </nav>
@@ -78,9 +82,13 @@ export function Header() {
         >
           <Separator />
         </Box>
-        <Box pr={{ initial: '2', xs: '6' }} py={{ initial: '2', xs: '4' }}>
+        <Flex
+          justify="end"
+          pr={{ initial: '2', xs: '6' }}
+          py={{ initial: '2', xs: '4' }}
+        >
           <ConnectKitButton />
-        </Box>
+        </Flex>
       </header>
     </Grid>
   )
