@@ -1,0 +1,16 @@
+.links {
+  border-bottom: 1px solid var(--accent-6);
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.links::-webkit-scrollbar {
+  display: none;
+}
+
+/* xs */
+@media (min-width: 520px) {
+  .links {
+    border-bottom: none;
+  }
+}

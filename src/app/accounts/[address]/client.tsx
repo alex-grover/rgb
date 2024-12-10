@@ -29,7 +29,7 @@ export function ProfileClientPage({ address }: ProfileClientPageProps) {
   )
 
   return (
-    <Box flexGrow="1" px="2" pb="8">
+    <Box flexGrow="1" px="2" py="6">
       <Flex direction="column" gap="8">
         <Flex direction="column" align="center" gap="6">
           <Signature color={idToColor(BigInt(address))} size={60} />

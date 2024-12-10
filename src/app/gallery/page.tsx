@@ -21,7 +21,7 @@ export default function GalleryPage() {
   const { data } = useSWR<string[], string>('/api/signatures')
 
   return (
-    <Box flexGrow="1">
+    <Box flexGrow="1" py="6">
       <Container size="1" px="2" pb="8">
         <Flex direction="column" gap="6">
           <Flex direction="column" gap="2">

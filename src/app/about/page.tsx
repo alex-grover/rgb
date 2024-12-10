@@ -2,8 +2,8 @@ import { Box, Container, Flex, Heading, Section, Text } from '@radix-ui/themes'
 
 export default function AboutPage() {
   return (
-    <Box flexGrow="1">
-      <Container size="1" px="2" pb="8">
+    <Box flexGrow="1" py="6">
+      <Container size="1" px="2">
         <Flex direction="column" gap="5" asChild>
           <Section pt="0">
             <Heading size="3">Introduction to RGB</Heading>
@@ -92,7 +92,7 @@ export default function AboutPage() {
           </Section>
         </Flex>
         <Flex direction="column" gap="5" asChild>
-          <Section pt="0">
+          <Section py="0">
             <Heading size="3">What’s next for RGB?</Heading>
             {/* TODO: link */}
             <Text as="p">
