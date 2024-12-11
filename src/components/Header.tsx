@@ -2,9 +2,9 @@
 
 import { chain } from '@/lib/chain'
 import { Box, Flex, Grid, Link, Separator } from '@radix-ui/themes'
-import { ConnectKitButton } from 'connectkit'
 import NextLink from 'next/link'
 import { useAccount } from 'wagmi'
+import { ConnectButton } from './ConnectButton'
 import styles from './Header.module.css'
 import { RGBIcon } from './RGBIcon'
 
@@ -96,7 +96,7 @@ export function Header() {
           pr={{ initial: '2', sm: '6' }}
           py={{ initial: '2', sm: '4' }}
         >
-          <ConnectKitButton />
+          <ConnectButton />
         </Flex>
       </header>
     </Grid>
