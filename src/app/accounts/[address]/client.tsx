@@ -9,6 +9,7 @@ import {
   Box,
   Button,
   Card,
+  Container,
   Flex,
   Inset,
   Skeleton,
@@ -29,17 +30,14 @@ export function ProfileClientPage({ address }: ProfileClientPageProps) {
   )
 
   return (
-    <Box flexGrow="1" px="2" py="6">
+    <Container maxWidth="400px" px="2" py="6" flexGrow="1">
       <Flex direction="column" gap="8">
-        <Flex direction="column" align="center" gap="6">
-          <Signature color={idToColor(BigInt(address))} size={60} />
-          <Flex direction="column" align="center" gap="2">
-            <Name address={address} link={false} />
-            <Text>
-              <Skeleton loading={!data}>{data?.count ?? '00'}</Skeleton>{' '}
-              Signatures owned
-            </Text>
-          </Flex>
+        <Flex direction="column" gap="2">
+          <Name address={address} link={false} />
+          <Text>
+            <Skeleton loading={!data}>{data?.count ?? '00'}</Skeleton>{' '}
+            Signatures owned
+          </Text>
         </Flex>
         {data && (
           <Flex direction="column" gap="8">
@@ -47,7 +45,7 @@ export function ProfileClientPage({ address }: ProfileClientPageProps) {
               const color = idToColor(BigInt(id))
 
               return (
-                <Box key={id} width="100%" maxWidth="400px" mx="auto">
+                <Box key={id} width="100%" asChild>
                   <Card>
                     <Inset side="top" pb="current">
                       <Link href={`/signatures/${id}`}>
@@ -85,6 +83,6 @@ export function ProfileClientPage({ address }: ProfileClientPageProps) {
           </Flex>
         )}
       </Flex>
-    </Box>
+    </Container>
   )
 }
