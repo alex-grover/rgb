@@ -109,9 +109,8 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
               <Theme appearance="dark">
                 <Box
                   position="absolute"
-                  left="4"
-                  bottom="4"
-                  display={{ initial: 'block', xs: 'none' }}
+                  left={{ initial: '4', xs: '6' }}
+                  bottom={{ initial: '4', xs: '6' }}
                   height="32px"
                   asChild
                 >
@@ -221,21 +220,6 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
             >
               <PlusIcon />
             </IconButton>
-          </Flex>
-          <Flex
-            display={{ initial: 'none', xs: 'flex' }}
-            position="fixed"
-            bottom="40px"
-            left="0"
-            width="100%"
-            justify="center"
-          >
-            <Flex align="center" gap="1" asChild>
-              <Button variant="ghost" onClick={shuffle}>
-                <Text>SPACEBAR</Text>
-                <DiceIcon size={16} />
-              </Button>
-            </Flex>
           </Flex>
         </Flex>
       </Container>
