@@ -69,11 +69,11 @@ export default async function SignaturePage({ params }: PageProps) {
         <Box>
           <Flex direction="column" p="6" gap="6">
             <RGBIcon size={20} />
-            <Flex direction="column" gap="4">
-              <Heading>
+            <Flex direction="column" gap="2">
+              <Heading weight="medium">
                 rgb({color.r},{color.g},{color.b})
               </Heading>
-              <Text size="2" weight="medium">
+              <Text size="2" weight="medium" color="gray">
                 owned by <Owner id={parseResult.output.id} />
               </Text>
             </Flex>
@@ -87,7 +87,9 @@ export default async function SignaturePage({ params }: PageProps) {
               flexGrow="1"
               py="4"
             >
-              <Text>R</Text>
+              <Text size="2" weight="medium" color="gray">
+                R
+              </Text>
               <Box
                 height="16px"
                 width="16px"
@@ -103,7 +105,9 @@ export default async function SignaturePage({ params }: PageProps) {
               flexGrow="1"
               py="4"
             >
-              <Text>G</Text>
+              <Text size="2" weight="medium" color="gray">
+                G
+              </Text>
               <Box
                 height="16px"
                 width="16px"
@@ -119,7 +123,9 @@ export default async function SignaturePage({ params }: PageProps) {
               flexGrow="1"
               py="4"
             >
-              <Text>B</Text>
+              <Text size="2" weight="medium" color="gray">
+                B
+              </Text>
               <Box
                 height="16px"
                 width="16px"
@@ -130,42 +136,71 @@ export default async function SignaturePage({ params }: PageProps) {
           </Flex>
           <Box p="6" className={styles.metadata}>
             <Flex align="center" justify="between" py="2">
-              <Text>Creator</Text>
-              <Link asChild>
+              <Text size="2" weight="medium" color="gray">
+                Creator
+              </Text>
+              <Link size="2" weight="medium" color="gray" asChild>
                 <NextLink href="/accounts/0xf3e2399c5D1C698A6C1dfa195ADbd12a6AfD1899">
                   rgb.eth
                 </NextLink>
               </Link>
             </Flex>
             <Flex align="center" justify="between" py="2">
-              <Text>Network</Text>
-              <Text>{chain.name}</Text>
+              <Text size="2" weight="medium" color="gray">
+                Network
+              </Text>
+              <Text size="2" weight="medium" color="gray">
+                {chain.name}
+              </Text>
             </Flex>
             <Flex align="center" justify="between" py="2">
-              <Text>Token ID</Text>
-              <Text>{parseResult.output.id}</Text>
+              <Text size="2" weight="medium" color="gray">
+                Token ID
+              </Text>
+              <Text size="2" weight="medium" color="gray">
+                {parseResult.output.id}
+              </Text>
             </Flex>
             <Flex align="center" justify="between" py="2">
-              <Text>Genesis</Text>
-              <Text>{log.args.genesis}</Text>
+              <Text size="2" weight="medium" color="gray">
+                Genesis
+              </Text>
+              <Text size="2" weight="medium" color="gray">
+                {log.args.genesis}
+              </Text>
             </Flex>
             <Flex align="center" justify="between" py="2">
-              <Text>Block</Text>
-              <Text>{log.blockNumber}</Text>
+              <Text size="2" weight="medium" color="gray">
+                Block
+              </Text>
+              <Text size="2" weight="medium" color="gray">
+                {log.blockNumber}
+              </Text>
             </Flex>
             <Flex align="center" justify="between" py="2">
-              <Text>Minted on</Text>
-              <Text>
+              <Text size="2" weight="medium" color="gray">
+                Minted on
+              </Text>
+              <Text size="2" weight="medium" color="gray">
                 {new Date(Number(log.args.timestamp) * 1000).toISOString()}
               </Text>
             </Flex>
             <Flex align="center" justify="between" py="2">
-              <Text>Minted by</Text>
-              <Name address={log.args.minter} />
+              <Text size="2" weight="medium" color="gray">
+                Minted by
+              </Text>
+              <Name
+                address={log.args.minter}
+                size="2"
+                weight="medium"
+                color="gray"
+              />
             </Flex>
             <Flex align="center" justify="between" py="2">
-              <Text>Transaction</Text>
-              <Link asChild>
+              <Text size="2" weight="medium" color="gray">
+                Transaction
+              </Text>
+              <Link size="2" weight="medium" color="gray" asChild>
                 <a
                   href={`${chain.blockExplorers.default.url}/tx/${log.transactionHash}`}
                   target="_blank"
@@ -184,6 +219,7 @@ export default async function SignaturePage({ params }: PageProps) {
               href={`https://${chain.id === baseSepolia.id ? 'testnets.' : ''}opensea.io/assets/${'network' in chain ? chain.network : chain.name.toLowerCase()}/${rgbSignaturesAddress[chain.id]}/${log.args.id}`}
               target="_blank"
               rel="noreferrer"
+              className={styles.button}
             >
               Place a bid on secondary
               <OpenSeaIcon />

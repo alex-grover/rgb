@@ -19,6 +19,11 @@
   border-bottom: 1px solid var(--accent-6);
 }
 
+.button {
+  color: black;
+  font-size: 1rem;
+}
+
 /* xs */
 @media (min-width: 520px) {
   .aside {

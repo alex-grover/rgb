@@ -12,5 +12,5 @@ export function Owner({ id }: OwnerProps) {
     args: [id],
   })
 
-  return <Name address={owner} />
+  return <Name address={owner} color="gray" />
 }
