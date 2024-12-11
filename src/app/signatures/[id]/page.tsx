@@ -44,6 +44,19 @@ export default async function SignaturePage({ params }: PageProps) {
 
   const color = idToColor(parseResult.output.id)
 
+  const date = new Date(Number(log.args.timestamp) * 1000)
+  const dateOptions = [
+    { month: 'numeric' },
+    { day: 'numeric' },
+    { year: 'numeric' },
+  ] as const
+  const timeOptions = [
+    { hour: '2-digit', hour12: false },
+    { minute: 'numeric' },
+    { second: 'numeric' },
+  ] as const
+  const datetime = `${dateOptions.map((option) => new Intl.DateTimeFormat('en-US', option).format(date)).join('-')} ${timeOptions.map((option) => new Intl.DateTimeFormat('en', option).format(date)).join(':')} UTC`
+
   return (
     <Flex
       direction={{ initial: 'column', xs: 'row' }}
@@ -182,7 +195,7 @@ export default async function SignaturePage({ params }: PageProps) {
                 Minted on
               </Text>
               <Text size="2" weight="medium" color="gray">
-                {new Date(Number(log.args.timestamp) * 1000).toISOString()}
+                {datetime}
               </Text>
             </Flex>
             <Flex align="center" justify="between" py="2">
