@@ -3,8 +3,9 @@
 import { chain, rpcUrl } from '@/lib/chain'
 import { env } from '@/lib/env'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { track } from '@vercel/analytics/react'
 import { ConnectKitProvider, getDefaultConfig } from 'connectkit'
-import type { PropsWithChildren } from 'react'
+import { type ComponentProps, type PropsWithChildren, useCallback } from 'react'
 import { http, WagmiProvider, createConfig } from 'wagmi'
 
 const config = createConfig(
@@ -17,17 +18,33 @@ const config = createConfig(
     appName: 'RGB Signatures',
     appDescription: 'RGB is an infinite canvas',
     appUrl: 'https://rgb.fun',
-    appIcon: '', // your app's icon, no bigger than 1024x1024px (max. 1MB)
+    appIcon: 'https://rgb.fun/apple-icon.png',
   }),
 )
 
 const queryClient = new QueryClient()
 
 export const Web3Provider = ({ children }: PropsWithChildren) => {
+  const handleConnect = useCallback(
+    ({
+      address,
+      connectorId,
+    }: Parameters<
+      NonNullable<ComponentProps<typeof ConnectKitProvider>['onConnect']>
+    >[0]) =>
+      track('Connect wallet', {
+        address: address ?? null,
+        connectorId: connectorId ?? null,
+      }),
+    [],
+  )
+
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <ConnectKitProvider mode="light">{children}</ConnectKitProvider>
+        <ConnectKitProvider mode="light" onConnect={handleConnect}>
+          {children}
+        </ConnectKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
   )
