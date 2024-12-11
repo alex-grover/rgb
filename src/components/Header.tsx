@@ -43,14 +43,14 @@ export function Header() {
         >
           <Flex align="center" gap="6" pl={{ initial: '2', xs: '0' }} asChild>
             <nav>
-              <Link asChild>
+              <Link weight="medium" asChild>
                 <NextLink href="/about">About</NextLink>
               </Link>
-              <Link asChild>
+              <Link weight="medium" asChild>
                 <NextLink href="/gallery">Gallery</NextLink>
               </Link>
               {address && (
-                <Link asChild>
+                <Link weight="medium" asChild>
                   <NextLink href={`/accounts/${address}`}>Profile</NextLink>
                 </Link>
               )}
@@ -58,15 +58,24 @@ export function Header() {
           </Flex>
           <Flex align="center" gap="6" pr={{ initial: '2', xs: '0' }} asChild>
             <nav>
-              <Link href="https://x.com/rgb_eth" target="_blank">
+              <Link
+                href="https://x.com/rgb_eth"
+                target="_blank"
+                weight="medium"
+              >
                 X/Twitter
               </Link>
-              <Link href="https://warpcast.com/~/channel/rgb" target="_blank">
+              <Link
+                href="https://warpcast.com/~/channel/rgb"
+                target="_blank"
+                weight="medium"
+              >
                 Farcaster
               </Link>
               <Link
                 href={`${chain.blockExplorers.default.url}/address/0xf3e2399c5D1C698A6C1dfa195ADbd12a6AfD1899`}
                 target="_blank"
+                weight="medium"
               >
                 rgb.eth
               </Link>
