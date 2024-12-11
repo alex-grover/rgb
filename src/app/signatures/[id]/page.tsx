@@ -91,7 +91,7 @@ export default async function SignaturePage({ params }: PageProps) {
               <Box
                 height="16px"
                 width="16px"
-                style={{ backgroundColor: 'red' }}
+                style={{ backgroundColor: 'rgb(255,0,0)' }}
               />
               <Text>{color.r}</Text>
             </Flex>
@@ -107,7 +107,7 @@ export default async function SignaturePage({ params }: PageProps) {
               <Box
                 height="16px"
                 width="16px"
-                style={{ backgroundColor: 'green' }}
+                style={{ backgroundColor: 'rgb(0,255,0)' }}
               />
               <Text>{color.g}</Text>
             </Flex>
@@ -123,7 +123,7 @@ export default async function SignaturePage({ params }: PageProps) {
               <Box
                 height="16px"
                 width="16px"
-                style={{ backgroundColor: 'blue' }}
+                style={{ backgroundColor: 'rgb(0,0,255)' }}
               />
               <Text>{color.b}</Text>
             </Flex>
