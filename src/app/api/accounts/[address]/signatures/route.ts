@@ -45,6 +45,6 @@ export async function GET(_: Request, { params }: RouteContext) {
 
   return NextResponse.json<AccountSignaturesResponse>({
     count: Number(balance),
-    signatures: ids.map((id) => id.toString()),
+    signatures: ids.reverse().map((id) => id.toString()),
   })
 }
