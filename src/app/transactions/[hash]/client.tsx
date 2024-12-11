@@ -38,14 +38,16 @@ export function TransactionClientPage({
       <Wrapper>
         <Spinner size="3" />
         <Flex direction="column" align="center" gap="1">
-          <Text>
+          <Text weight="medium" color="gray">
             Minting{' '}
             {isRandom
               ? `${props.amount} random Signature${props.amount > 1 ? 's' : ''}`
               : `rgb(${idToColor(props.id).r},${idToColor(props.id).g},${idToColor(props.id).b})`}
             ...
           </Text>
-          <Text>Please don't close this window</Text>
+          <Text weight="medium" color="gray">
+            Please don't close this window
+          </Text>
         </Flex>
       </Wrapper>
     )
@@ -68,8 +70,12 @@ export function TransactionClientPage({
             ))}
           </Flex>
           <Flex direction="column" align="center" gap="1">
-            <Text>Successfully minted {props.amount} Signatures</Text>
-            <Text>Welcome to RGB</Text>
+            <Text weight="medium">
+              Successfully minted {props.amount} Signatures
+            </Text>
+            <Text weight="medium" color="gray">
+              Welcome to RGB
+            </Text>
           </Flex>
           <Box width="100%" maxWidth="300px" asChild>
             <Button variant="outline" size="3" asChild>
@@ -88,10 +94,12 @@ export function TransactionClientPage({
           <Signature color={idToColor(props.id)} size={60} />
         </Link>
         <Flex direction="column" align="center" gap="1">
-          <Text>
+          <Text weight="medium">
             Successfully minted rgb({color.r},{color.g},{color.b})
           </Text>
-          <Text>Welcome to RGB</Text>
+          <Text weight="medium" color="gray">
+            Welcome to RGB
+          </Text>
         </Flex>
         <Box width="100%" maxWidth="300px" asChild>
           <Button variant="outline" size="3" asChild>
