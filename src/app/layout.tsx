@@ -1,11 +1,12 @@
 import { Header } from '@/components/Header'
+import { SWRProvider } from '@/components/SWRProvider'
 import { Web3Provider } from '@/components/Web3Provider'
 import { Flex, Theme } from '@radix-ui/themes'
+import { Analytics } from '@vercel/analytics/next'
 import type { Metadata } from 'next'
 import type { PropsWithChildren } from 'react'
 import '@radix-ui/themes/styles.css'
 import './global.css'
-import { SWRProvider } from '@/components/SWRProvider'
 
 export const metadata: Metadata = {
   title: 'RGB',
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
             </SWRProvider>
           </Web3Provider>
         </Theme>
+        <Analytics />
       </body>
     </html>
   )
