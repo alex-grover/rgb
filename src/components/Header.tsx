@@ -13,8 +13,8 @@ export function Header() {
 
   return (
     <Grid
-      rows={{ initial: 'auto auto auto', xs: '1' }}
-      columns={{ initial: '2', xs: 'auto 1fr auto' }}
+      rows={{ initial: 'auto auto auto', sm: '1' }}
+      columns={{ initial: '2', sm: 'auto 1fr auto' }}
       align="center"
       gapX="6"
       asChild
@@ -22,8 +22,8 @@ export function Header() {
       <header>
         <Flex
           align="center"
-          pl={{ initial: '2', xs: '6' }}
-          py={{ initial: '2', xs: '4' }}
+          pl={{ initial: '2', sm: '6' }}
+          py={{ initial: '2', sm: '4' }}
           asChild
         >
           <NextLink href="/">
@@ -31,17 +31,17 @@ export function Header() {
           </NextLink>
         </Flex>
         <Flex
-          direction={{ initial: 'row', xs: 'row-reverse' }}
+          direction={{ initial: 'row', sm: 'row-reverse' }}
           align="center"
           justify="between"
           gap="6"
-          gridRow={{ initial: '3', xs: 'auto' }}
-          gridColumn={{ initial: '1 / span 2', xs: 'auto' }}
+          gridRow={{ initial: '3', sm: 'auto' }}
+          gridColumn={{ initial: '1 / span 2', sm: 'auto' }}
           overflowX="auto"
-          py={{ initial: '3', xs: '0' }}
+          py={{ initial: '3', sm: '0' }}
           className={styles.links}
         >
-          <Flex align="center" gap="6" pl={{ initial: '2', xs: '0' }} asChild>
+          <Flex align="center" gap="6" pl={{ initial: '2', sm: '0' }} asChild>
             <nav>
               <Link weight="medium" asChild>
                 <NextLink href="/about">About</NextLink>
@@ -56,7 +56,7 @@ export function Header() {
               )}
             </nav>
           </Flex>
-          <Flex align="center" gap="6" pr={{ initial: '2', xs: '0' }} asChild>
+          <Flex align="center" gap="6" pr={{ initial: '2', sm: '0' }} asChild>
             <nav>
               <Link
                 href="https://x.com/rgb_eth"
@@ -85,7 +85,7 @@ export function Header() {
         <Box
           gridRow="2"
           gridColumn="1 / span 2"
-          display={{ initial: 'block', xs: 'none' }}
+          display={{ initial: 'block', sm: 'none' }}
           width="100%"
           asChild
         >
@@ -93,8 +93,8 @@ export function Header() {
         </Box>
         <Flex
           justify="end"
-          pr={{ initial: '2', xs: '6' }}
-          py={{ initial: '2', xs: '4' }}
+          pr={{ initial: '2', sm: '6' }}
+          py={{ initial: '2', sm: '4' }}
         >
           <ConnectKitButton />
         </Flex>
