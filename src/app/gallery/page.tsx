@@ -24,13 +24,15 @@ export default function GalleryPage() {
     <Box flexGrow="1" py="6">
       <Container size="1" px="2" pb="8">
         <Flex direction="column" gap="6">
-          <Flex direction="column" gap="2">
-            <Heading size="3">Registered Signatures</Heading>
-            <Text>
+          <Flex direction="column" gap="1">
+            <Heading size="3" weight="medium">
+              Registered Signatures
+            </Heading>
+            <Text weight="medium" color="gray">
               <Skeleton loading={!data}>{data?.length ?? 123}</Skeleton>/
               {MAX_SUPPLY.toLocaleString()} minted
             </Text>
-            <Text>
+            <Text weight="medium" color="gray">
               <Skeleton loading={!data}>
                 {data
                   ? new Intl.NumberFormat('en-US', {
