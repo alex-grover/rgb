@@ -10,7 +10,6 @@ import {
 } from '@/generated'
 import { type Color, colorToId } from '@/lib/color'
 import { randomColor } from '@/lib/random'
-import { useKeyPress } from '@/lib/useKeyPress'
 import { MinusIcon, PlusIcon } from '@radix-ui/react-icons'
 import {
   AspectRatio,
@@ -27,6 +26,7 @@ import { useIsMounted } from 'connectkit'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
+import { useEventListener } from 'usehooks-ts'
 import { parseEther } from 'viem'
 import styles from './client.module.css'
 
@@ -72,7 +72,14 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
     [],
   )
 
-  useKeyPress(' ', shuffle)
+  const handleKeyUp = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === ' ') shuffle()
+    },
+    [shuffle],
+  )
+
+  useEventListener('keyup', handleKeyUp)
 
   const {
     data: mintHash,
