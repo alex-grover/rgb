@@ -80,7 +80,7 @@ export default function GalleryPage() {
                     justifyContent: 'center',
                   }}
                 >
-                  <Signature color={idToColor(BigInt(id))} size={24} />
+                  <Signature color={idToColor(BigInt(id))} size={24} bordered />
                 </Link>
               ))}
             </Grid>

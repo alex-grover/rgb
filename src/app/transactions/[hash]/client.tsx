@@ -65,7 +65,7 @@ export function TransactionClientPage({
           <Flex gap="3">
             {logs.map((log) => (
               <Link key={log.args.id} href={`/signatures/${log.args.id}`}>
-                <Signature color={idToColor(log.args.id)} size={30} />
+                <Signature color={idToColor(log.args.id)} size={30} bordered />
               </Link>
             ))}
           </Flex>
@@ -91,7 +91,7 @@ export function TransactionClientPage({
     return (
       <Wrapper>
         <Link href={`/signatures/${props.id}`}>
-          <Signature color={idToColor(props.id)} size={60} />
+          <Signature color={idToColor(props.id)} size={60} bordered />
         </Link>
         <Flex direction="column" align="center" gap="1">
           <Text weight="medium">

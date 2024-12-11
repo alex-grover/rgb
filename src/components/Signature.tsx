@@ -1,4 +1,5 @@
 import type { Color } from '@/lib/color'
+import styles from './Signature.module.css'
 
 const INDEXES = [
   [0, 1, 2, 3, 4],
@@ -11,9 +12,10 @@ const INDEXES = [
 type SignatureProps = {
   color: Color
   size?: number
+  bordered?: boolean
 }
 
-export function Signature({ color, size = 240 }: SignatureProps) {
+export function Signature({ color, size = 240, bordered }: SignatureProps) {
   const binary =
     color.r.toString(2).padStart(8, '0') +
     color.g.toString(2).padStart(8, '0') +
@@ -26,6 +28,7 @@ export function Signature({ color, size = 240 }: SignatureProps) {
       height={size}
       width={size}
       shapeRendering="crispEdges"
+      className={bordered ? styles.bordered : undefined}
     >
       <title>RGB Signature</title>
       {Array(5)

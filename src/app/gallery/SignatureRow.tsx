@@ -18,7 +18,7 @@ export function SignatureRow({ id, owner }: SignatureRowProps) {
       <Flex align="center" gap="2" asChild>
         <Reset>
           <NextLink href={`/signatures/${id}`}>
-            <Signature color={color} size={15} />
+            <Signature color={color} size={16} bordered />
             <Text>
               rgb({color.r},{color.g},{color.b})
             </Text>
