@@ -19,6 +19,7 @@ import { AspectRatio } from '@radix-ui/themes'
 import Link from 'next/link'
 import useSWR from 'swr'
 import type { Address } from 'viem'
+import styles from './client.module.css'
 
 type ProfileClientPageProps = {
   address: Address
@@ -32,9 +33,9 @@ export function ProfileClientPage({ address }: ProfileClientPageProps) {
   return (
     <Container maxWidth="400px" px="2" py="6" flexGrow="1">
       <Flex direction="column" gap="8">
-        <Flex direction="column" gap="2">
-          <Name address={address} link={false} />
-          <Text>
+        <Flex direction="column">
+          <Name address={address} link={false} weight="medium" />
+          <Text weight="medium" color="gray">
             <Skeleton loading={!data}>{data?.count ?? '00'}</Skeleton>{' '}
             Signatures owned
           </Text>
@@ -65,15 +66,20 @@ export function ProfileClientPage({ address }: ProfileClientPageProps) {
                     <Flex direction="column" p="3" gap="5">
                       <RGBIcon size={16} />
                       <Flex direction="column" gap="2">
-                        <Text size="4">
+                        <Text size="4" weight="medium">
                           rgb({color.r},{color.g},{color.b})
                         </Text>
-                        <Text size="2">
+                        <Text size="2" color="gray">
                           owned by <Name address={address} link={false} />
                         </Text>
                       </Flex>
                       <Button variant="outline" size="3" asChild>
-                        <Link href={`/signatures/${id}`}>View Signature</Link>
+                        <Link
+                          href={`/signatures/${id}`}
+                          className={styles.button}
+                        >
+                          View Signature
+                        </Link>
                       </Button>
                     </Flex>
                   </Card>

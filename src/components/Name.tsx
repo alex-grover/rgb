@@ -1,7 +1,7 @@
 'use client'
 
 import { shortenAddress } from '@/lib/address'
-import { Link, type LinkProps, Skeleton } from '@radix-ui/themes'
+import { Link, type LinkProps, Skeleton, Text } from '@radix-ui/themes'
 import NextLink from 'next/link'
 import useSWRImmutable from 'swr/immutable'
 import type { Address } from 'viem'
@@ -31,7 +31,7 @@ export function Name({ address, link = true, ...props }: NameProps) {
             </NextLink>
           </Link>
         ) : (
-          (data?.ens ?? shortenAddress(address))
+          <Text {...props}>{data?.ens ?? shortenAddress(address)}</Text>
         )
       ) : (
         '0x0000...0000'
