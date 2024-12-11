@@ -41,7 +41,7 @@ export default function GalleryPage() {
 
   return (
     <Box flexGrow="1" py="6">
-      <Container size="1" px="2" pb="8">
+      <Container size="1" px="2" pb="4">
         <Flex direction="column" gap="6">
           <Flex direction="column" gap="1">
             <Heading size="3" weight="medium">

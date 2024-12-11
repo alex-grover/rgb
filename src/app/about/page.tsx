@@ -21,7 +21,7 @@ import styles from './page.module.css'
 
 export default function AboutPage() {
   return (
-    <Box flexGrow="1" py="6">
+    <Box flexGrow="1" pt="6" pb="8">
       <Container size="1" px="2">
         <Flex direction="column" gap="4" asChild>
           <Section pt="0">
