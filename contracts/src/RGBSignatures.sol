@@ -33,7 +33,7 @@ import {SignatureRenderer} from "./SignatureRenderer.sol";
 */
 
 contract RGBSignatures is ERC721Enumerable, Ownable {
-    uint256 public constant MINT_COST = 0.002 ether;
+    uint256 public constant MINT_COST = 0.004 ether;
     uint256 public constant RANDOM_MINT_COST = 0.001 ether;
     address payable public immutable feeRecipient;
 

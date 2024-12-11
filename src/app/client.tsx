@@ -176,14 +176,14 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
               onClick={() =>
                 mint({
                   args: [color.r, color.g, color.b],
-                  value: parseEther('0.002'),
+                  value: parseEther('0.004'),
                 })
               }
               loading={mintPending}
               disabled={mintRandomPending}
               highContrast
             >
-              Mint for .002 ETH
+              Mint for .004 ETH
             </Button>
           )}
           <Flex gap="3">
