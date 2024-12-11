@@ -1,20 +1,17 @@
 import { Name } from '@/components/Name'
 import { Signature } from '@/components/Signature'
-import { useReadRgbSignaturesOwnerOf } from '@/generated'
 import { idToColor } from '@/lib/color'
 import { Box, Flex, Reset, Text } from '@radix-ui/themes'
 import NextLink from 'next/link'
+import type { Address } from 'viem'
 
 type SignatureRowProps = {
   id: bigint
+  owner: Address
 }
 
-export function SignatureRow({ id }: SignatureRowProps) {
+export function SignatureRow({ id, owner }: SignatureRowProps) {
   const color = idToColor(id)
-
-  const { data: owner } = useReadRgbSignaturesOwnerOf({
-    args: [id],
-  })
 
   return (
     <Flex justify="between">
