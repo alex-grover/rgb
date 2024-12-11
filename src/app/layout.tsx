@@ -8,8 +8,9 @@ import './global.css'
 import { SWRProvider } from '@/components/SWRProvider'
 
 export const metadata: Metadata = {
-  title: 'RGB Signatures',
-  description: 'RGB is an infinite canvas',
+  title: 'RGB',
+  description:
+    'Mint an RGB Signature - a collection of 16,777,216 NFTs on Base',
 }
 
 export default function RootLayout({ children }: PropsWithChildren) {
