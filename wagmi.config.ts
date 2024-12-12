@@ -12,7 +12,7 @@ export default defineConfig({
       deployments: {
         RGBSignatures: {
           [base.id]: '0x0000000000000000000000000000000000000000',
-          [baseSepolia.id]: '0xacF2762CF66CA69ED131660906c2Ec2D437D0f50',
+          [baseSepolia.id]: '0xEe224295ac4A1Dea887B2979De855D9C556FC7e3',
         },
       },
     }),
