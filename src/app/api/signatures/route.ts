@@ -33,7 +33,8 @@ export async function GET(request: NextRequest) {
     schema,
     Object.fromEntries(searchParams.entries()),
   )
-  if (!parseResult.success) return new Response('Invalid page', { status: 400 })
+  if (!parseResult.success)
+    return NextResponse.json(parseResult.issues, { status: 400 })
   const { page } = parseResult.output
 
   const totalSupply = await viemClient.readContract({

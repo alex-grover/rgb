@@ -4,7 +4,6 @@ import { ColorPicker } from '@/components/ColorPicker'
 import { DiceIcon } from '@/components/DiceIcon'
 import { Signature } from '@/components/Signature'
 import {
-  useReadRgbSignaturesOwnerOf,
   useWriteRgbSignaturesAllowlistMint,
   useWriteRgbSignaturesMint,
   useWriteRgbSignaturesMintRandom,
@@ -32,6 +31,7 @@ import { useEventListener } from 'usehooks-ts'
 import { parseEther } from 'viem'
 import { useAccount } from 'wagmi'
 import type { AllowlistResponse } from './api/allowlist/[address]/route'
+import type { SignatureResponse } from './api/signatures/[id]/route'
 import styles from './client.module.css'
 
 type HomeClientPageProps = {
@@ -55,7 +55,9 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
     .join('')
 
   const tokenId = colorToId(color)
-  const { data: owner } = useReadRgbSignaturesOwnerOf({ args: [tokenId] })
+  const { data: signature } = useSWR<SignatureResponse>(
+    `/api/signatures/${tokenId}`,
+  )
 
   const { data: allowlist } = useSWR<AllowlistResponse>(
     address && `/api/allowlist/${address}`,
@@ -196,7 +198,7 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
               <TextField.Slot>B</TextField.Slot>
             </TextField.Root>
           </Flex>
-          {owner ? (
+          {signature?.owner ? (
             <Button size="4" asChild>
               <Link href={`/signatures/${tokenId}`}>Already minted</Link>
             </Button>
