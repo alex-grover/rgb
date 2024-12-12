@@ -53,19 +53,19 @@ export function TransactionClientPage({
     )
 
   if (isConfirmed) {
-    if (isRandom) {
-      const logs = parseEventLogs({
-        abi: rgbSignaturesAbi,
-        eventName: 'Mint',
-        logs: transactionReceipt.logs,
-      })
+    const ids = parseEventLogs({
+      abi: rgbSignaturesAbi,
+      eventName: 'Mint',
+      logs: transactionReceipt.logs,
+    }).map((log) => log.args.id)
 
+    if (isRandom && ids.length > 1) {
       return (
         <Wrapper>
           <Flex gap="3">
-            {logs.map((log) => (
-              <Link key={log.args.id} href={`/signatures/${log.args.id}`}>
-                <Signature color={idToColor(log.args.id)} size={30} bordered />
+            {ids.map((id) => (
+              <Link key={id} href={`/signatures/${id}`}>
+                <Signature color={idToColor(id)} size={30} bordered />
               </Link>
             ))}
           </Flex>
@@ -86,12 +86,13 @@ export function TransactionClientPage({
       )
     }
 
-    const color = idToColor(props.id)
+    const id = ids[0]
+    const color = idToColor(id)
 
     return (
       <Wrapper>
-        <Link href={`/signatures/${props.id}`}>
-          <Signature color={idToColor(props.id)} size={60} bordered />
+        <Link href={`/signatures/${id}`}>
+          <Signature color={idToColor(id)} size={60} bordered />
         </Link>
         <Flex direction="column" align="center" gap="1">
           <Text weight="medium">
@@ -103,7 +104,7 @@ export function TransactionClientPage({
         </Flex>
         <Box width="100%" maxWidth="300px" asChild>
           <Button variant="outline" size="3" asChild>
-            <Link href={`/signatures/${props.id}`}>View Signature</Link>
+            <Link href={`/signatures/${id}`}>View Signature</Link>
           </Button>
         </Box>
       </Wrapper>
