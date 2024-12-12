@@ -7,7 +7,6 @@ import {ERC721Enumerable} from "openzeppelin-contracts/contracts/token/ERC721/ex
 import {Base64} from "openzeppelin-contracts/contracts/utils/Base64.sol";
 import {MerkleProof} from "openzeppelin-contracts/contracts/utils/cryptography/MerkleProof.sol";
 import {Strings} from "openzeppelin-contracts/contracts/utils/Strings.sol";
-import {SignatureRenderer} from "./SignatureRenderer.sol";
 
 /*
           _____                    _____                    _____
@@ -119,7 +118,7 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
             ",",
             Strings.toString(b),
             ')","description":"RGB is an infinite canvas","image":"data:image/svg+xml;base64,',
-            Base64.encode(bytes(SignatureRenderer.render(id))),
+            Base64.encode(bytes(_renderSignature(id))),
             '","attributes":[{"trait_type":"r","display_type":"number","max_value":255,"value":',
             Strings.toString(r),
             '},{"trait_type":"g","display_type":"number","max_value":255,"value":',
@@ -156,5 +155,65 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
         r = uint8(random % 256);
         g = uint8((random / 256) % 256);
         b = uint8((random / (256 * 256)) % 256);
+    }
+
+    function _renderSignature(uint256 id) internal pure returns (string memory) {
+        bool[24] memory binary;
+        for (uint8 i = 0; i < 24; i++) {
+            binary[23 - i] = (id & 1 == 1) ? true : false;
+            id >>= 1;
+        }
+
+        uint8[5][5] memory indexes =
+            [[0, 1, 2, 3, 4], [15, 16, 17, 18, 5], [14, 23, 24, 19, 6], [13, 22, 21, 20, 7], [12, 11, 10, 9, 8]];
+
+        string memory result =
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" height="512" width="512" shape-rendering="crispEdges">';
+
+        for (uint8 row = 0; row < 5; row++) {
+            for (uint8 col = 0; col < 5; col++) {
+                uint8 index = indexes[row][col];
+
+                string memory color;
+                string memory centerColor;
+                if (index == 24) {
+                    color = "black";
+                    centerColor = "white";
+                } else {
+                    color = binary[index] ? "white" : "black";
+                    centerColor = row == col && row != 3 ? (binary[index] ? "black" : "white") : color;
+                }
+
+                result = string.concat(result, _renderSquare(row, col, color, centerColor));
+            }
+        }
+
+        return string.concat(result, "</svg>");
+    }
+
+    function _renderSquare(uint8 outerRow, uint8 outerCol, string memory color, string memory centerColor)
+        internal
+        pure
+        returns (string memory)
+    {
+        string memory result = "";
+
+        for (uint8 row = 0; row < 3; row++) {
+            for (uint8 col = 0; col < 3; col++) {
+                string memory fill = row == 1 && col == 1 ? centerColor : color;
+                result = string.concat(
+                    result,
+                    '<rect x="',
+                    Strings.toString(outerCol * 3 + col),
+                    '" y="',
+                    Strings.toString(outerRow * 3 + row),
+                    '" width="1" height="1" fill="',
+                    fill,
+                    '" />'
+                );
+            }
+        }
+
+        return result;
     }
 }
