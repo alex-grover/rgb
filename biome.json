@@ -1,6 +1,6 @@
 {
   "extends": ["@alex-grover/biome-config"],
   "files": {
-    "ignore": ["src/generated.ts", "contracts/**/*"]
+    "ignore": ["contracts/**/*", "src/proofs.json", "src/generated.ts"]
   }
 }

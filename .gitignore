@@ -40,4 +40,4 @@ yarn-error.log*
 next-env.d.ts
 .env*.local
 
-src/scripts/allowlist.json
+src/scripts/allowlist.csv
