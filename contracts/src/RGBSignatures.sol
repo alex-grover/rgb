@@ -5,6 +5,7 @@ import {Ownable} from "openzeppelin-contracts/contracts/access/Ownable.sol";
 import {ERC721} from "openzeppelin-contracts/contracts/token/ERC721/ERC721.sol";
 import {ERC721Enumerable} from "openzeppelin-contracts/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import {Base64} from "openzeppelin-contracts/contracts/utils/Base64.sol";
+import {MerkleProof} from "openzeppelin-contracts/contracts/utils/cryptography/MerkleProof.sol";
 import {Strings} from "openzeppelin-contracts/contracts/utils/Strings.sol";
 import {SignatureRenderer} from "./SignatureRenderer.sol";
 
@@ -36,16 +37,22 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
     uint256 public mintCost;
     uint256 public randomMintCost;
     address payable public feeRecipient;
+    bytes32 public merkleRoot;
+    mapping(address minter => bool claimed) public allowlistClaimed;
 
     event Mint(uint256 indexed id, address minter, uint256 genesis, uint256 timestamp);
 
-    constructor(address owner, uint256 mintCost_, uint256 randomMintCost_, address payable feeRecipient_)
-        ERC721("RGB Signatures", "RGB")
-        Ownable(owner)
-    {
+    constructor(
+        address owner,
+        uint256 mintCost_,
+        uint256 randomMintCost_,
+        address payable feeRecipient_,
+        bytes32 merkleRoot_
+    ) ERC721("RGB Signatures", "RGB") Ownable(owner) {
         mintCost = mintCost_;
         randomMintCost = randomMintCost_;
         feeRecipient = feeRecipient_;
+        merkleRoot = merkleRoot_;
     }
 
     function mint(uint8 r, uint8 g, uint8 b) external payable returns (uint256 id) {
@@ -60,15 +67,22 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
 
         ids = new uint256[](amount);
         for (uint8 i = 0; i < amount; i++) {
-            uint256 random = uint256(keccak256(abi.encodePacked(block.prevrandao, msg.sender, i)));
-            uint8 r = uint8(random % 256);
-            uint8 g = uint8((random / 256) % 256);
-            uint8 b = uint8((random / (256 * 256)) % 256);
-
+            (uint8 r, uint8 g, uint8 b) = _generateRandomRGB(i);
             ids[i] = _mintSignature(r, g, b, msg.sender);
         }
 
         _transferFees();
+    }
+
+    function allowlistMint(bytes32[] calldata merkleProof) external returns (uint256 id) {
+        bytes32 leaf = keccak256(abi.encodePacked(msg.sender));
+        require(MerkleProof.verify(merkleProof, merkleRoot, leaf), "Invalid proof");
+        require(!allowlistClaimed[msg.sender], "Already claimed");
+
+        allowlistClaimed[msg.sender] = true;
+
+        (uint8 r, uint8 g, uint8 b) = _generateRandomRGB(0);
+        return _mintSignature(r, g, b, msg.sender);
     }
 
     function adminMint(uint8 r, uint8 g, uint8 b, address to) external onlyOwner returns (uint256 id) {
@@ -82,6 +96,10 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
 
     function setFeeRecipient(address payable newFeeRecipient) external onlyOwner {
         feeRecipient = newFeeRecipient;
+    }
+
+    function setMerkleRoot(bytes32 newMerkleRoot) external onlyOwner {
+        merkleRoot = newMerkleRoot;
     }
 
     function contractURI() public pure returns (string memory) {
@@ -131,5 +149,12 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
     function _transferFees() internal {
         (bool sent,) = feeRecipient.call{value: address(this).balance}("");
         require(sent, "Failed to transfer fees");
+    }
+
+    function _generateRandomRGB(uint8 salt) internal view returns (uint8 r, uint8 g, uint8 b) {
+        uint256 random = uint256(keccak256(abi.encodePacked(block.prevrandao, msg.sender, salt)));
+        r = uint8(random % 256);
+        g = uint8((random / 256) % 256);
+        b = uint8((random / (256 * 256)) % 256);
     }
 }

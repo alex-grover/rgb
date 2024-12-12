@@ -9,7 +9,7 @@ contract RGBSignaturesTest is Test {
         external
     {
         vm.assume(owner != address(0) && feeRecipient != address(0));
-        RGBSignatures signatures = new RGBSignatures(owner, mintCost, randomMintCost, feeRecipient);
+        RGBSignatures signatures = new RGBSignatures(owner, mintCost, randomMintCost, feeRecipient, bytes32(0));
         console.log(signatures.tokenURI(signatures.tokenId(255, 153, 0)));
     }
 }
