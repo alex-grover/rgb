@@ -5,6 +5,7 @@ import { DiceIcon } from '@/components/DiceIcon'
 import { Signature } from '@/components/Signature'
 import {
   useReadRgbSignaturesOwnerOf,
+  useWriteRgbSignaturesAllowlistMint,
   useWriteRgbSignaturesMint,
   useWriteRgbSignaturesMintRandom,
 } from '@/generated'
@@ -26,8 +27,11 @@ import { useIsMounted } from 'connectkit'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
+import useSWR from 'swr'
 import { useEventListener } from 'usehooks-ts'
 import { parseEther } from 'viem'
+import { useAccount } from 'wagmi'
+import type { AllowlistResponse } from './api/allowlist/[address]/route'
 import styles from './client.module.css'
 
 type HomeClientPageProps = {
@@ -38,6 +42,7 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
   const router = useRouter()
   const pathname = usePathname()
   const isMounted = useIsMounted()
+  const { address } = useAccount()
 
   const [color, setColor] = useState(initialColor)
   const [randomMintAmount, setRandomMintAmount] = useState(1)
@@ -51,6 +56,10 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
 
   const tokenId = colorToId(color)
   const { data: owner } = useReadRgbSignaturesOwnerOf({ args: [tokenId] })
+
+  const { data: allowlist } = useSWR<AllowlistResponse>(
+    address && `/api/allowlist/${address}`,
+  )
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: don't update search params on first load
   useEffect(() => {
@@ -91,16 +100,30 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
     writeContract: mintRandom,
     isPending: mintRandomPending,
   } = useWriteRgbSignaturesMintRandom()
+  const {
+    data: allowlistMintHash,
+    writeContract: allowlistMint,
+    isPending: allowlistMintPending,
+  } = useWriteRgbSignaturesAllowlistMint()
 
   useEffect(() => {
-    if (!mintHash && !mintRandomHash) return
+    if (!mintHash && !mintRandomHash && !allowlistMintHash) return
 
     const params = new URLSearchParams()
     if (mintHash) params.set('id', tokenId.toString())
     else params.set('amount', randomMintAmount.toString())
 
-    router.push(`/transactions/${mintHash || mintRandomHash}?${params}`)
-  }, [mintHash, mintRandomHash, tokenId, randomMintAmount, router])
+    router.push(
+      `/transactions/${mintHash || mintRandomHash || allowlistMintHash}?${params}`,
+    )
+  }, [
+    mintHash,
+    mintRandomHash,
+    allowlistMintHash,
+    tokenId,
+    randomMintAmount,
+    router,
+  ])
 
   return (
     <Flex flexGrow="1" direction="column" justify="center" asChild>
@@ -187,7 +210,7 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
                 })
               }
               loading={mintPending}
-              disabled={mintRandomPending}
+              disabled={mintRandomPending || allowlistMintPending}
               highContrast
             >
               Mint for .004 ETH
@@ -202,23 +225,38 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
             >
               <MinusIcon />
             </IconButton>
-            <Button
-              size="4"
-              onClick={() =>
-                mintRandom({
-                  args: [randomMintAmount],
-                  value: parseEther(randomMintCost),
-                })
-              }
-              loading={mintRandomPending}
-              disabled={mintPending}
-              variant="outline"
-              className={styles.random}
-            >
-              <Text size={{ initial: '3', xs: '4' }}>
-                Mint x{randomMintAmount} random for {randomMintCost} ETH
-              </Text>
-            </Button>
+            {allowlist?.eligible && randomMintAmount === 1 ? (
+              <Button
+                size="4"
+                onClick={() => allowlistMint({ args: [allowlist.proof] })}
+                loading={allowlistMintPending}
+                disabled={mintPending}
+                variant="outline"
+                className={styles.random}
+              >
+                <Text size={{ initial: '3', xs: '4' }}>
+                  Mint x1 random for free
+                </Text>
+              </Button>
+            ) : (
+              <Button
+                size="4"
+                onClick={() =>
+                  mintRandom({
+                    args: [randomMintAmount],
+                    value: parseEther(randomMintCost),
+                  })
+                }
+                loading={mintRandomPending}
+                disabled={mintPending}
+                variant="outline"
+                className={styles.random}
+              >
+                <Text size={{ initial: '3', xs: '4' }}>
+                  Mint x{randomMintAmount} random for {randomMintCost} ETH
+                </Text>
+              </Button>
+            )}
             <IconButton
               size="4"
               variant="outline"
