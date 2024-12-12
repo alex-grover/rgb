@@ -39,9 +39,9 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
 
     event Mint(uint256 indexed id, address minter, uint256 genesis, uint256 timestamp);
 
-    constructor(uint256 mintCost_, uint256 randomMintCost_, address payable feeRecipient_)
+    constructor(address owner, uint256 mintCost_, uint256 randomMintCost_, address payable feeRecipient_)
         ERC721("RGB Signatures", "RGB")
-        Ownable(msg.sender)
+        Ownable(owner)
     {
         mintCost = mintCost_;
         randomMintCost = randomMintCost_;
