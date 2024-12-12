@@ -2,7 +2,7 @@ import { Name } from '@/components/Name'
 import { OpenSeaIcon } from '@/components/OpenSeaIcon'
 import { RGBIcon } from '@/components/RGBIcon'
 import { Signature } from '@/components/Signature'
-import { rgbSignaturesAddress } from '@/generated'
+import { rgbSignaturesAbi, rgbSignaturesAddress } from '@/generated'
 import { chain, fromBlock } from '@/lib/chain'
 import { idToColor } from '@/lib/color'
 import { mintEvent } from '@/lib/contracts'
@@ -13,7 +13,6 @@ import NextLink from 'next/link'
 import { notFound } from 'next/navigation'
 import * as v from 'valibot'
 import { baseSepolia } from 'wagmi/chains'
-import { Owner } from './owner'
 import styles from './page.module.css'
 
 const schema = v.object({
@@ -29,15 +28,23 @@ export default async function SignaturePage({ params }: PageProps) {
   const parseResult = v.safeParse(schema, await params)
   if (!parseResult.success) notFound()
 
-  const logs = await viemClient.getLogs({
-    address: rgbSignaturesAddress[chain.id],
-    event: mintEvent,
-    fromBlock,
-    args: {
-      id: parseResult.output.id,
-    },
-    strict: true,
-  })
+  const [logs, owner] = await Promise.all([
+    viemClient.getLogs({
+      address: rgbSignaturesAddress[chain.id],
+      event: mintEvent,
+      fromBlock,
+      args: {
+        id: parseResult.output.id,
+      },
+      strict: true,
+    }),
+    viemClient.readContract({
+      address: rgbSignaturesAddress[chain.id],
+      abi: rgbSignaturesAbi,
+      functionName: 'ownerOf',
+      args: [parseResult.output.id],
+    }),
+  ])
 
   const log = logs.at(0)
   if (!log) notFound()
@@ -87,7 +94,7 @@ export default async function SignaturePage({ params }: PageProps) {
                 rgb({color.r},{color.g},{color.b})
               </Heading>
               <Text size="2" weight="medium" color="gray">
-                owned by <Owner id={parseResult.output.id} />
+                owned by <Name address={owner} color="gray" />
               </Text>
             </Flex>
           </Flex>
