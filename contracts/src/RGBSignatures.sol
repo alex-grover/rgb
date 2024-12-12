@@ -33,25 +33,30 @@ import {SignatureRenderer} from "./SignatureRenderer.sol";
 */
 
 contract RGBSignatures is ERC721Enumerable, Ownable {
-    uint256 public constant MINT_COST = 0.004 ether;
-    uint256 public constant RANDOM_MINT_COST = 0.001 ether;
-    address payable public immutable feeRecipient;
+    uint256 public mintCost;
+    uint256 public randomMintCost;
+    address payable public feeRecipient;
 
     event Mint(uint256 indexed id, address minter, uint256 genesis, uint256 timestamp);
 
-    constructor(address payable feeRecipient_) ERC721("RGB Signatures", "RGB") Ownable(msg.sender) {
+    constructor(uint256 mintCost_, uint256 randomMintCost_, address payable feeRecipient_)
+        ERC721("RGB Signatures", "RGB")
+        Ownable(msg.sender)
+    {
+        mintCost = mintCost_;
+        randomMintCost = randomMintCost_;
         feeRecipient = feeRecipient_;
     }
 
     function mint(uint8 r, uint8 g, uint8 b) external payable returns (uint256 id) {
-        require(msg.value >= MINT_COST, "Insufficient funds");
+        require(msg.value >= mintCost, "Insufficient funds");
 
         id = _mintSignature(r, g, b, msg.sender);
         _transferFees();
     }
 
     function mintRandom(uint8 amount) external payable returns (uint256[] memory ids) {
-        require(msg.value >= RANDOM_MINT_COST * amount, "Insufficient funds");
+        require(msg.value >= randomMintCost * amount, "Insufficient funds");
 
         ids = new uint256[](amount);
         for (uint8 i = 0; i < amount; i++) {
@@ -68,6 +73,15 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
 
     function adminMint(uint8 r, uint8 g, uint8 b, address to) external onlyOwner returns (uint256 id) {
         return _mintSignature(r, g, b, to);
+    }
+
+    function setMintCosts(uint256 newMintCost, uint256 newRandomMintCost) external onlyOwner {
+        mintCost = newMintCost;
+        randomMintCost = newRandomMintCost;
+    }
+
+    function setFeeRecipient(address payable newFeeRecipient) external onlyOwner {
+        feeRecipient = newFeeRecipient;
     }
 
     function contractURI() public pure returns (string memory) {
