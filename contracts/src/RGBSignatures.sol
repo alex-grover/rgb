@@ -57,7 +57,7 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
     function mint(uint8 r, uint8 g, uint8 b) external payable returns (uint256 id) {
         require(msg.value >= mintCost, "Insufficient funds");
 
-        id = _mintSignature(r, g, b, msg.sender);
+        id = _mintSignature(r, g, b, msg.sender, msg.sender);
         _transferFees();
     }
 
@@ -67,25 +67,25 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
         ids = new uint256[](amount);
         for (uint8 i = 0; i < amount; i++) {
             (uint8 r, uint8 g, uint8 b) = _generateRandomRGB(i);
-            ids[i] = _mintSignature(r, g, b, msg.sender);
+            ids[i] = _mintSignature(r, g, b, msg.sender, msg.sender);
         }
 
         _transferFees();
     }
 
     function allowlistMint(bytes32[] calldata merkleProof) external returns (uint256 id) {
-        bytes32 leaf = keccak256(abi.encodePacked(msg.sender));
-        require(MerkleProof.verify(merkleProof, merkleRoot, leaf), "Invalid proof");
+        bytes32 leaf = keccak256(bytes.concat(keccak256(abi.encode(msg.sender))));
+        require(MerkleProof.verifyCalldata(merkleProof, merkleRoot, leaf), "Invalid proof");
         require(!allowlistClaimed[msg.sender], "Already claimed");
 
         allowlistClaimed[msg.sender] = true;
 
         (uint8 r, uint8 g, uint8 b) = _generateRandomRGB(0);
-        return _mintSignature(r, g, b, msg.sender);
+        return _mintSignature(r, g, b, msg.sender, msg.sender);
     }
 
-    function adminMint(uint8 r, uint8 g, uint8 b, address to) external onlyOwner returns (uint256 id) {
-        return _mintSignature(r, g, b, to);
+    function adminMint(uint8 r, uint8 g, uint8 b, address recipient) external onlyOwner returns (uint256 id) {
+        return _mintSignature(r, g, b, msg.sender, recipient);
     }
 
     function setMintCosts(uint256 newMintCost, uint256 newRandomMintCost) external onlyOwner {
@@ -107,7 +107,9 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
         );
     }
 
-    function tokenURI(uint256 id) public pure override returns (string memory) {
+    function tokenURI(uint256 id) public view override returns (string memory) {
+        _requireOwned(id);
+
         (uint8 r, uint8 g, uint8 b) = rgb(id);
 
         return string.concat(
@@ -139,10 +141,13 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
         b = uint8(id & 0xFF);
     }
 
-    function _mintSignature(uint8 r, uint8 g, uint8 b, address to) internal returns (uint256 id) {
+    function _mintSignature(uint8 r, uint8 g, uint8 b, address minter, address recipient)
+        internal
+        returns (uint256 id)
+    {
         id = tokenId(r, g, b);
-        _mint(to, id);
-        emit Mint(id, to, totalSupply(), block.timestamp);
+        _mint(recipient, id);
+        emit Mint(id, minter, totalSupply(), block.timestamp);
     }
 
     function _transferFees() internal {
