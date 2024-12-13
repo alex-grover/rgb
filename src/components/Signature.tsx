@@ -22,6 +22,7 @@ export function Signature({ color, size = 240, bordered }: SignatureProps) {
     color.b.toString(2).padStart(8, '0')
 
   return (
+    // biome-ignore lint/a11y/noSvgWithoutTitle: breaks frame image
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 15 15"
@@ -30,7 +31,6 @@ export function Signature({ color, size = 240, bordered }: SignatureProps) {
       shapeRendering="crispEdges"
       className={bordered ? styles.bordered : undefined}
     >
-      <title>RGB Signature</title>
       {Array(5)
         .fill(null)
         .flatMap((_, row) =>
@@ -54,50 +54,27 @@ export function Signature({ color, size = 240, bordered }: SignatureProps) {
                     : color
               }
 
-              return (
-                <Square
-                  // biome-ignore lint/suspicious/noArrayIndexKey: fixed list of elements
-                  key={`${row}-${col}`}
-                  row={row}
-                  col={col}
-                  color={color}
-                  centerColor={centerColor}
-                />
-              )
+              return Array(3)
+                .fill(null)
+                .flatMap((_, innerRow) =>
+                  Array(3)
+                    .fill(null)
+                    .map((_, innerCol) => (
+                      <rect
+                        // biome-ignore lint/suspicious/noArrayIndexKey: fixed list of elements
+                        key={`${innerRow}-${innerCol}`}
+                        x={col * 3 + innerCol}
+                        y={row * 3 + innerRow}
+                        width="1"
+                        height="1"
+                        fill={
+                          innerRow === 1 && innerCol === 1 ? centerColor : color
+                        }
+                      />
+                    )),
+                )
             }),
         )}
     </svg>
   )
-}
-
-type SquareProps = {
-  row: number
-  col: number
-  color: string
-  centerColor: string
-}
-
-function Square({
-  row: outerRow,
-  col: outerCol,
-  color,
-  centerColor,
-}: SquareProps) {
-  return Array(3)
-    .fill(null)
-    .flatMap((_, row) =>
-      Array(3)
-        .fill(null)
-        .map((_, col) => (
-          <rect
-            // biome-ignore lint/suspicious/noArrayIndexKey: fixed list of elements
-            key={`${row}-${col}`}
-            x={outerCol * 3 + col}
-            y={outerRow * 3 + row}
-            width="1"
-            height="1"
-            fill={row === 1 && col === 1 ? centerColor : color}
-          />
-        )),
-    )
 }
