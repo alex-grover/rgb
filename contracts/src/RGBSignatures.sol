@@ -41,6 +41,11 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
 
     event Mint(uint256 indexed id, address minter, uint256 genesis, uint256 timestamp);
 
+    error InsufficientFunds(uint256 cost, uint256 value);
+    error AllowlistInvalidProof();
+    error AllowlistAlreadyClaimed(address minter);
+    error FeeTransferFailed();
+
     constructor(
         address owner,
         uint256 mintCost_,
@@ -55,14 +60,16 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
     }
 
     function mint(uint8 r, uint8 g, uint8 b) external payable returns (uint256 id) {
-        require(msg.value >= mintCost, "Insufficient funds");
+        if (msg.value < mintCost) revert InsufficientFunds(mintCost, msg.value);
 
         id = _mintSignature(r, g, b, msg.sender, msg.sender);
         _transferFees();
     }
 
     function mintRandom(uint8 amount) external payable returns (uint256[] memory ids) {
-        require(msg.value >= randomMintCost * amount, "Insufficient funds");
+        if (msg.value < randomMintCost * amount) {
+            revert InsufficientFunds(randomMintCost * amount, msg.value);
+        }
 
         ids = new uint256[](amount);
         for (uint8 i = 0; i < amount; i++) {
@@ -75,8 +82,8 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
 
     function allowlistMint(bytes32[] calldata merkleProof) external returns (uint256 id) {
         bytes32 leaf = keccak256(bytes.concat(keccak256(abi.encode(msg.sender))));
-        require(MerkleProof.verifyCalldata(merkleProof, merkleRoot, leaf), "Invalid proof");
-        require(!allowlistClaimed[msg.sender], "Already claimed");
+        if (!MerkleProof.verifyCalldata(merkleProof, merkleRoot, leaf)) revert AllowlistInvalidProof();
+        if (allowlistClaimed[msg.sender]) revert AllowlistAlreadyClaimed(msg.sender);
 
         allowlistClaimed[msg.sender] = true;
 
@@ -152,7 +159,7 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
 
     function _transferFees() internal {
         (bool sent,) = feeRecipient.call{value: address(this).balance}("");
-        require(sent, "Failed to transfer fees");
+        if (!sent) revert FeeTransferFailed();
     }
 
     function _generateRandomRGB(uint8 salt) internal view returns (uint8 r, uint8 g, uint8 b) {

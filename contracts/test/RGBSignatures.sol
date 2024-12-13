@@ -83,7 +83,7 @@ contract RGBSignaturesTest is Test {
             new RGBSignatures(makeAddr("owner"), mintCost, 0.001 ether, payable(makeAddr("feeRecipient")), bytes32(0));
 
         vm.deal(address(this), value);
-        vm.expectRevert("Insufficient funds");
+        vm.expectRevert(abi.encodeWithSelector(RGBSignatures.InsufficientFunds.selector, mintCost, value));
         signatures.mint{value: value}(255, 153, 0);
     }
 
@@ -96,7 +96,7 @@ contract RGBSignaturesTest is Test {
             new RGBSignatures(makeAddr("owner"), mintCost, 0.001 ether, payable(address(feeRecipient)), bytes32(0));
 
         vm.deal(address(this), mintCost);
-        vm.expectRevert("Failed to transfer fees");
+        vm.expectRevert(RGBSignatures.FeeTransferFailed.selector);
         signatures.mint{value: mintCost}(255, 153, 0);
     }
 
@@ -151,7 +151,9 @@ contract RGBSignaturesTest is Test {
         );
 
         vm.deal(address(this), value);
-        vm.expectRevert("Insufficient funds");
+        vm.expectRevert(
+            abi.encodeWithSelector(RGBSignatures.InsufficientFunds.selector, randomMintCost * amount, value)
+        );
         signatures.mintRandom{value: value}(amount);
     }
 
@@ -165,7 +167,7 @@ contract RGBSignaturesTest is Test {
         );
 
         vm.deal(address(this), randomMintCost);
-        vm.expectRevert("Failed to transfer fees");
+        vm.expectRevert(RGBSignatures.FeeTransferFailed.selector);
         signatures.mintRandom{value: randomMintCost}(1);
     }
 
@@ -199,7 +201,7 @@ contract RGBSignaturesTest is Test {
             makeAddr("owner"), 0.004 ether, 0.001 ether, payable(makeAddr("feeRecipient")), bytes32(0)
         );
 
-        vm.expectRevert("Invalid proof");
+        vm.expectRevert(RGBSignatures.AllowlistInvalidProof.selector);
         signatures.allowlistMint(merkleProof);
     }
 
@@ -221,7 +223,7 @@ contract RGBSignaturesTest is Test {
         vm.prank(minter);
         signatures.allowlistMint(merkleProof);
 
-        vm.expectRevert("Already claimed");
+        vm.expectRevert(abi.encodeWithSelector(RGBSignatures.AllowlistAlreadyClaimed.selector, minter));
         vm.prank(minter);
         signatures.allowlistMint(merkleProof);
     }
