@@ -1,4 +1,5 @@
 import { Header } from '@/components/Header'
+import { MintFeed } from '@/components/MintFeed'
 import { SWRProvider } from '@/components/SWRProvider'
 import { Web3Provider } from '@/components/Web3Provider'
 import { Flex, Theme } from '@radix-ui/themes'
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
                 <Header />
                 {children}
               </Flex>
+              <MintFeed />
             </SWRProvider>
           </Web3Provider>
         </Theme>
