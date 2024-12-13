@@ -31,7 +31,7 @@ export function ProfileClientPage({ address }: ProfileClientPageProps) {
   )
 
   return (
-    <Container maxWidth="400px" px="2" py="6" flexGrow="1">
+    <Container size="1" px="2" py="6" flexGrow="1">
       <Flex direction="column" gap="8">
         <Flex direction="column">
           <Name address={address} link={false} weight="medium" />
