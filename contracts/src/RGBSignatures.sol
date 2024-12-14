@@ -114,7 +114,7 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
 
     function contractURI() public pure returns (string memory) {
         return string.concat(
-            'data:application/json;utf8,{"name":"RGB Signatures","description":"RGB is an infinite canvas"}'
+            'data:application/json;utf8,{"name":"RGB Signatures","description":"16,777,216 onchain rgb values"}'
         );
     }
 
@@ -130,7 +130,7 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
             Strings.toString(g),
             ",",
             Strings.toString(b),
-            ')","description":"RGB is an infinite canvas","image":"data:image/svg+xml;base64,',
+            ')","description":"16,777,216 onchain rgb values","image":"data:image/svg+xml;base64,',
             Base64.encode(bytes(_renderSignature(id))),
             '","attributes":[{"trait_type":"r","value":"',
             Strings.toString(r),
