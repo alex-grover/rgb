@@ -12,7 +12,7 @@ export function RGBIcon({ size = 40 }: RGBIconProps) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <title>RGB Signatures Logo</title>
+      <title>RGB Logo</title>
       <path
         fillRule="evenodd"
         clipRule="evenodd"

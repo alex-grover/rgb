@@ -33,6 +33,7 @@ import {Strings} from "openzeppelin-contracts/contracts/utils/Strings.sol";
 */
 
 contract RGBSignatures is ERC721Enumerable, Ownable {
+    string public constant description = "16,777,216 onchain rgb values";
     uint256 public mintCost;
     uint256 public randomMintCost;
     address payable public feeRecipient;
@@ -52,7 +53,7 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
         uint256 randomMintCost_,
         address payable feeRecipient_,
         bytes32 merkleRoot_
-    ) ERC721("RGB Signatures", "RGB") Ownable(owner) {
+    ) ERC721("RGB", "RGB") Ownable(owner) {
         mintCost = mintCost_;
         randomMintCost = randomMintCost_;
         feeRecipient = feeRecipient_;
@@ -112,10 +113,8 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
         merkleRoot = newMerkleRoot;
     }
 
-    function contractURI() public pure returns (string memory) {
-        return string.concat(
-            'data:application/json;utf8,{"name":"RGB Signatures","description":"16,777,216 onchain rgb values"}'
-        );
+    function contractURI() public view returns (string memory) {
+        return string.concat('data:application/json;utf8,{"name":"', name(), '","description":"', description, '"}');
     }
 
     function tokenURI(uint256 id) public view override returns (string memory) {
@@ -130,7 +129,9 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
             Strings.toString(g),
             ",",
             Strings.toString(b),
-            ')","description":"16,777,216 onchain rgb values","image":"data:image/svg+xml;base64,',
+            ')","description":"',
+            description,
+            '","image":"data:image/svg+xml;base64,',
             Base64.encode(bytes(_renderSignature(id))),
             '","attributes":[{"trait_type":"r","value":"',
             Strings.toString(r),
