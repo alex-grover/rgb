@@ -114,7 +114,13 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
     }
 
     function contractURI() public view returns (string memory) {
-        return string.concat('data:application/json;utf8,{"name":"', name(), '","description":"', description, '"}');
+        return string.concat(
+            'data:application/json;utf8,{"name":"',
+            name(),
+            '","description":"',
+            description,
+            '","image":"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwMCIgaGVpZ2h0PSIxMDAwIiB2aWV3Qm94PSIwIDAgMTAwMCAxMDAwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAwIiBoZWlnaHQ9IjEwMDAiIGZpbGw9IndoaXRlIi8+PHJlY3QgeD0iMjUwIiB5PSIzNTAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjMDBGRjAwIi8+PHJlY3QgeD0iMjUwIiB5PSI0NTAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjMDBGRjAwIi8+PHJlY3QgeD0iMjUwIiB5PSI1NTAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjMDBGRjAwIi8+PHJlY3QgeD0iMjUwIiB5PSI2NTAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjMDBGRjAwIi8+PHJlY3QgeD0iMzUwIiB5PSIyNTAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRkYwMDAwIi8+PHJlY3QgeD0iMzUwIiB5PSI0NTAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjMDAwMEZGIi8+PHJlY3QgeD0iMzUwIiB5PSI1NTAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjMDAwMEZGIi8+PHJlY3QgeD0iMzUwIiB5PSI2NTAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjMDBGRjAwIi8+PHJlY3QgeD0iNDUwIiB5PSIyNTAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRkYwMDAwIi8+PHJlY3QgeD0iNDUwIiB5PSIzNTAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjMDAwMEZGIi8+PHJlY3QgeD0iNDUwIiB5PSI1NTAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjMDAwMEZGIi8+PHJlY3QgeD0iNDUwIiB5PSI2NTAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjMDBGRjAwIi8+PHJlY3QgeD0iNTUwIiB5PSIyNTAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRkYwMDAwIi8+PHJlY3QgeD0iNTUwIiB5PSIzNTAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjMDAwMEZGIi8+PHJlY3QgeD0iNTUwIiB5PSI0NTAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjMDAwMEZGIi8+PHJlY3QgeD0iNTUwIiB5PSI1NTAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjMDAwMEZGIi8+PHJlY3QgeD0iNTUwIiB5PSI2NTAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjMDBGRjAwIi8+PHJlY3QgeD0iNjUwIiB5PSIyNTAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRkYwMDAwIi8+PHJlY3QgeD0iNjUwIiB5PSIzNTAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRkYwMDAwIi8+PHJlY3QgeD0iNjUwIiB5PSI0NTAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRkYwMDAwIi8+PHJlY3QgeD0iNjUwIiB5PSI1NTAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRkYwMDAwIi8+PC9zdmc+"}'
+        );
     }
 
     function tokenURI(uint256 id) public view override returns (string memory) {
