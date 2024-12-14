@@ -9,8 +9,7 @@ contract DeployScript is Script {
         uint256 deployerPrivateKey = vm.envUint("DEPLOYER_PRIVATE_KEY");
         vm.startBroadcast(deployerPrivateKey);
 
-        // cargo run --release 0x0000000000ffe8b47b3e2130213b802212439497 (caller: rgb.eth)0xf3e2399c5d1c698a6c1dfa195adbd12a6afd1899 INIT_CODE_HASH(need allowlist)
-        new RGBSignatures{salt: bytes32(0)}( // TODO
+        new RGBSignatures{salt: 0xf3e2399c5d1c698a6c1dfa195adbd12a6afd1899caea6f74733f40e69ac87b7c}(
             0x000000005d5Bd1cC7fF80ddCd46F245beC548EdF,
             0.004 ether,
             0.001 ether,
