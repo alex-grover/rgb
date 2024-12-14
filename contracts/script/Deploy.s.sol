@@ -14,7 +14,7 @@ contract DeployScript is Script {
             0.004 ether,
             0.001 ether,
             payable(0xcdf5228c53998d24176Bea664c11dFFE7b401d19),
-            bytes32(0) // TODO
+            0xc1b5e21037602577a7c1df76cca738965a6c40c5d1022309c27b43b3caa6db52
         );
 
         vm.stopBroadcast();
