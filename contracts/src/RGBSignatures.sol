@@ -82,8 +82,12 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
 
     function allowlistMint(bytes32[] calldata merkleProof) external returns (uint256 id) {
         bytes32 leaf = keccak256(bytes.concat(keccak256(abi.encode(msg.sender))));
-        if (!MerkleProof.verifyCalldata(merkleProof, merkleRoot, leaf)) revert AllowlistInvalidProof();
-        if (allowlistClaimed[msg.sender]) revert AllowlistAlreadyClaimed(msg.sender);
+        if (!MerkleProof.verifyCalldata(merkleProof, merkleRoot, leaf)) {
+            revert AllowlistInvalidProof();
+        }
+        if (allowlistClaimed[msg.sender]) {
+            revert AllowlistAlreadyClaimed(msg.sender);
+        }
 
         allowlistClaimed[msg.sender] = true;
 
@@ -128,13 +132,13 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
             Strings.toString(b),
             ')","description":"RGB is an infinite canvas","image":"data:image/svg+xml;base64,',
             Base64.encode(bytes(_renderSignature(id))),
-            '","attributes":[{"trait_type":"r","display_type":"number","max_value":255,"value":',
+            '","attributes":[{"trait_type":"r","value":"',
             Strings.toString(r),
-            '},{"trait_type":"g","display_type":"number","max_value":255,"value":',
+            '"},{"trait_type":"g","value":"',
             Strings.toString(g),
-            '},{"trait_type":"b","display_type":"number","max_value":255,"value":',
+            '"},{"trait_type":"b","value":"',
             Strings.toString(b),
-            "}]}"
+            '"}]}'
         );
     }
 
