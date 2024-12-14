@@ -5,8 +5,10 @@ import { shortenAddress } from '@/lib/address'
 import { chain } from '@/lib/chain'
 import { idToColor } from '@/lib/color'
 import type { EnsDataResponse } from '@/lib/ens'
+import { Flex, Text } from '@radix-ui/themes'
 import { Toaster, toast } from 'sonner'
 import { useAccount, useWatchContractEvent } from 'wagmi'
+import { Signature } from './Signature'
 
 export function MintFeed() {
   const { address } = useAccount()
@@ -33,7 +35,14 @@ export function MintFeed() {
 
         if (logs.length === 1) {
           const color = idToColor(log.args.id)
-          toast(`${name} minted rgb(${color.r},${color.g},${color.b})`)
+          toast(
+            <Flex gap="2" align="center">
+              <Text>
+                {name} minted rgb({color.r},{color.g},{color.b})
+              </Text>
+              <Signature color={color} size={16} bordered />
+            </Flex>,
+          )
           return
         }
 
