@@ -12,7 +12,7 @@ contract DeployScript is Script {
         vm.startBroadcast(deployerPrivateKey);
 
         RGBSignatures signatures = new RGBSignatures{
-            salt: 0xf3e2399c5d1c698a6c1dfa195adbd12a6afd18996b3a72a38ebd428c8537115d
+            salt: 0xf3e2399c5d1c698a6c1dfa195adbd12a6afd18995e9a3af510cda38dbca8c6ae
         }(
             deployer,
             0.004 ether,
