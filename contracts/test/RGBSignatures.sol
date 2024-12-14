@@ -361,6 +361,8 @@ contract RGBSignaturesTest is Test {
         );
 
         vm.assertEq(signatures.tokenId(255, 153, 0), 16750849);
+        vm.assertEq(signatures.tokenId(0, 0, 0), 1);
+        vm.assertEq(signatures.tokenId(255, 255, 255), 16777216);
     }
 
     function test_RGB() external {
