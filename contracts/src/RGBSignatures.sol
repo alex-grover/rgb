@@ -150,13 +150,13 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
     }
 
     function tokenId(uint8 r, uint8 g, uint8 b) public pure returns (uint256) {
-        return (uint256(r) << 16) | (uint256(g) << 8) | uint256(b);
+        return ((uint256(r) << 16) | (uint256(g) << 8) | uint256(b)) + 1;
     }
 
     function rgb(uint256 id) public pure returns (uint8 r, uint8 g, uint8 b) {
-        r = uint8((id >> 16) & 0xFF);
-        g = uint8((id >> 8) & 0xFF);
-        b = uint8(id & 0xFF);
+        r = uint8(((id - 1) >> 16) & 0xFF);
+        g = uint8(((id - 1) >> 8) & 0xFF);
+        b = uint8((id - 1) & 0xFF);
     }
 
     function _mintSignature(uint8 r, uint8 g, uint8 b, address minter, address recipient)

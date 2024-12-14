@@ -29,16 +29,9 @@ contract DeployScript is Script {
         signatures.adminMint(0, 255, 255, deployer);
         signatures.adminMint(255, 0, 255, deployer);
         signatures.adminMint(255, 255, 0, deployer);
-        signatures.adminMint(
-            85,
-            85,
-            85,
-            0xD6507fC98605eAb8775f851c25A5E09Dc12ab7A7
-        );
+        signatures.adminMint(85, 85, 85, 0xD6507fC98605eAb8775f851c25A5E09Dc12ab7A7);
 
-        signatures.transferOwnership(
-            0x000000005d5Bd1cC7fF80ddCd46F245beC548EdF
-        );
+        signatures.transferOwnership(0x000000005d5Bd1cC7fF80ddCd46F245beC548EdF);
 
         vm.stopBroadcast();
     }

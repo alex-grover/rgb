@@ -17,7 +17,13 @@ contract RGBSignaturesTest is Test {
     ) external {
         vm.assume(owner != address(0));
 
-        RGBSignatures signatures = new RGBSignatures(owner, mintCost, randomMintCost, feeRecipient, merkleRoot);
+        RGBSignatures signatures = new RGBSignatures(
+            owner,
+            mintCost,
+            randomMintCost,
+            feeRecipient,
+            merkleRoot
+        );
 
         assertEq(signatures.owner(), owner);
         assertEq(signatures.mintCost(), mintCost);
@@ -30,9 +36,15 @@ contract RGBSignaturesTest is Test {
         uint256 mintCost = 0.004 ether;
         address payable feeRecipient = payable(makeAddr("feeRecipient"));
 
-        RGBSignatures signatures = new RGBSignatures(makeAddr("owner"), mintCost, 0.001 ether, feeRecipient, bytes32(0));
+        RGBSignatures signatures = new RGBSignatures(
+            makeAddr("owner"),
+            mintCost,
+            0.001 ether,
+            feeRecipient,
+            bytes32(0)
+        );
 
-        uint256 expectedId = 16750848;
+        uint256 expectedId = 16750849;
 
         vm.expectEmit(address(signatures));
         emit RGBSignatures.Mint(expectedId, address(this), 1, block.timestamp);
@@ -45,10 +57,21 @@ contract RGBSignaturesTest is Test {
         assertEq(feeRecipient.balance, mintCost);
     }
 
-    function testFuzz_Mint(uint256 mintCost, uint8 r, uint8 g, uint8 b) external {
+    function testFuzz_Mint(
+        uint256 mintCost,
+        uint8 r,
+        uint8 g,
+        uint8 b
+    ) external {
         address payable feeRecipient = payable(makeAddr("feeRecipient"));
 
-        RGBSignatures signatures = new RGBSignatures(makeAddr("owner"), mintCost, 0.001 ether, feeRecipient, bytes32(0));
+        RGBSignatures signatures = new RGBSignatures(
+            makeAddr("owner"),
+            mintCost,
+            0.001 ether,
+            feeRecipient,
+            bytes32(0)
+        );
 
         uint256 expectedId = signatures.tokenId(r, g, b);
 
@@ -65,25 +88,49 @@ contract RGBSignaturesTest is Test {
 
     function test_CannotMintIfAlreadyMinted() external {
         uint256 mintCost = 0.004 ether;
-        RGBSignatures signatures =
-            new RGBSignatures(makeAddr("owner"), mintCost, 0.001 ether, payable(makeAddr("feeRecipient")), bytes32(0));
+        RGBSignatures signatures = new RGBSignatures(
+            makeAddr("owner"),
+            mintCost,
+            0.001 ether,
+            payable(makeAddr("feeRecipient")),
+            bytes32(0)
+        );
 
         vm.deal(address(this), mintCost);
         signatures.mint{value: mintCost}(255, 153, 0);
 
-        vm.expectRevert(abi.encodeWithSelector(IERC721Errors.ERC721InvalidSender.selector, address(0)));
+        vm.expectRevert(
+            abi.encodeWithSelector(
+                IERC721Errors.ERC721InvalidSender.selector,
+                address(0)
+            )
+        );
         vm.deal(address(this), mintCost);
         signatures.mint{value: mintCost}(255, 153, 0);
     }
 
-    function testFuzz_CannotMintWithInsufficientFunds(uint256 mintCost, uint256 value) external {
+    function testFuzz_CannotMintWithInsufficientFunds(
+        uint256 mintCost,
+        uint256 value
+    ) external {
         vm.assume(value < mintCost);
 
-        RGBSignatures signatures =
-            new RGBSignatures(makeAddr("owner"), mintCost, 0.001 ether, payable(makeAddr("feeRecipient")), bytes32(0));
+        RGBSignatures signatures = new RGBSignatures(
+            makeAddr("owner"),
+            mintCost,
+            0.001 ether,
+            payable(makeAddr("feeRecipient")),
+            bytes32(0)
+        );
 
         vm.deal(address(this), value);
-        vm.expectRevert(abi.encodeWithSelector(RGBSignatures.InsufficientFunds.selector, mintCost, value));
+        vm.expectRevert(
+            abi.encodeWithSelector(
+                RGBSignatures.InsufficientFunds.selector,
+                mintCost,
+                value
+            )
+        );
         signatures.mint{value: value}(255, 153, 0);
     }
 
@@ -92,8 +139,13 @@ contract RGBSignaturesTest is Test {
         feeRecipient.setAcceptEther(false);
 
         uint256 mintCost = 0.004 ether;
-        RGBSignatures signatures =
-            new RGBSignatures(makeAddr("owner"), mintCost, 0.001 ether, payable(address(feeRecipient)), bytes32(0));
+        RGBSignatures signatures = new RGBSignatures(
+            makeAddr("owner"),
+            mintCost,
+            0.001 ether,
+            payable(address(feeRecipient)),
+            bytes32(0)
+        );
 
         vm.deal(address(this), mintCost);
         vm.expectRevert(RGBSignatures.FeeTransferFailed.selector);
@@ -104,8 +156,13 @@ contract RGBSignaturesTest is Test {
         uint256 randomMintCost = 0.001 ether;
         address payable feeRecipient = payable(makeAddr("feeRecipient"));
 
-        RGBSignatures signatures =
-            new RGBSignatures(makeAddr("owner"), 0.004 ether, randomMintCost, feeRecipient, bytes32(0));
+        RGBSignatures signatures = new RGBSignatures(
+            makeAddr("owner"),
+            0.004 ether,
+            randomMintCost,
+            feeRecipient,
+            bytes32(0)
+        );
 
         vm.expectEmit(false, true, true, true, address(signatures));
         emit RGBSignatures.Mint(0, address(this), 1, block.timestamp);
@@ -118,13 +175,21 @@ contract RGBSignaturesTest is Test {
         assertEq(feeRecipient.balance, randomMintCost);
     }
 
-    function testFuzz_MintRandom(uint256 randomMintCost, uint8 amount) external {
+    function testFuzz_MintRandom(
+        uint256 randomMintCost,
+        uint8 amount
+    ) external {
         vm.assume(amount > 0 && randomMintCost <= type(uint256).max / amount);
 
         address payable feeRecipient = payable(makeAddr("feeRecipient"));
 
-        RGBSignatures signatures =
-            new RGBSignatures(makeAddr("owner"), 0.004 ether, randomMintCost, feeRecipient, bytes32(0));
+        RGBSignatures signatures = new RGBSignatures(
+            makeAddr("owner"),
+            0.004 ether,
+            randomMintCost,
+            feeRecipient,
+            bytes32(0)
+        );
 
         for (uint8 i = 0; i < amount; i++) {
             vm.expectEmit(false, true, true, true, address(signatures));
@@ -132,7 +197,9 @@ contract RGBSignaturesTest is Test {
         }
 
         vm.deal(address(this), randomMintCost * amount);
-        uint256[] memory ids = signatures.mintRandom{value: randomMintCost * amount}(amount);
+        uint256[] memory ids = signatures.mintRandom{
+            value: randomMintCost * amount
+        }(amount);
 
         assertEq(ids.length, amount);
         for (uint8 i = 0; i < amount; i++) {
@@ -141,18 +208,32 @@ contract RGBSignaturesTest is Test {
         assertEq(feeRecipient.balance, randomMintCost * amount);
     }
 
-    function test_FuzzCannotMintRandomWithInsufficientFunds(uint256 randomMintCost, uint8 amount, uint256 value)
-        external
-    {
-        vm.assume(amount > 0 && randomMintCost <= type(uint256).max / amount && value < randomMintCost * amount);
+    function test_FuzzCannotMintRandomWithInsufficientFunds(
+        uint256 randomMintCost,
+        uint8 amount,
+        uint256 value
+    ) external {
+        vm.assume(
+            amount > 0 &&
+                randomMintCost <= type(uint256).max / amount &&
+                value < randomMintCost * amount
+        );
 
         RGBSignatures signatures = new RGBSignatures(
-            makeAddr("owner"), 0.004 ether, randomMintCost, payable(makeAddr("feeRecipient")), bytes32(0)
+            makeAddr("owner"),
+            0.004 ether,
+            randomMintCost,
+            payable(makeAddr("feeRecipient")),
+            bytes32(0)
         );
 
         vm.deal(address(this), value);
         vm.expectRevert(
-            abi.encodeWithSelector(RGBSignatures.InsufficientFunds.selector, randomMintCost * amount, value)
+            abi.encodeWithSelector(
+                RGBSignatures.InsufficientFunds.selector,
+                randomMintCost * amount,
+                value
+            )
         );
         signatures.mintRandom{value: value}(amount);
     }
@@ -163,7 +244,11 @@ contract RGBSignaturesTest is Test {
 
         uint256 randomMintCost = 0.001 ether;
         RGBSignatures signatures = new RGBSignatures(
-            makeAddr("owner"), 0.004 ether, randomMintCost, payable(address(feeRecipient)), bytes32(0)
+            makeAddr("owner"),
+            0.004 ether,
+            randomMintCost,
+            payable(address(feeRecipient)),
+            bytes32(0)
         );
 
         vm.deal(address(this), randomMintCost);
@@ -187,8 +272,12 @@ contract RGBSignaturesTest is Test {
 
         // Merkle proof for address(1)
         bytes32[] memory merkleProof = new bytes32[](2);
-        merkleProof[0] = 0x2584db4a68aa8b172f70bc04e2e74541617c003374de6eb4b295e823e5beab01;
-        merkleProof[1] = 0xc949c2dc5da2bd9a4f5ae27532dfbb3551487bed50825cd099ff5d0a8d613ab5;
+        merkleProof[
+            0
+        ] = 0x2584db4a68aa8b172f70bc04e2e74541617c003374de6eb4b295e823e5beab01;
+        merkleProof[
+            1
+        ] = 0xc949c2dc5da2bd9a4f5ae27532dfbb3551487bed50825cd099ff5d0a8d613ab5;
         vm.prank(minter);
         uint256 id = signatures.allowlistMint(merkleProof);
 
@@ -196,9 +285,15 @@ contract RGBSignaturesTest is Test {
         assertTrue(signatures.allowlistClaimed(minter));
     }
 
-    function test_CannotAllowlistMintWithInvalidProof(bytes32[] calldata merkleProof) external {
+    function test_CannotAllowlistMintWithInvalidProof(
+        bytes32[] calldata merkleProof
+    ) external {
         RGBSignatures signatures = new RGBSignatures(
-            makeAddr("owner"), 0.004 ether, 0.001 ether, payable(makeAddr("feeRecipient")), bytes32(0)
+            makeAddr("owner"),
+            0.004 ether,
+            0.001 ether,
+            payable(makeAddr("feeRecipient")),
+            bytes32(0)
         );
 
         vm.expectRevert(RGBSignatures.AllowlistInvalidProof.selector);
@@ -218,12 +313,21 @@ contract RGBSignaturesTest is Test {
 
         // Merkle proof for address(1)
         bytes32[] memory merkleProof = new bytes32[](2);
-        merkleProof[0] = 0x2584db4a68aa8b172f70bc04e2e74541617c003374de6eb4b295e823e5beab01;
-        merkleProof[1] = 0xc949c2dc5da2bd9a4f5ae27532dfbb3551487bed50825cd099ff5d0a8d613ab5;
+        merkleProof[
+            0
+        ] = 0x2584db4a68aa8b172f70bc04e2e74541617c003374de6eb4b295e823e5beab01;
+        merkleProof[
+            1
+        ] = 0xc949c2dc5da2bd9a4f5ae27532dfbb3551487bed50825cd099ff5d0a8d613ab5;
         vm.prank(minter);
         signatures.allowlistMint(merkleProof);
 
-        vm.expectRevert(abi.encodeWithSelector(RGBSignatures.AllowlistAlreadyClaimed.selector, minter));
+        vm.expectRevert(
+            abi.encodeWithSelector(
+                RGBSignatures.AllowlistAlreadyClaimed.selector,
+                minter
+            )
+        );
         vm.prank(minter);
         signatures.allowlistMint(merkleProof);
     }
@@ -231,10 +335,15 @@ contract RGBSignaturesTest is Test {
     function test_AdminMint() external {
         address owner = makeAddr("owner");
         address recipient = makeAddr("recipient");
-        RGBSignatures signatures =
-            new RGBSignatures(owner, 0.004 ether, 0.001 ether, payable(makeAddr("feeRecipient")), bytes32(0));
+        RGBSignatures signatures = new RGBSignatures(
+            owner,
+            0.004 ether,
+            0.001 ether,
+            payable(makeAddr("feeRecipient")),
+            bytes32(0)
+        );
 
-        uint256 expectedId = 16750848;
+        uint256 expectedId = 16750849;
 
         vm.expectEmit(address(signatures));
         emit RGBSignatures.Mint(expectedId, owner, 1, block.timestamp);
@@ -246,20 +355,41 @@ contract RGBSignaturesTest is Test {
         assertEq(signatures.ownerOf(id), address(recipient));
     }
 
-    function testFuzz_CannotAdminMintAsNonOwner(address owner, address nonOwner) external {
+    function testFuzz_CannotAdminMintAsNonOwner(
+        address owner,
+        address nonOwner
+    ) external {
         vm.assume(owner != address(0) && owner != nonOwner);
 
-        RGBSignatures signatures =
-            new RGBSignatures(owner, 0.004 ether, 0.001 ether, payable(makeAddr("feeRecipient")), bytes32(0));
+        RGBSignatures signatures = new RGBSignatures(
+            owner,
+            0.004 ether,
+            0.001 ether,
+            payable(makeAddr("feeRecipient")),
+            bytes32(0)
+        );
 
-        vm.expectRevert(abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, nonOwner));
+        vm.expectRevert(
+            abi.encodeWithSelector(
+                Ownable.OwnableUnauthorizedAccount.selector,
+                nonOwner
+            )
+        );
         vm.prank(nonOwner);
         signatures.adminMint(255, 153, 0, makeAddr("recipient"));
     }
 
-    function test_SetMintCosts(uint256 newMintCost, uint256 newRandomMintCost) external {
-        RGBSignatures signatures =
-            new RGBSignatures(address(this), 0.004 ether, 0.001 ether, payable(makeAddr("feeRecipient")), bytes32(0));
+    function test_SetMintCosts(
+        uint256 newMintCost,
+        uint256 newRandomMintCost
+    ) external {
+        RGBSignatures signatures = new RGBSignatures(
+            address(this),
+            0.004 ether,
+            0.001 ether,
+            payable(makeAddr("feeRecipient")),
+            bytes32(0)
+        );
 
         signatures.setMintCosts(newMintCost, newRandomMintCost);
 
@@ -275,59 +405,109 @@ contract RGBSignaturesTest is Test {
     ) external {
         vm.assume(owner != address(0) && owner != nonOwner);
 
-        RGBSignatures signatures =
-            new RGBSignatures(owner, 0.004 ether, 0.001 ether, payable(makeAddr("feeRecipient")), bytes32(0));
+        RGBSignatures signatures = new RGBSignatures(
+            owner,
+            0.004 ether,
+            0.001 ether,
+            payable(makeAddr("feeRecipient")),
+            bytes32(0)
+        );
 
-        vm.expectRevert(abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, nonOwner));
+        vm.expectRevert(
+            abi.encodeWithSelector(
+                Ownable.OwnableUnauthorizedAccount.selector,
+                nonOwner
+            )
+        );
         vm.prank(nonOwner);
         signatures.setMintCosts(newMintCost, newRandomMintCost);
     }
 
     function test_SetFeeRecipient(address payable newFeeRecipient) external {
-        RGBSignatures signatures =
-            new RGBSignatures(address(this), 0.004 ether, 0.001 ether, payable(makeAddr("feeRecipient")), bytes32(0));
+        RGBSignatures signatures = new RGBSignatures(
+            address(this),
+            0.004 ether,
+            0.001 ether,
+            payable(makeAddr("feeRecipient")),
+            bytes32(0)
+        );
 
         signatures.setFeeRecipient(newFeeRecipient);
 
         vm.assertEq(signatures.feeRecipient(), newFeeRecipient);
     }
 
-    function test_CannotSetFeeRecipientAsNonOwner(address owner, address nonOwner, address payable newFeeRecipient)
-        external
-    {
+    function test_CannotSetFeeRecipientAsNonOwner(
+        address owner,
+        address nonOwner,
+        address payable newFeeRecipient
+    ) external {
         vm.assume(owner != address(0) && owner != nonOwner);
 
-        RGBSignatures signatures =
-            new RGBSignatures(owner, 0.004 ether, 0.001 ether, payable(makeAddr("feeRecipient")), bytes32(0));
+        RGBSignatures signatures = new RGBSignatures(
+            owner,
+            0.004 ether,
+            0.001 ether,
+            payable(makeAddr("feeRecipient")),
+            bytes32(0)
+        );
 
-        vm.expectRevert(abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, nonOwner));
+        vm.expectRevert(
+            abi.encodeWithSelector(
+                Ownable.OwnableUnauthorizedAccount.selector,
+                nonOwner
+            )
+        );
         vm.prank(nonOwner);
         signatures.setFeeRecipient(newFeeRecipient);
     }
 
     function test_SetMerkleRoot(bytes32 newMerkleRoot) external {
-        RGBSignatures signatures =
-            new RGBSignatures(address(this), 0.004 ether, 0.001 ether, payable(makeAddr("feeRecipient")), bytes32(0));
+        RGBSignatures signatures = new RGBSignatures(
+            address(this),
+            0.004 ether,
+            0.001 ether,
+            payable(makeAddr("feeRecipient")),
+            bytes32(0)
+        );
 
         signatures.setMerkleRoot(newMerkleRoot);
 
         vm.assertEq(signatures.merkleRoot(), newMerkleRoot);
     }
 
-    function test_CannotSetMerkleRootAsNonOwner(address owner, address nonOwner, bytes32 newMerkleRoot) external {
+    function test_CannotSetMerkleRootAsNonOwner(
+        address owner,
+        address nonOwner,
+        bytes32 newMerkleRoot
+    ) external {
         vm.assume(owner != address(0) && owner != nonOwner);
 
-        RGBSignatures signatures =
-            new RGBSignatures(owner, 0.004 ether, 0.001 ether, payable(makeAddr("feeRecipient")), bytes32(0));
+        RGBSignatures signatures = new RGBSignatures(
+            owner,
+            0.004 ether,
+            0.001 ether,
+            payable(makeAddr("feeRecipient")),
+            bytes32(0)
+        );
 
-        vm.expectRevert(abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, nonOwner));
+        vm.expectRevert(
+            abi.encodeWithSelector(
+                Ownable.OwnableUnauthorizedAccount.selector,
+                nonOwner
+            )
+        );
         vm.prank(nonOwner);
         signatures.setMerkleRoot(newMerkleRoot);
     }
 
     function test_ContractURI() external {
         RGBSignatures signatures = new RGBSignatures(
-            makeAddr("owner"), 0.004 ether, 0.001 ether, payable(makeAddr("feeRecipient")), bytes32(0)
+            makeAddr("owner"),
+            0.004 ether,
+            0.001 ether,
+            payable(makeAddr("feeRecipient")),
+            bytes32(0)
         );
 
         signatures.contractURI();
@@ -336,8 +516,13 @@ contract RGBSignaturesTest is Test {
     }
 
     function test_TokenURI() external {
-        RGBSignatures signatures =
-            new RGBSignatures(address(this), 0.004 ether, 0.001 ether, payable(makeAddr("feeRecipient")), bytes32(0));
+        RGBSignatures signatures = new RGBSignatures(
+            address(this),
+            0.004 ether,
+            0.001 ether,
+            payable(makeAddr("feeRecipient")),
+            bytes32(0)
+        );
 
         uint256 id = signatures.adminMint(255, 153, 0, address(this));
 
@@ -348,29 +533,56 @@ contract RGBSignaturesTest is Test {
 
     function test_CannotCallTokenURIWithUnmintedId() external {
         RGBSignatures signatures = new RGBSignatures(
-            makeAddr("owner"), 0.004 ether, 0.001 ether, payable(makeAddr("feeRecipient")), bytes32(0)
+            makeAddr("owner"),
+            0.004 ether,
+            0.001 ether,
+            payable(makeAddr("feeRecipient")),
+            bytes32(0)
         );
 
-        vm.expectRevert(abi.encodeWithSelector(IERC721Errors.ERC721NonexistentToken.selector, 0));
+        vm.expectRevert(
+            abi.encodeWithSelector(
+                IERC721Errors.ERC721NonexistentToken.selector,
+                0
+            )
+        );
         signatures.tokenURI(0);
     }
 
     function test_TokenId() external {
         RGBSignatures signatures = new RGBSignatures(
-            makeAddr("owner"), 0.004 ether, 0.001 ether, payable(makeAddr("feeRecipient")), bytes32(0)
+            makeAddr("owner"),
+            0.004 ether,
+            0.001 ether,
+            payable(makeAddr("feeRecipient")),
+            bytes32(0)
         );
 
-        vm.assertEq(signatures.tokenId(255, 153, 0), 16750848);
+        vm.assertEq(signatures.tokenId(255, 153, 0), 16750849);
     }
 
     function test_RGB() external {
         RGBSignatures signatures = new RGBSignatures(
-            makeAddr("owner"), 0.004 ether, 0.001 ether, payable(makeAddr("feeRecipient")), bytes32(0)
+            makeAddr("owner"),
+            0.004 ether,
+            0.001 ether,
+            payable(makeAddr("feeRecipient")),
+            bytes32(0)
         );
 
-        (uint8 r, uint8 g, uint8 b) = signatures.rgb(16750848);
+        (uint8 r, uint8 g, uint8 b) = signatures.rgb(16750849);
         vm.assertEq(r, 255);
         vm.assertEq(g, 153);
         vm.assertEq(b, 0);
+
+        (r, g, b) = signatures.rgb(1);
+        vm.assertEq(r, 0);
+        vm.assertEq(g, 0);
+        vm.assertEq(b, 0);
+
+        (r, g, b) = signatures.rgb(16777216);
+        vm.assertEq(r, 255);
+        vm.assertEq(g, 255);
+        vm.assertEq(b, 255);
     }
 }
