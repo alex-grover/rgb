@@ -181,10 +181,12 @@ contract RGBSignatures is ERC721Enumerable, Ownable {
     }
 
     function _renderSignature(uint256 id) internal pure returns (string memory) {
+        uint256 shiftedId = id - 1;
+
         bool[24] memory binary;
         for (uint8 i = 0; i < 24; i++) {
-            binary[23 - i] = ((id - 1) & 1 == 1) ? true : false;
-            id >>= 1;
+            binary[23 - i] = (shiftedId & 1 == 1) ? true : false;
+            shiftedId >>= 1;
         }
 
         uint8[5][5] memory indexes =
