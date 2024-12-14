@@ -34,7 +34,7 @@ export function Header() {
           direction={{ initial: 'row', sm: 'row-reverse' }}
           align="center"
           justify="between"
-          gap="6"
+          gap="4"
           gridRow={{ initial: '3', sm: 'auto' }}
           gridColumn={{ initial: '1 / span 2', sm: 'auto' }}
           overflowX="auto"
@@ -56,7 +56,7 @@ export function Header() {
               )}
             </nav>
           </Flex>
-          <Flex align="center" gap="6" pr={{ initial: '2', sm: '0' }} asChild>
+          <Flex align="center" gap="4" pr={{ initial: '2', sm: '0' }} asChild>
             <nav>
               <Link
                 href="https://x.com/rgb_eth"
