@@ -42,7 +42,7 @@ export function Header() {
           py={{ initial: '3', sm: '0' }}
           className={styles.links}
         >
-          <Flex align="center" gap="6" pl={{ initial: '2', sm: '0' }} asChild>
+          <Flex align="center" gap="4" pl={{ initial: '2', sm: '0' }} asChild>
             <nav>
               <Link weight="medium" asChild>
                 <NextLink href="/about">About</NextLink>
