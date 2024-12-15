@@ -6,7 +6,7 @@ import { rgbSignaturesAbi, rgbSignaturesAddress } from '@/generated'
 import { chain, fromBlock } from '@/lib/chain'
 import { idToColor } from '@/lib/color'
 import { mintEvent } from '@/lib/contracts'
-import type { PageProps, RouteContext } from '@/lib/next'
+import { type PageProps, type RouteContext, getUrl } from '@/lib/next'
 import { viemClient } from '@/lib/viem'
 import { Box, Button, Flex, Heading, Link, Text } from '@radix-ui/themes'
 import { getFrameMetadata } from 'frog/web'
@@ -32,7 +32,7 @@ export async function generateMetadata({
   const parseResult = v.safeParse(schema, await params)
   if (!parseResult.success) notFound()
 
-  const url = process.env.VERCEL_URL || 'http://localhost:3000'
+  const url = getUrl()
   const frameMetadata = await getFrameMetadata(
     `${url}/signatures/${parseResult.output.id}/frame`,
   )

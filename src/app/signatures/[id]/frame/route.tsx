@@ -1,5 +1,6 @@
 /** @jsxImportSource frog/jsx */
 
+import { getUrl } from '@/lib/next'
 import { Button, Frog } from 'frog'
 import { handle } from 'frog/next'
 
@@ -13,7 +14,7 @@ const app = new Frog({
 })
 
 app.frame('/signatures/:id/frame', (c) => {
-  const url = process.env.VERCEL_URL ?? 'http://localhost:3000'
+  const url = getUrl()
 
   return c.res({
     image: `/signatures/${c.req.param('id')}/frame/image`,
