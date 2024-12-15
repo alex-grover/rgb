@@ -24,11 +24,12 @@ export function Header() {
           align="center"
           pl={{ initial: '2', sm: '6' }}
           py={{ initial: '2', sm: '4' }}
-          asChild
         >
-          <NextLink href="/">
-            <RGBIcon />
-          </NextLink>
+          <Flex asChild>
+            <NextLink href="/">
+              <RGBIcon />
+            </NextLink>
+          </Flex>
         </Flex>
         <Flex
           direction={{ initial: 'row', sm: 'row-reverse' }}
