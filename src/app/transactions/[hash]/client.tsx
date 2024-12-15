@@ -3,7 +3,8 @@
 import { Signature } from '@/components/Signature'
 import { rgbSignaturesAbi } from '@/generated'
 import { idToColor } from '@/lib/color'
-import { Box, Button, Flex, Spinner, Text } from '@radix-ui/themes'
+import { getUrl } from '@/lib/next'
+import { Box, Button, Flex, Grid, Spinner, Text } from '@radix-ui/themes'
 import Link from 'next/link'
 import type { PropsWithChildren } from 'react'
 import { type Hash, parseEventLogs } from 'viem'
@@ -88,6 +89,7 @@ export function TransactionClientPage({
 
     const id = ids[0]
     const color = idToColor(id)
+    const url = `${getUrl()}/signatures/${id}`
 
     return (
       <Wrapper>
@@ -102,11 +104,29 @@ export function TransactionClientPage({
             Welcome to RGB
           </Text>
         </Flex>
-        <Box width="100%" maxWidth="300px" asChild>
+        <Grid width="100%" maxWidth="300px" columns="2" rows="2" gap="3">
+          <Box gridColumn="1 / span 2" asChild>
+            <Button variant="outline" size="3" asChild>
+              <Link href={`/signatures/${id}`}>View Signature</Link>
+            </Button>
+          </Box>
           <Button variant="outline" size="3" asChild>
-            <Link href={`/signatures/${id}`}>View Signature</Link>
+            <Link
+              href={`https://x.com/intent/tweet?${new URLSearchParams({ url })}`}
+              target="_blank"
+            >
+              Share on X
+            </Link>
           </Button>
-        </Box>
+          <Button variant="outline" size="3" asChild>
+            <Link
+              href={`https://warpcast.com/~/compose?${new URLSearchParams({ 'embeds[]': url })}`}
+              target="_blank"
+            >
+              Share on FC
+            </Link>
+          </Button>
+        </Grid>
       </Wrapper>
     )
   }

@@ -91,7 +91,9 @@ app.frame('/signatures/:id/frame/finish', async (c) => {
       // biome-ignore lint/correctness/useJsxKeyInIterable: n/a
       <Button.Link href={url}>View</Button.Link>,
       // biome-ignore lint/correctness/useJsxKeyInIterable: n/a
-      <Button.Link href={`https://warpcast.com/~/compose?embeds[]=${url}`}>
+      <Button.Link
+        href={`https://warpcast.com/~/compose?${new URLSearchParams({ 'embeds[]': url })}`}
+      >
         Share
       </Button.Link>,
     ],
