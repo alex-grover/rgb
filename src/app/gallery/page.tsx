@@ -69,7 +69,7 @@ export default function GalleryPage() {
             </Text>
           </Flex>
           {data && (
-            <Grid columns="12" gap="3">
+            <Grid columns="12" gap={{ initial: '1', xs: '3' }}>
               {data.signatures.map(({ id }) => (
                 <Link
                   key={id}
