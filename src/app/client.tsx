@@ -26,6 +26,7 @@ import { useIsMounted } from 'connectkit'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
+import { toast } from 'sonner'
 import useSWR from 'swr'
 import { useEventListener } from 'usehooks-ts'
 import { parseEther } from 'viem'
@@ -107,6 +108,11 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
     writeContract: allowlistMint,
     isPending: allowlistMintPending,
   } = useWriteRgbSignaturesAllowlistMint()
+
+  useEffect(() => {
+    if (!(mintPending || mintRandomPending || allowlistMintPending)) return
+    toast('Please confirm in your wallet', { position: 'bottom-right' })
+  }, [mintPending, mintRandomPending, allowlistMintPending])
 
   useEffect(() => {
     if (!mintHash && !mintRandomHash && !allowlistMintHash) return
