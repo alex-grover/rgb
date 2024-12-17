@@ -1,6 +1,6 @@
 'use client'
 
-import { chain, rpcUrl } from '@/lib/chain'
+import { chain } from '@/lib/chain'
 import { env } from '@/lib/env'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { track } from '@vercel/analytics/react'
@@ -12,7 +12,7 @@ const config = createConfig(
   getDefaultConfig({
     chains: [chain],
     transports: {
-      [chain.id]: http(rpcUrl),
+      [chain.id]: http(),
     },
     walletConnectProjectId: env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
     appName: 'RGB',
