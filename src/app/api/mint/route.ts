@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
   const logs = parseEventLogs({
     abi: rgbSignaturesAbi,
     eventName: 'Mint',
-    logs: body.transaction.logs,
+    logs: body.events[0].transaction.logs,
     strict: true,
   })
 
