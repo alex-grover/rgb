@@ -38,6 +38,15 @@ export async function generateMetadata({
   )
 
   return {
+    openGraph: {
+      images: [
+        {
+          url: `${url}/signatures/${parseResult.output.id}/frame/image`,
+          width: 1000,
+          height: 1000,
+        },
+      ],
+    },
     other: frameMetadata,
   }
 }
