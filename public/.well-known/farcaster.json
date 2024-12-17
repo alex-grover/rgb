@@ -1,0 +1,16 @@
+{
+  "accountAssociation": {
+    "header": "eyJmaWQiOjEwMjU5LCJ0eXBlIjoiY3VzdG9keSIsImtleSI6IjB4NzI1NkEwN0ZhODU5N2JDMUU2M2I3ZEFlMGNFYkIxMERhRDczNzBiQSJ9",
+    "payload": "eyJkb21haW4iOiJyZ2IuZnVuIn0",
+    "signature": "MHhjN2RjMTVjMmUyNzAzMzVhNjA1OTg2OWEzOGFiZWMzNGMwZWZjNjVlODY1ZDMxMDdjYzA3MTZiOTJhMjIyNzQ5MDM0MzVjZDEwOWFlZGM4ZDZhZTMyZTYyOGQ5NDFkOTJlNDg2YmU1OTk1YTQ4Mzc2ZDQxYzdjMTJhZWQ1ZTExNzFj"
+  },
+  "frame": {
+    "version": "1",
+    "name": "RGB",
+    "iconUrl": "https://rgb.fun/icon.svg",
+    "homeUrl": "https://rgb.fun",
+    "imageUrl": "https://rgb.fun/opengraph-image.png",
+    "buttonTitle": "Mint",
+    "splashBackgroundColor": "#ffffff"
+  }
+}
