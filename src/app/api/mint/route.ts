@@ -1,6 +1,7 @@
 import { rgbSignaturesAbi } from '@/generated'
 import { shortenAddress } from '@/lib/address'
 import { idToColor } from '@/lib/color'
+import { getUrl } from '@/lib/next'
 import { neynarClient } from '@/lib/neynar'
 import type { NextRequest } from 'next/server'
 import { type Address, parseEventLogs } from 'viem'
@@ -51,6 +52,7 @@ export async function POST(request: NextRequest) {
       // biome-ignore lint/style/noNonNullAssertion: it's in the env
       signerUuid: process.env.NEYNAR_SIGNER_UUID!,
       text: `${username} minted rgb(${color.r},${color.g},${color.b})`,
+      embeds: [{ url: `${getUrl()}/signatures/${log.args.id}` }],
     })
   }
 
