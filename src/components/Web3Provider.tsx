@@ -2,10 +2,17 @@
 
 import { chain } from '@/lib/chain'
 import { env } from '@/lib/env'
+import sdk from '@farcaster/frame-sdk'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { track } from '@vercel/analytics/react'
 import { ConnectKitProvider, getDefaultConfig } from 'connectkit'
-import { type ComponentProps, type PropsWithChildren, useCallback } from 'react'
+import {
+  type ComponentProps,
+  type PropsWithChildren,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react'
 import { http, WagmiProvider, createConfig } from 'wagmi'
 
 const config = createConfig(
@@ -24,7 +31,15 @@ const config = createConfig(
 
 const queryClient = new QueryClient()
 
-export const Web3Provider = ({ children }: PropsWithChildren) => {
+export default function Web3Provider({ children }: PropsWithChildren) {
+  const [isSDKLoaded, setIsSDKLoaded] = useState(false)
+
+  useEffect(() => {
+    if (!sdk || isSDKLoaded) return
+    setIsSDKLoaded(true)
+    sdk.actions.ready()
+  }, [isSDKLoaded])
+
   const handleConnect = useCallback(
     ({
       address,
