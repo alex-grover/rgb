@@ -11,8 +11,7 @@ import './global.css'
 
 export const metadata: Metadata = {
   title: 'RGB',
-  description:
-    'Mint an RGB Signature - a collection of 16,777,216 NFTs on Base',
+  description: '16,777,216 onchain rgb values',
 }
 
 export default function RootLayout({ children }: PropsWithChildren) {

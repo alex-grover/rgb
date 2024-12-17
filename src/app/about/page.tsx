@@ -62,7 +62,7 @@ export default function AboutPage() {
             </Text>
             <Text as="p" weight="medium" color="gray">
               This is the fundamental constraint that RGB is centered around:
-              the combination of 3 inputs to create 16,777,216 outputs.
+              the combination of 3 inputs to create 16,777,216 unique outputs.
             </Text>
           </Section>
         </Flex>
@@ -151,11 +151,11 @@ export default function AboutPage() {
             <Text as="p" weight="medium" color="gray">
               More announcements soon. Follow{' '}
               <Link
-                href="https://warpcast.com/rgb"
+                href="https://warpcast.com/~/channel/rgb"
                 target="_blank"
                 color="gray"
               >
-                @rgb
+                /rgb
               </Link>{' '}
               for updates.
             </Text>

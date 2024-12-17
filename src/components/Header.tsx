@@ -59,11 +59,7 @@ export function Header() {
           </Flex>
           <Flex align="center" gap="4" pr={{ initial: '2', sm: '0' }} asChild>
             <nav>
-              <Link
-                href="https://x.com/rgb_eth"
-                target="_blank"
-                weight="medium"
-              >
+              <Link href="https://x.com/rgbfun" target="_blank" weight="medium">
                 X/Twitter
               </Link>
               <Link
