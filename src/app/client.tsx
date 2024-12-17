@@ -22,7 +22,7 @@ import {
   TextField,
   Theme,
 } from '@radix-ui/themes'
-import { useIsMounted } from 'connectkit'
+import { useIsMounted, useModal } from 'connectkit'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
@@ -44,6 +44,7 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
   const pathname = usePathname()
   const isMounted = useIsMounted()
   const { address } = useAccount()
+  const { setOpen } = useModal()
 
   const [color, setColor] = useState(initialColor)
   const [randomMintAmount, setRandomMintAmount] = useState(1)
@@ -212,10 +213,12 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
             <Button
               size="4"
               onClick={() =>
-                mint({
-                  args: [color.r, color.g, color.b],
-                  value: parseEther('0.004'),
-                })
+                address
+                  ? mint({
+                      args: [color.r, color.g, color.b],
+                      value: parseEther('0.004'),
+                    })
+                  : setOpen(true)
               }
               loading={mintPending}
               disabled={mintRandomPending || allowlistMintPending}
@@ -250,10 +253,12 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
               <Button
                 size="4"
                 onClick={() =>
-                  mintRandom({
-                    args: [randomMintAmount],
-                    value: parseEther(randomMintCost),
-                  })
+                  address
+                    ? mintRandom({
+                        args: [randomMintAmount],
+                        value: parseEther(randomMintCost),
+                      })
+                    : setOpen(true)
                 }
                 loading={mintRandomPending}
                 disabled={mintPending}
