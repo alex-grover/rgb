@@ -7,6 +7,8 @@ import { NextResponse } from 'next/server'
 import * as v from 'valibot'
 import { type Address, type Hex, isAddress } from 'viem'
 
+export const revalidate = 10
+
 const schema = v.object({
   address: v.custom<Address>(
     (input) => typeof input === 'string' && isAddress(input),
@@ -25,9 +27,11 @@ export async function GET(_: Request, { params }: RouteContext) {
   if (!parseResult.success)
     return NextResponse.json(parseResult.issues, { status: 400 })
 
-  const proof = (proofs as Partial<Record<Address, Hex[]>>)[
-    parseResult.output.address
-  ]
+  const proof =
+    (proofs as Partial<Record<Address, Hex[]>>)[parseResult.output.address] ||
+    (proofs as Partial<Record<Address, Hex[]>>)[
+      parseResult.output.address.toLowerCase() as Hex
+    ]
   const onAllowlist = !!proof
 
   const claimed =
