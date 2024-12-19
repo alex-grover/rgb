@@ -7,6 +7,8 @@ import { NextResponse } from 'next/server'
 import * as v from 'valibot'
 import { type Address, type Hex, isAddress } from 'viem'
 
+export const revalidate = 10
+
 const schema = v.object({
   address: v.custom<Address>(
     (input) => typeof input === 'string' && isAddress(input),
