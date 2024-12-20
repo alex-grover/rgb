@@ -112,7 +112,7 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
 
   useEffect(() => {
     if (!(mintPending || mintRandomPending || allowlistMintPending)) return
-    toast('Please confirm in your wallet', { position: 'bottom-right' })
+    toast('Please confirm in your wallet')
   }, [mintPending, mintRandomPending, allowlistMintPending])
 
   useEffect(() => {

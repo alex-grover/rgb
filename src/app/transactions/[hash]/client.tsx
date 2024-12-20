@@ -6,9 +6,12 @@ import { idToColor } from '@/lib/color'
 import { getUrl } from '@/lib/next'
 import { Box, Button, Flex, Grid, Spinner, Text } from '@radix-ui/themes'
 import Link from 'next/link'
-import type { PropsWithChildren } from 'react'
+import { type PropsWithChildren, useCallback } from 'react'
+import { toast } from 'sonner'
+import { useCopyToClipboard } from 'usehooks-ts'
 import { type Hash, parseEventLogs } from 'viem'
 import { useAccount, useWaitForTransactionReceipt } from 'wagmi'
+import styles from './client.module.css'
 
 type TransactionClientPageProps = {
   hash: Hash
@@ -31,6 +34,20 @@ export function TransactionClientPage({
     isLoading: isConfirming,
     isSuccess: isConfirmed,
   } = useWaitForTransactionReceipt({ hash })
+
+  const [, copy] = useCopyToClipboard()
+  const handleCopyClicked = useCallback(
+    (text: string) => () => {
+      async function handle() {
+        const success = await copy(text)
+        if (success) toast('Copied to clipboard!')
+        else toast('Failed to copy to clipboard')
+      }
+
+      void handle()
+    },
+    [copy],
+  )
 
   const isRandom = 'amount' in props
 
@@ -79,8 +96,15 @@ export function TransactionClientPage({
             </Text>
           </Flex>
           <Box width="100%" maxWidth="300px" asChild>
+            <Button size="3" asChild>
+              <Link href={`/accounts/${address}`} className={styles.primary}>
+                View your Signatures
+              </Link>
+            </Button>
+          </Box>
+          <Box width="100%" maxWidth="300px" asChild>
             <Button variant="outline" size="3" asChild>
-              <Link href={`/accounts/${address}`}>View your Signatures</Link>
+              <Link href="/">Mint more</Link>
             </Button>
           </Box>
         </Wrapper>
@@ -106,8 +130,15 @@ export function TransactionClientPage({
         </Flex>
         <Grid width="100%" maxWidth="300px" columns="2" rows="2" gap="3">
           <Box gridColumn="1 / span 2" asChild>
+            <Button size="3" asChild>
+              <Link href={`/signatures/${id}`} className={styles.primary}>
+                View Signature
+              </Link>
+            </Button>
+          </Box>
+          <Box gridColumn="1 / span 2" asChild>
             <Button variant="outline" size="3" asChild>
-              <Link href={`/signatures/${id}`}>View Signature</Link>
+              <Link href="/">Mint another</Link>
             </Button>
           </Box>
           <Button variant="outline" size="3" asChild>
@@ -126,6 +157,11 @@ export function TransactionClientPage({
               Share on FC
             </Link>
           </Button>
+          <Box gridColumn="1 / span 2" asChild>
+            <Button variant="outline" size="3" onClick={handleCopyClicked(url)}>
+              Copy link
+            </Button>
+          </Box>
         </Grid>
       </Wrapper>
     )
