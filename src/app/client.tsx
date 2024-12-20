@@ -112,7 +112,7 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
 
   useEffect(() => {
     if (!(mintPending || mintRandomPending || allowlistMintPending)) return
-    toast('Please confirm in your wallet', { position: 'bottom-right' })
+    toast('Please confirm in your wallet')
   }, [mintPending, mintRandomPending, allowlistMintPending])
 
   useEffect(() => {
@@ -177,6 +177,13 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
                 if (r > 255) return
                 setColor({ ...color, r })
               }}
+              onKeyUp={(e) => {
+                if (e.code === 'ArrowUp' && color.r !== 255) {
+                  setColor({ ...color, r: color.r + 1 })
+                } else if (e.code === 'ArrowDown' && color.r !== 0) {
+                  setColor({ ...color, r: color.r - 1 })
+                }
+              }}
             >
               <TextField.Slot>R</TextField.Slot>
             </TextField.Root>
@@ -189,6 +196,13 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
                 if (g > 255) return
                 setColor({ ...color, g })
               }}
+              onKeyUp={(e) => {
+                if (e.code === 'ArrowUp' && color.g !== 255) {
+                  setColor({ ...color, g: color.g + 1 })
+                } else if (e.code === 'ArrowDown' && color.g !== 0) {
+                  setColor({ ...color, g: color.g - 1 })
+                }
+              }}
             >
               <TextField.Slot>G</TextField.Slot>
             </TextField.Root>
@@ -200,6 +214,13 @@ export function HomeClientPage({ color: initialColor }: HomeClientPageProps) {
                   Number.parseInt(e.target.value.replace(/\D/g, '')) || 0
                 if (b > 255) return
                 setColor({ ...color, b })
+              }}
+              onKeyUp={(e) => {
+                if (e.code === 'ArrowUp' && color.b !== 255) {
+                  setColor({ ...color, b: color.b + 1 })
+                } else if (e.code === 'ArrowDown' && color.b !== 0) {
+                  setColor({ ...color, b: color.b - 1 })
+                }
               }}
             >
               <TextField.Slot>B</TextField.Slot>

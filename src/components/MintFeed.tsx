@@ -45,21 +45,19 @@ export function MintFeed() {
               </Text>
               <Signature color={color} size={16} bordered />
             </Flex>,
+            { position: 'top-center' },
           )
           return
         }
 
-        debouncedToast(`${name} minted x${logs.length} random`)
+        debouncedToast(`${name} minted x${logs.length} random`, {
+          position: 'top-center',
+        })
       }
 
       void handle()
     },
   })
 
-  return (
-    <Toaster
-      position="top-center"
-      toastOptions={{ style: { borderRadius: 0 } }}
-    />
-  )
+  return <Toaster toastOptions={{ style: { borderRadius: 0 } }} />
 }
