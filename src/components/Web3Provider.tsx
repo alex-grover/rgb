@@ -13,7 +13,13 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { http, WagmiProvider, createConfig } from 'wagmi'
+import {
+  http,
+  WagmiProvider,
+  createConfig,
+  useAccount,
+  useSwitchChain,
+} from 'wagmi'
 
 const config = createConfig(
   getDefaultConfig({
@@ -59,8 +65,21 @@ export default function Web3Provider({ children }: PropsWithChildren) {
       <QueryClientProvider client={queryClient}>
         <ConnectKitProvider mode="light" onConnect={handleConnect}>
           {children}
+          <SwitchChain />
         </ConnectKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
   )
+}
+
+function SwitchChain() {
+  const { address } = useAccount()
+  const { switchChain } = useSwitchChain()
+
+  useEffect(() => {
+    if (!address) return
+    switchChain({ chainId: chain.id })
+  }, [address, switchChain])
+
+  return null
 }
